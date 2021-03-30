@@ -22,17 +22,17 @@ struct CountView: View {
         ActionSheet(
             title: Text("Select image source"),
             buttons: [
-                .default(Text("Take Photo"), action: {
+                .default(Text(Strings.TakePhoto), action: {
                     showActionSheet = false
                     countViewModel.sourceType = .camera
                     showImagePicker()
                 }),
-                .default(Text("Select from Library"), action: {
+                .default(Text(Strings.SelectFromLibrary), action: {
                     showActionSheet = false
                     countViewModel.sourceType = .photoLibrary
                     showImagePicker()
                 }),
-                .cancel(Text("Close"), action: {
+                .cancel(Text(Strings.CancelTitle), action: {
                     showActionSheet = false
                 })
             ])
@@ -59,7 +59,7 @@ struct CountView: View {
                         showActionSheet = true
                         countViewModel.countRespone = nil
                     }, label: {
-                        MainButtonView(title: self.countViewModel.selectedImage == nil ? "Select Photo" : "Change photo")
+                        MainButtonView(title: self.countViewModel.selectedImage == nil ? Strings.SelectPhotoTitle : Strings.ChangePhotoTitle)
                     })
                     .padding(.bottom)
                     if let img = self.countViewModel.selectedImage {
@@ -77,20 +77,23 @@ struct CountView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .cornerRadius(8)
                                 .padding(.bottom)
-                            Text("Number of eggs: \(countViewModel.countRespone?.count ?? 0)")
+                            Text("\(Strings.CountResultTitle): \(countViewModel.countRespone?.count ?? 0)")
                                 .bold()
                         }
                     }
+                    
+                    CheckView(isChecked: $countViewModel.isDefault, title: Strings.DefaultMethodTitle)
+                        .padding(.vertical)
                     Button(action: {
                         if let img = countViewModel.selectedImage {
-                            ProgressHUD.show("Counting...")
-                            api.uploadImage(image: img, template: template) { result in
+                            ProgressHUD.show(Strings.Counting)
+                            api.uploadForCounting(image: img, template: template, method: countViewModel.method) { result in
                                 self.countViewModel.countRespone = result
                                 ProgressHUD.dismiss()
                             }
                         }
                     }, label: {
-                        MainButtonView(title: String.CountTitle)
+                        MainButtonView(title: Strings.CountTitle)
                     })
                     .isHidden(self.countViewModel.selectedImage == nil)
                     .padding(.bottom)
@@ -104,22 +107,6 @@ struct CountView: View {
         }
 }
 
-struct MainButtonView: View {
-    var title = String.DefaultButtonTitle
-    var backgroundColor = Color.blue
-    var textColor = Color.white
-    var body: some View {
-        ZStack {
-            Rectangle()
-                .fill(backgroundColor)
-                .frame(height: 56)
-                .cornerRadius(8)
-            Text(title)
-                .foregroundColor(textColor)
-                .bold()
-        }
-    }
-}
 
 //struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {

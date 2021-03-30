@@ -38,6 +38,8 @@ struct HomeView: View {
             }) {
                 ZStack(alignment: .topTrailing) {
                     Image("nav-menu")
+                        .renderingMode(.template)
+                        .foregroundColor(Color.Count.PrimaryTextColor)
                         .foregroundColor(.black)
                         .padding(.vertical)
                         .padding(.leading)
@@ -48,7 +50,8 @@ struct HomeView: View {
                 UITableView.appearance().separatorStyle = .none
             }
             
-        }
+        }.accentColor(Color.Count.PrimaryColor)
+
     }
 }
 

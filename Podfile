@@ -9,6 +9,9 @@ target 'My Counter' do
   pod 'ProgressHUD'
   pod 'KYDrawerController'
   pod 'ASCollectionView-SwiftUI', '~> 1.3'
+  pod 'IQKeyboardManager'
+  pod 'FBSDKLoginKit'
+  pod 'SwiftyJSON'
   # Pods for My Counter
 
 end

@@ -14,6 +14,7 @@ struct Template: Identifiable {
     var description = ""
 }
 
+
 struct TemplateServer: Codable {
     var id: String?
     var name: String?

@@ -10,12 +10,13 @@ import UIKit
 import Alamofire
 
 class API {
-    
-    func uploadImage(image: UIImage, template: Template, completionHandler: @escaping (CountRespone) -> Void) {
+    func uploadForCounting(image: UIImage, template: Template, method: CountMethod = .defaultMethod, completionHandler: @escaping (CountRespone) -> Void) {
         let parameters = [
             "name": template.name,
-            "id": template.id
+            "id": template.id,
+            "method": method.rawValue
         ]
+        print(parameters)
         
         let img = image.resizeImage(targetSize: CGSize(width: 500, height: 500))
         let imgData = img.jpegData(compressionQuality: 1)!
@@ -29,6 +30,9 @@ class API {
         .responseDecodable(of: CountRespone.self) { resp in
             if let countResponse = resp.value {
                 completionHandler(countResponse)
+            }
+            else {
+                completionHandler(CountRespone(count: 0, url: "", fileName: ""))
             }
         }
     }

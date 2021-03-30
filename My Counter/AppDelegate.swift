@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import CoreML
+import Vision
+import SwiftUI
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: Color.Count.PrimaryTextColor.uiColor()]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: Color.Count.PrimaryTextColor.uiColor()]
         return true
     }
 
