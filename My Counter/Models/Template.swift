@@ -18,6 +18,6 @@ struct Template: Identifiable {
 struct TemplateServer: Codable {
     var id: String?
     var name: String?
-    var desciption: String?
+    var description: String?
     var imageUrl: String?
 }

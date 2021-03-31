@@ -9,3 +9,6 @@ import Foundation
 
 
 let apiUrl = "https://my-kounter.herokuapp.com/upload"
+let storageUrl = "gs://my-counter-c02e5.appspot.com"
+let templateChild = "Template"
+let idLength = 5

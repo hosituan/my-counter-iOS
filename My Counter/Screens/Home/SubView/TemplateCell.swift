@@ -7,23 +7,28 @@
 
 import Foundation
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct TemplateCell: View {
-    var template: Template
+    var template: TemplateServer
     @State var isShowCount = false
     var body: some View {
             VStack {
-                Image(uiImage: template.image)
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .shadow(color: .primary, radius: 2)
-                    .padding([.top], 7)
-                Text(template.name)
+                if let urlStr = template.imageUrl, let url = URL(string: urlStr) {
+                    WebImage(url: url)
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(Circle())
+                        .shadow(color: .primary, radius: 2)
+                        .padding([.top], 7)
+                }
+
+
+                Text(template.name ?? "")
                     .bold()
                     .font(.system(size: 14))
                     .lineLimit(1)
-                Text(template.description)
+                Text(template.description ?? "")
                     .italic()
                     .font(.system(size: 12))
                     .lineLimit(1)

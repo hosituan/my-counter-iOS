@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TemplateCollectionView: View {
-    var templateList: [Template]
+    var templateList: [TemplateServer]
     var columns = 3
     var body: some View {
         ForEach(0..<((templateList.count / columns) + 1)) { index in

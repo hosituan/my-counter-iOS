@@ -8,13 +8,19 @@
 import Foundation
 import Combine
 import UIKit
+import ProgressHUD
 
 class HomeViewModel: ObservableObject {
     let objectWillChange: ObservableObjectPublisher = ObservableObjectPublisher()
-    @Published var templateList: [Template] = [Template(image: UIImage(named: "egg-icon")!, name: "Chicken Egg", description: "Count eggs"),
-                                                Template(image: UIImage(named: "egg-icon")!, name: "Egg", description: "Count eggs"),
-                                                Template(image: UIImage(named: "egg-icon")!, name: "Egg", description: "Count eggs"),
-                                                Template(image: UIImage(named: "egg-icon")!, name: "Egg", description: "Count eggs"),
-                                                Template(image: UIImage(named: "egg-icon")!, name: "Egg", description: "Count eggs"),
-    ]
+    let firebaseManager = FirebaseManager()
+    @Published var templateList: [TemplateServer] = [TemplateServer]()
+    
+    func loadTemplate() {
+        ProgressHUD.show()
+        firebaseManager.loadTemplate { (result) in
+            self.templateList = result
+            self.objectWillChange.send()
+            ProgressHUD.dismiss()
+        }
+    }
 }

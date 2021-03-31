@@ -7,11 +7,12 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import FirebaseAuth
 struct ProfileMenuView: View {
-    var user: User
+    var user: User?
     var body: some View {
         HStack {
-            if let urlStr = user.avatarUrl, let url = URL(string: urlStr) {
+            if let url = user?.photoURL {
                 WebImage(url: url)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -26,10 +27,10 @@ struct ProfileMenuView: View {
                     .cornerRadius(32)
             }
             VStack(alignment: .leading) {
-                Text(user.name)
+                Text(user?.displayName ?? "")
                     .bold()
                     .font(.system(size: 14))
-                Text(user.email)
+                Text(user?.email ?? "")
                     .italic()
                     .font(.system(size: 12))
             }
@@ -42,6 +43,7 @@ struct ProfileMenuView: View {
         }
         
     }
+
 }
 
 //struct ProfileMenuView_Previews: PreviewProvider {

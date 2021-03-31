@@ -23,19 +23,19 @@ struct LoginView: View {
     var bottomView: some View {
         HStack {
             Button(action: {
-                userLogin.facebookLogin() { result in
-                    if result {
-                        dismissAction()
-                    }
-                }
+                userLogin.logInFacebook()
             }) {
                 Image("facebook_icon")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 30, height: 30, alignment: .center)
                     .padding(.horizontal, 3)
+            }.onReceive(userLogin.objectWillChange) { _ in
+                if userLogin.isLogin {
+                    dismissAction()
+                }
             }
-
+            
             Image("google_icon")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -52,16 +52,16 @@ struct LoginView: View {
         NavigationView {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .center) {
-//                    Image("Logo")
-//                        .padding(32)
+                    //                    Image("Logo")
+                    //                        .padding(32)
                     Text("This is logo")
                         .foregroundColor(Color.Count.PrimaryColor)
                         .bold()
                         .padding(.vertical)
                     VStack(alignment: .leading, spacing: 0) {
-                        MainTextField(title: Strings.EmailFieldName, placeHolder: Strings.EmailPlaceHolder, value: $loginViewModel.email)
+                        MainTextField(title: Strings.EN.EmailFieldName, placeHolder: Strings.EN.EmailPlaceHolder, value: $loginViewModel.email)
                             .padding(.bottom, 23)
-                        SecureTextField(value: $loginViewModel.password, title: Strings.PasswordFieldName)
+                        SecureTextField(value: $loginViewModel.password, title: Strings.EN.PasswordFieldName)
                     }
                     .padding(.bottom, 24)
                     Button(action: {
@@ -71,7 +71,7 @@ struct LoginView: View {
                             Rectangle()
                                 .fill(loginViewModel.validate ? Color.Count.PrimaryColor : Color.Count.ContentGrayTextColor )
                                 .frame(height: 56)
-                            Text(Strings.LoginTitle)
+                            Text(Strings.EN.LoginTitle)
                                 .foregroundColor(.white)
                                 .bold()
                         }
@@ -81,7 +81,7 @@ struct LoginView: View {
                     
                     NavigationLink(destination: ResetPasswordView(), isActive: $isShowReset) {
                         HStack {
-                            Text(Strings.ResetPasswordTitle)
+                            Text(Strings.EN.ResetPasswordTitle)
                                 .foregroundColor(Color.Count.NavigationLinkColor)
                                 .modifier(NavigationLink_14())
                             Spacer()
@@ -90,7 +90,7 @@ struct LoginView: View {
                     
                     NavigationLink(destination: RegisterView(), isActive: $isShowRegister) {
                         HStack {
-                            Text(Strings.RegisterTitle)
+                            Text(Strings.EN.RegisterTitle)
                                 .foregroundColor(Color.Count.NavigationLinkColor)
                                 .modifier(NavigationLink_14())
                             Spacer()
@@ -103,7 +103,7 @@ struct LoginView: View {
                     
                 }
                 .padding(.horizontal, 16)
-                .navigationBarTitle(Text(Strings.LoginTitle))
+                .navigationBarTitle(Text(Strings.EN.LoginTitle))
                 .navigationBarItems(leading: Button(action: {
                     self.dismissAction()
                 }, label: {

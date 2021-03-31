@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 class API {
-    func uploadForCounting(image: UIImage, template: Template, method: CountMethod = .defaultMethod, completionHandler: @escaping (CountRespone) -> Void) {
+    func uploadForCounting(image: UIImage, template: TemplateServer, method: CountMethod = .defaultMethod, completionHandler: @escaping (CountRespone) -> Void) {
         let parameters = [
             "name": template.name,
             "id": template.id,
@@ -23,7 +23,7 @@ class API {
         AF.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(imgData, withName: "file",fileName: "file.jpg", mimeType: "image/jpg")
             for (key, value) in parameters {
-                            multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
+                multipartFormData.append(value!.data(using: String.Encoding.utf8)!, withName: key)
                         }
         },
         to:apiUrl, method: .post)

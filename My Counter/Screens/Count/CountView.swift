@@ -16,23 +16,23 @@ struct CountView: View {
     @State var showActionSheet = false
     @ObservedObject var countViewModel = CountViewModel()
     let api = API()
-    var template: Template
+    var template: TemplateServer
     
     var sheet: ActionSheet {
         ActionSheet(
             title: Text("Select image source"),
             buttons: [
-                .default(Text(Strings.TakePhoto), action: {
+                .default(Text(Strings.EN.TakePhoto), action: {
                     showActionSheet = false
                     countViewModel.sourceType = .camera
                     showImagePicker()
                 }),
-                .default(Text(Strings.SelectFromLibrary), action: {
+                .default(Text(Strings.EN.SelectFromLibrary), action: {
                     showActionSheet = false
                     countViewModel.sourceType = .photoLibrary
                     showImagePicker()
                 }),
-                .cancel(Text(Strings.CancelTitle), action: {
+                .cancel(Text(Strings.EN.CancelTitle), action: {
                     showActionSheet = false
                 })
             ])
@@ -50,16 +50,21 @@ struct CountView: View {
     var body: some View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    Text(template.description)
+                    Text(template.description ?? "")
                         .bold()
                         .italic()
                         .font(.system(size: 14))
                         .padding(.bottom)
                     Button(action: {
-                        showActionSheet = true
-                        countViewModel.countRespone = nil
+                        AppDelegate.shared().requestCameraAccess() { result in
+                            if result {
+                                showActionSheet = true
+                                countViewModel.countRespone = nil
+                            }
+                        }
+       
                     }, label: {
-                        MainButtonView(title: self.countViewModel.selectedImage == nil ? Strings.SelectPhotoTitle : Strings.ChangePhotoTitle)
+                        MainButtonView(title: self.countViewModel.selectedImage == nil ? Strings.EN.SelectPhotoTitle : Strings.EN.ChangePhotoTitle)
                     })
                     .padding(.bottom)
                     if let img = self.countViewModel.selectedImage {
@@ -74,28 +79,34 @@ struct CountView: View {
                         VStack {
                             WebImage(url: url)
                                 .resizable()
-                                .aspectRatio(contentMode: .fit)
+                                .placeholder(content: {
+                                    Image(uiImage: countViewModel.tempImage!)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .cornerRadius(8)
+                                })
+                                .aspectRatio(contentMode: .fill)
                                 .cornerRadius(8)
                                 .padding(.bottom)
-                            Text("\(Strings.CountResultTitle): \(countViewModel.countRespone?.count ?? 0)")
+                            Text("\(Strings.EN.CountResultTitle)\(template.name ?? ""): \(countViewModel.countRespone?.count ?? 0)")
                                 .bold()
                         }
                     }
                     
-                    CheckView(isChecked: $countViewModel.isDefault, title: Strings.DefaultMethodTitle)
+                    CheckView(isChecked: $countViewModel.isDefault, title: Strings.EN.DefaultMethodTitle)
                         .padding(.vertical)
                     Button(action: {
                         if let img = countViewModel.selectedImage {
-                            ProgressHUD.show(Strings.Counting)
+                            ProgressHUD.show(Strings.EN.Counting)
                             api.uploadForCounting(image: img, template: template, method: countViewModel.method) { result in
                                 self.countViewModel.countRespone = result
                                 ProgressHUD.dismiss()
                             }
                         }
                     }, label: {
-                        MainButtonView(title: Strings.CountTitle)
+                        MainButtonView(title: Strings.EN.CountTitle)
                     })
-                    .isHidden(self.countViewModel.selectedImage == nil)
+                    .isHidden(self.countViewModel.selectedImage == nil && self.countViewModel.tempImage == nil)
                     .padding(.bottom)
                 }
                 .padding()
@@ -103,7 +114,12 @@ struct CountView: View {
                     sheet
                 }
             }
-            .navigationBarTitle(template.name)
+            .navigationBarTitle(template.name ?? "")
+            .onDisappear() {
+                countViewModel.selectedImage = nil
+                countViewModel.countRespone = nil
+                countViewModel.tempImage = nil
+            }
         }
 }
 

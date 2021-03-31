@@ -10,6 +10,9 @@ import SwiftUI
 import KYDrawerController
 import PartialSheet
 import FBSDKCoreKit
+import FirebaseAuth
+import FBSDKLoginKit
+import IQKeyboardManager
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -19,11 +22,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let drawerController = KYDrawerController(drawerDirection: .right, drawerWidth: 300)
     
     let userLogin = UserLogin()
-    let menuHandler = MenuHandler()
+
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         // init facebook SDK
+        IQKeyboardManager.shared().isEnabled = true
         ApplicationDelegate.initializeSDK(nil)
         Settings.isAutoLogAppEventsEnabled = true
         Settings.isAdvertiserIDCollectionEnabled = true
@@ -33,6 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Create the SwiftUI view that provides the window contents.
         
+        let menuHandler = MenuHandler()
         let contentView = ContentView(showMenuAction: {
             self.drawerController.setDrawerState(.opened, animated: true)
         })
@@ -90,3 +95,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
 }
 
+
+extension SceneDelegate {
+    func showMenu() {
+        self.drawerController.setDrawerState(.opened, animated: true)
+    }
+    
+    func hideMenu() {
+        self.drawerController.setDrawerState(.closed, animated: true)
+    }
+}
+
+
+
+
+extension UIViewController{
+    func inNavigation() -> UIViewController {
+        let navigationController = UINavigationController(rootViewController: self)
+        DispatchQueue.main.async {
+            navigationController.isNavigationBarHidden = true
+        }
+        return navigationController
+    }
+}

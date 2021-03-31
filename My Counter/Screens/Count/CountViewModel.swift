@@ -11,9 +11,14 @@ import UIKit
 
 class CountViewModel: ObservableObject {
     @Published var selectedImage: UIImage?
-    @Published var countRespone: CountRespone?
+    @Published var countRespone: CountRespone? {
+        didSet {
+            tempImage = selectedImage
+            selectedImage = countRespone != nil ? nil : selectedImage
+        }
+    }
+    @Published var tempImage: UIImage?
     @Published var sourceType: UIImagePickerController.SourceType = .camera
-    
     @Published var isDefault: Bool = true {
         didSet {
             method = isDefault ? .defaultMethod : .advanced

@@ -12,6 +12,9 @@ target 'My Counter' do
   pod 'IQKeyboardManager'
   pod 'FBSDKLoginKit'
   pod 'SwiftyJSON'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Storage'
+  pod 'Firebase/Database'
   # Pods for My Counter
 
 end

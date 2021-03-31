@@ -9,64 +9,86 @@ import Foundation
 import Combine
 import FBSDKLoginKit
 import SwiftyJSON
-class UserLogin: ObservableObject {
+import FirebaseAuth
+import Firebase
+import SwiftUI
+import ProgressHUD
+
+class UserLogin: NSObject, ObservableObject, LoginButtonDelegate {
+    
     @Published var isLogin = false
     {
         didSet {
             UserDefaults.standard.set(isLogin, forKey: "isLogin")
+            self.objectWillChange.send()
         }
     }
-    @Published var user: User = User()
+    @Published var user: User?
     
-    init() {
-        self.isLogin = UserDefaults.standard.bool(forKey: "isLogin")
-    }
-    
-    let loginManager = LoginManager()
-    func facebookLogin(completionHandler: @escaping (Bool) -> Void) {
-        loginManager.logIn(permissions: [.publicProfile, .email], viewController: nil) { loginResult in
-            switch loginResult {
-            case .failed(let error):
-                print(error)
-                completionHandler(false)
-            case .cancelled:
-                print("User cancelled login.")
-                completionHandler(false)
-            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                self.isLogin = true
-                completionHandler(true)
-                print("Logged in! \(grantedPermissions) \(declinedPermissions) \(String(describing: accessToken))")
-                self.getUserInformation()
-            }
-        }
+    func logout() {
+        fbLoginButton.sendActions(for: .touchUpInside)
     }
     
     func getUserInformation() {
-        let graphPath = "me/picture"
-        let parameters = [
-          "type": "large",
-          "redirect": "false"
-        ]
-        GraphRequest(graphPath: "me", parameters: ["fields": "id, name, picture"]).start(completionHandler: { (connection, result, error) -> Void in
-            if (error == nil) {
-                let dict = result as! NSDictionary
-                let id = dict["id"] as! String
-                let name = dict["name"] as! String
-                GraphRequest(graphPath: graphPath, parameters: parameters).start { (connection, result, error) in
-                    if error == nil {
-                        let json = JSON(result!)
-                        let url = json["data"]["url"].stringValue
-                        self.user = User(name: name, email: id, avatarUrl: url)
-                    }
-                }
-
+        Auth.auth().addStateDidChangeListener { (auth, user) in
+            if let user = user {
+                self.user = user
+                self.isLogin = true
             }
-        })
+            ProgressHUD.dismiss()
+        }
     }
-    func logout() {
-        loginManager.logOut()
+    
+    override init() {
+        super.init()
+        self.isLogin = UserDefaults.standard.bool(forKey: "isLogin")
+        if isLogin {
+            self.getUserInformation()
+        }
+        
+        fbLoginButton.delegate = self
+    }
+    
+    
+    //MARK:-- Facebook
+    
+    let fbLoginButton = FBLoginButton()
+    
+    func logInFacebook() {
+        fbLoginButton.sendActions(for: .touchUpInside)
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
         self.isLogin = false
     }
+    
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        }
+        else {
+            firebaseAuth()
+        }
+    }
+    
+    func firebaseAuth() {
+        // `AccessToken` is generated after user logs in through Facebook SDK successfully
+        ProgressHUD.show()
+        if let facebookToken = AccessToken.current?.tokenString {
+            let credential = FacebookAuthProvider.credential(withAccessToken: facebookToken)
+            Auth.auth().signIn(with: credential) { (result, error) in
+                if let error = error {
+                    print("Firebase auth fails with error: \(error.localizedDescription)")
+                    
+                } else if let result = result {
+                    print(result)
+                    self.getUserInformation()
+                }
+            }
+        }
+    }
+    //MARK:-- Google
 }
 
 

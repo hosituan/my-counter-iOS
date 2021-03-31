@@ -24,6 +24,14 @@
 		FB8AA2162609947100C7C0D2 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA2152609947100C7C0D2 /* Template.swift */; };
 		FB8AA21A260996EA00C7C0D2 /* CountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA219260996EA00C7C0D2 /* CountResponse.swift */; };
 		FB8AA26E26099A5200C7C0D2 /* CountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA26D26099A5200C7C0D2 /* CountViewModel.swift */; };
+		FB9703F126141F7E00FB1319 /* AddTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9703F026141F7E00FB1319 /* AddTemplateView.swift */; };
+		FB9703F426144A9B00FB1319 /* TextSize16.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9703F326144A9B00FB1319 /* TextSize16.swift */; };
+		FB9703F726144AFF00FB1319 /* MenuActionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9703F626144AFF00FB1319 /* MenuActionRowView.swift */; };
+		FB9703FA26144D2F00FB1319 /* AddTemplateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9703F926144D2F00FB1319 /* AddTemplateViewModel.swift */; };
+		FB9703FD26144E6E00FB1319 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9703FC26144E6E00FB1319 /* FirebaseManager.swift */; };
+		FB970431261459B700FB1319 /* TemplateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB970430261459B700FB1319 /* TemplateListView.swift */; };
+		FB97043526145C2A00FB1319 /* TemplateListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB97043426145C2A00FB1319 /* TemplateListViewModel.swift */; };
+		FB97043926145CA700FB1319 /* TemplateRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB97043826145CA700FB1319 /* TemplateRow.swift */; };
 		FBAD74E32608D86E00A22FF6 /* PhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAD74E22608D86E00A22FF6 /* PhotoPickerView.swift */; };
 		FBAD74EB2608DAE200A22FF6 /* View+Hidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAD74EA2608DAE200A22FF6 /* View+Hidden.swift */; };
 		FBAD74EE2608DB6800A22FF6 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAD74ED2608DB6800A22FF6 /* Config.swift */; };
@@ -47,6 +55,7 @@
 		FBED48422612F26D00AF0BD4 /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED48412612F26D00AF0BD4 /* ResetPasswordView.swift */; };
 		FBED48462612F4C200AF0BD4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED48452612F4C200AF0BD4 /* Colors.swift */; };
 		FBED4855261303DA00AF0BD4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED4854261303DA00AF0BD4 /* User.swift */; };
+		FBED487B26134E4900AF0BD4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBED487A26134E4900AF0BD4 /* GoogleService-Info.plist */; };
 		FBF4A4292608D6780012020C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF4A4282608D6780012020C /* AppDelegate.swift */; };
 		FBF4A42B2608D6780012020C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF4A42A2608D6780012020C /* SceneDelegate.swift */; };
 		FBF4A42D2608D6780012020C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF4A42C2608D6780012020C /* ContentView.swift */; };
@@ -73,6 +82,14 @@
 		FB8AA2152609947100C7C0D2 /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		FB8AA219260996EA00C7C0D2 /* CountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountResponse.swift; sourceTree = "<group>"; };
 		FB8AA26D26099A5200C7C0D2 /* CountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountViewModel.swift; sourceTree = "<group>"; };
+		FB9703F026141F7E00FB1319 /* AddTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTemplateView.swift; sourceTree = "<group>"; };
+		FB9703F326144A9B00FB1319 /* TextSize16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSize16.swift; sourceTree = "<group>"; };
+		FB9703F626144AFF00FB1319 /* MenuActionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuActionRowView.swift; sourceTree = "<group>"; };
+		FB9703F926144D2F00FB1319 /* AddTemplateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTemplateViewModel.swift; sourceTree = "<group>"; };
+		FB9703FC26144E6E00FB1319 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		FB970430261459B700FB1319 /* TemplateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateListView.swift; sourceTree = "<group>"; };
+		FB97043426145C2A00FB1319 /* TemplateListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateListViewModel.swift; sourceTree = "<group>"; };
+		FB97043826145CA700FB1319 /* TemplateRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateRow.swift; sourceTree = "<group>"; };
 		FBAD74E22608D86E00A22FF6 /* PhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerView.swift; sourceTree = "<group>"; };
 		FBAD74EA2608DAE200A22FF6 /* View+Hidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Hidden.swift"; sourceTree = "<group>"; };
 		FBAD74ED2608DB6800A22FF6 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -96,6 +113,7 @@
 		FBED48412612F26D00AF0BD4 /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
 		FBED48452612F4C200AF0BD4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		FBED4854261303DA00AF0BD4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		FBED487A26134E4900AF0BD4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FBF4A4252608D6780012020C /* My Counter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Counter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBF4A4282608D6780012020C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBF4A42A2608D6780012020C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				FB4916AD2609EA4600B64148 /* ProfileMenuView.swift */,
+				FB9703F626144AFF00FB1319 /* MenuActionRowView.swift */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -169,6 +188,8 @@
 		FB5A78A926097F84003BDD6A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				FB97042F261459A700FB1319 /* TemplateList */,
+				FB9703EF26141F2700FB1319 /* Add Template */,
 				FBED480E26125B2300AF0BD4 /* Login */,
 				FB5A78CA26098411003BDD6A /* Menu */,
 				FB5A78AF26098014003BDD6A /* Home */,
@@ -216,10 +237,38 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		FB9703EF26141F2700FB1319 /* Add Template */ = {
+			isa = PBXGroup;
+			children = (
+				FB9703F026141F7E00FB1319 /* AddTemplateView.swift */,
+				FB9703F926144D2F00FB1319 /* AddTemplateViewModel.swift */,
+			);
+			path = "Add Template";
+			sourceTree = "<group>";
+		};
+		FB97042F261459A700FB1319 /* TemplateList */ = {
+			isa = PBXGroup;
+			children = (
+				FB970430261459B700FB1319 /* TemplateListView.swift */,
+				FB97043426145C2A00FB1319 /* TemplateListViewModel.swift */,
+				FB97043726145C9A00FB1319 /* SubView */,
+			);
+			path = TemplateList;
+			sourceTree = "<group>";
+		};
+		FB97043726145C9A00FB1319 /* SubView */ = {
+			isa = PBXGroup;
+			children = (
+				FB97043826145CA700FB1319 /* TemplateRow.swift */,
+			);
+			path = SubView;
+			sourceTree = "<group>";
+		};
 		FBAD750026097D0A00A22FF6 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				FBAD74F02608DDA600A22FF6 /* API.swift */,
+				FB9703FC26144E6E00FB1319 /* FirebaseManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -271,6 +320,7 @@
 			children = (
 				FBED481E26125CB200AF0BD4 /* TextSize12.swift */,
 				FBED48382612673800AF0BD4 /* TextSize14.swift */,
+				FB9703F326144A9B00FB1319 /* TextSize16.swift */,
 			);
 			path = Modifier;
 			sourceTree = "<group>";
@@ -328,6 +378,7 @@
 				FBAD750026097D0A00A22FF6 /* Services */,
 				FBF4A42E2608D67A0012020C /* Assets.xcassets */,
 				FBF4A4332608D67A0012020C /* LaunchScreen.storyboard */,
+				FBED487A26134E4900AF0BD4 /* GoogleService-Info.plist */,
 				FBF4A4362608D67A0012020C /* Info.plist */,
 				FBF4A4302608D67A0012020C /* Preview Content */,
 			);
@@ -410,6 +461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBF4A4352608D67A0012020C /* LaunchScreen.storyboard in Resources */,
+				FBED487B26134E4900AF0BD4 /* GoogleService-Info.plist in Resources */,
 				FBF4A4322608D67A0012020C /* Preview Assets.xcassets in Resources */,
 				FBF4A42F2608D67A0012020C /* Assets.xcassets in Resources */,
 			);
@@ -474,11 +526,18 @@
 				FBED481726125B8700AF0BD4 /* Constants.swift in Sources */,
 				FBAD74FE26097CF800A22FF6 /* UIViewControllerHolder.swift in Sources */,
 				FBED48362612665D00AF0BD4 /* RectangleButton.swift in Sources */,
+				FB9703FA26144D2F00FB1319 /* AddTemplateViewModel.swift in Sources */,
 				FB5A78C526098159003BDD6A /* LaunchView.swift in Sources */,
+				FB9703FD26144E6E00FB1319 /* FirebaseManager.swift in Sources */,
+				FB97043526145C2A00FB1319 /* TemplateListViewModel.swift in Sources */,
+				FB9703F726144AFF00FB1319 /* MenuActionRowView.swift in Sources */,
 				FBAD74EB2608DAE200A22FF6 /* View+Hidden.swift in Sources */,
+				FB9703F426144A9B00FB1319 /* TextSize16.swift in Sources */,
 				FBED48392612673800AF0BD4 /* TextSize14.swift in Sources */,
 				FBED483D2612F1B700AF0BD4 /* RegisterView.swift in Sources */,
+				FB9703F126141F7E00FB1319 /* AddTemplateView.swift in Sources */,
 				FB8AA2122609944F00C7C0D2 /* TemplateCell.swift in Sources */,
+				FB970431261459B700FB1319 /* TemplateListView.swift in Sources */,
 				FBF4A4292608D6780012020C /* AppDelegate.swift in Sources */,
 				FB8AA21A260996EA00C7C0D2 /* CountResponse.swift in Sources */,
 				FBF4A42B2608D6780012020C /* SceneDelegate.swift in Sources */,
@@ -489,6 +548,7 @@
 				FBED48062612597700AF0BD4 /* MenuViewModel.swift in Sources */,
 				FB8AA26E26099A5200C7C0D2 /* CountViewModel.swift in Sources */,
 				FBAD74E32608D86E00A22FF6 /* PhotoPickerView.swift in Sources */,
+				FB97043926145CA700FB1319 /* TemplateRow.swift in Sources */,
 				FB50018226124DD100D17411 /* MainButtonView.swift in Sources */,
 				FBED481426125B6B00AF0BD4 /* LoginViewModel.swift in Sources */,
 				FBAD74FA2608E40500A22FF6 /* UIImage+Resize.swift in Sources */,
