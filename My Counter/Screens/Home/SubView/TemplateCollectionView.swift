@@ -12,7 +12,7 @@ struct TemplateCollectionView: View {
     var templateList: [TemplateServer]
     var columns = 3
     var body: some View {
-        ForEach(0..<((templateList.count / columns) + 1)) { index in
+        ForEach(templateList.indices, id: \.self) { index in
             HStack {
                 ForEach(0..<columns) { i in
                     if index * columns + i < templateList.count {

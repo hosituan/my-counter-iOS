@@ -23,4 +23,7 @@ class HomeViewModel: ObservableObject {
             ProgressHUD.dismiss()
         }
     }
+    init() {
+        loadTemplate()
+    }
 }

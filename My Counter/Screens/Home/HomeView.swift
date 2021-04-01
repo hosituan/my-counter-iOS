@@ -13,60 +13,57 @@ struct HomeView: View {
     var showMenuAction: (() -> Void)
     @ObservedObject var homeViewModel = HomeViewModel()
     @EnvironmentObject var menuHandler: MenuHandler
-    func content() -> some View {
-        VStack {
-            if #available(iOS 14.0, *) {
-                ScrollView {
-                    LazyVStack {
-                        Section {
-                            Text("Select Template")
-                                .bold()
-                                .padding()
-                        }
-                        TemplateCollectionView(templateList: homeViewModel.templateList)
-                    }.background(Color.clear)
-                    .buttonStyle(PlainButtonStyle())
-                }
-            } else {
-                List {
-                    VStack {
-                        Section {
-                            Text("Select Template")
-                                .bold()
-                                .padding()
-                        }
-                        TemplateCollectionView(templateList: homeViewModel.templateList)
-                    }
-                }.background(Color.clear)
-                .buttonStyle(PlainButtonStyle())
-            }
-        }
-        
-    }
     var body: some View {
         NavigationView {
-            content()
-                .padding()
-                .background(navigationLinkList)
-                .edgesIgnoringSafeArea(.bottom)
-                .navigationBarTitle("My Counter", displayMode: .large)
-                .navigationBarItems(trailing: Button(action: {
-                    self.showMenuAction()
-                }) {
-                    ZStack(alignment: .topTrailing) {
-                        Image("nav-menu")
-                            .renderingMode(.template)
-                            .foregroundColor(Color.Count.PrimaryTextColor)
-                            .foregroundColor(.black)
-                            .padding(.vertical)
-                            .padding(.leading)
-                            .padding(.trailing, 4)
+            VStack {
+                if #available(iOS 14, *) {
+                    ScrollView(showsIndicators: false) {
+                        LazyVStack {
+                            Section {
+                                Text("Select Template")
+                                    .bold()
+                                    .padding()
+                                TemplateCollectionView(templateList: homeViewModel.templateList)
+                            }
+                        }.padding()
                     }
-                })
-                .onAppear() {
-                    UITableView.appearance().separatorStyle = .none
-                    homeViewModel.loadTemplate()
+                    .edgesIgnoringSafeArea(.bottom)
                 }
+                else {
+                    List {
+                        Section {
+                            Text("Select Template")
+                                .bold()
+                                .padding()
+                            TemplateCollectionView(templateList: homeViewModel.templateList)
+                        }
+                        
+                    }
+                    .edgesIgnoringSafeArea(.all)
+                    
+                }
+                
+            }
+            .buttonStyle(PlainButtonStyle())
+            .listStyle(PlainListStyle())
+            .background(navigationLinkList)
+            .navigationBarTitle("My Counter", displayMode: .large)
+            .navigationBarItems(trailing: Button(action: {
+                self.showMenuAction()
+            }) {
+                ZStack(alignment: .topTrailing) {
+                    Image("nav-menu")
+                        .renderingMode(.template)
+                        .foregroundColor(Color.Count.PrimaryTextColor)
+                        .foregroundColor(.black)
+                        .padding(.vertical)
+                        .padding(.leading)
+                        .padding(.trailing, 4)
+                }
+            })
+            .onAppear() {
+                UITableView.appearance().separatorStyle = .none
+            }
             
         }.accentColor(Color.Count.PrimaryColor)
         

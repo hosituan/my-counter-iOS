@@ -52,6 +52,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         drawerController.drawerViewController = UIHostingController(rootView: MenuView(showLoginAction: { self.drawerController.present(loginVc, animated: true, completion: nil) }).environmentObject(userLogin)
                                                                         .environmentObject(menuHandler))
         
+        UITableView.appearance().separatorColor = .clear
+        UITableView.appearance().separatorStyle = .none
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
