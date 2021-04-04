@@ -16,7 +16,9 @@ import ProgressHUD
 import GoogleSignIn
 
 
-class UserLogin: NSObject, ObservableObject, LoginButtonDelegate {
+class UserLogin: NSObject, ObservableObject, LoginButtonDelegate, GIDSignInDelegate {
+    
+    
     
     @Published var isLogin = false
     {
@@ -49,6 +51,9 @@ class UserLogin: NSObject, ObservableObject, LoginButtonDelegate {
         }
         
         fbLoginButton.delegate = self
+        
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance().delegate = self
     }
     
     
@@ -91,41 +96,44 @@ class UserLogin: NSObject, ObservableObject, LoginButtonDelegate {
         }
     }
     //MARK:-- Google
-    let ggSigninButton = GoogleSignInButton()
+    
+
     
     func logInGoogle() {
-        ggSigninButton.onTapGesture {
-            SocialLogin().attemptLoginGoogle()
-        }
+        GIDSignIn.sharedInstance()?.presentingViewController = UIApplication.shared.windows.first?.rootViewController
+        GIDSignIn.sharedInstance()?.signIn()
     }
-    // Button
-    struct GoogleSignInButton: UIViewRepresentable {
-        func makeUIView(context: Context) -> GIDSignInButton {
-            return GIDSignInButton()
+    
+    func logOutGoogle() {
+        GIDSignIn.sharedInstance()?.signOut()
+        try! Auth.auth().signOut()
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if error != nil {
+            print(error.localizedDescription)
+            return
         }
+        let credential = GoogleAuthProvider.credential(withIDToken: user.authentication.idToken, accessToken: user.authentication.accessToken)
         
-        func updateUIView(_ uiView: GIDSignInButton, context: Context) {
+        Auth.auth().signIn(with: credential) { (res, err) in
+            if err !=   nil {
+                print((err?.localizedDescription)!)
+                return
+            }
+            
+            //User Logged In Successfully
+            
+            //Sending Notification To UI
+            NotificationCenter.default.post (name: NSNotification.Name("SIGNIN"),object:nil)
+            
+            print(res?.user.email)
         }
     }
-
-    // Sign-In flow UI of the provider
-    struct SocialLogin: UIViewRepresentable {
-        func makeUIView(context: UIViewRepresentableContext<SocialLogin>) -> UIView {
-            return UIView()
-        }
-
-        func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<SocialLogin>) {
-        }
-
-        func attemptLoginGoogle() {
-            GIDSignIn.sharedInstance()?.presentingViewController = UIApplication.shared.windows.last?.rootViewController
-            GIDSignIn.sharedInstance()?.signIn()
-        }
-        
-        func signOutGoogleAccount() {
-            GIDSignIn.sharedInstance().signOut()
-        }
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        <#code#>
     }
+    
 }
 
 
