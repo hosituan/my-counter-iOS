@@ -15,6 +15,9 @@ target 'My Counter' do
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
   pod 'Firebase/Database'
+  pod 'GoogleSignIn'
+  
+
   # Pods for My Counter
 
 end

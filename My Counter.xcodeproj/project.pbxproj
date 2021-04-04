@@ -18,8 +18,8 @@
 		FB5A78B22609802D003BDD6A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A78B12609802D003BDD6A /* HomeView.swift */; };
 		FB5A78C526098159003BDD6A /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A78C426098159003BDD6A /* LaunchView.swift */; };
 		FB5A78C8260982A3003BDD6A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A78C7260982A3003BDD6A /* MenuView.swift */; };
-		FB8AA20B26098E8100C7C0D2 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = FB8AA20A26098E8100C7C0D2 /* PartialSheet */; };
-		FB8AA20F2609910500C7C0D2 /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = FB8AA20E2609910500C7C0D2 /* QGrid */; };
+		FB8AA20B26098E8100C7C0D2 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = FB8AA20A26098E8100C7C0D2 /* SwiftPackageProductDependency */; };
+		FB8AA20F2609910500C7C0D2 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = FB8AA20E2609910500C7C0D2 /* SwiftPackageProductDependency */; };
 		FB8AA2122609944F00C7C0D2 /* TemplateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA2112609944F00C7C0D2 /* TemplateCell.swift */; };
 		FB8AA2162609947100C7C0D2 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA2152609947100C7C0D2 /* Template.swift */; };
 		FB8AA21A260996EA00C7C0D2 /* CountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA219260996EA00C7C0D2 /* CountResponse.swift */; };
@@ -129,8 +129,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB8AA20F2609910500C7C0D2 /* QGrid in Frameworks */,
-				FB8AA20B26098E8100C7C0D2 /* PartialSheet in Frameworks */,
+				FB8AA20F2609910500C7C0D2 /* BuildFile in Frameworks */,
+				FB8AA20B26098E8100C7C0D2 /* BuildFile in Frameworks */,
 				2A39F3F87785F335B97BF24C /* Pods_My_Counter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,6 +405,7 @@
 				FBF4A4222608D6780012020C /* Frameworks */,
 				FBF4A4232608D6780012020C /* Resources */,
 				1D3A50C91EBF5952CDF55D3F /* [CP] Embed Pods Frameworks */,
+				FB8FEBE3EC5AA3F3F718D777 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -412,8 +413,8 @@
 			);
 			name = "My Counter";
 			packageProductDependencies = (
-				FB8AA20A26098E8100C7C0D2 /* PartialSheet */,
-				FB8AA20E2609910500C7C0D2 /* QGrid */,
+				FB8AA20A26098E8100C7C0D2 /* SwiftPackageProductDependency */,
+				FB8AA20E2609910500C7C0D2 /* SwiftPackageProductDependency */,
 			);
 			productName = "My Counter";
 			productReference = FBF4A4252608D6780012020C /* My Counter.app */;
@@ -443,8 +444,8 @@
 			);
 			mainGroup = FBF4A41C2608D6780012020C;
 			packageReferences = (
-				FB8AA20926098E8100C7C0D2 /* XCRemoteSwiftPackageReference "PartialSheet" */,
-				FB8AA20D2609910500C7C0D2 /* XCRemoteSwiftPackageReference "QGrid" */,
+				FB8AA20926098E8100C7C0D2 /* RemoteSwiftPackageReference */,
+				FB8AA20D2609910500C7C0D2 /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = FBF4A4262608D6780012020C /* Products */;
 			projectDirPath = "";
@@ -507,6 +508,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FB8FEBE3EC5AA3F3F718D777 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-My Counter/Pods-My Counter-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-My Counter/Pods-My Counter-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-My Counter/Pods-My Counter-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -769,7 +787,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		FB8AA20926098E8100C7C0D2 /* XCRemoteSwiftPackageReference "PartialSheet" */ = {
+		FB8AA20926098E8100C7C0D2 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AndreaMiotto/PartialSheet.git";
 			requirement = {
@@ -777,7 +795,7 @@
 				minimumVersion = 2.1.11;
 			};
 		};
-		FB8AA20D2609910500C7C0D2 /* XCRemoteSwiftPackageReference "QGrid" */ = {
+		FB8AA20D2609910500C7C0D2 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Q-Mobile/QGrid";
 			requirement = {
@@ -788,14 +806,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FB8AA20A26098E8100C7C0D2 /* PartialSheet */ = {
+		FB8AA20A26098E8100C7C0D2 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FB8AA20926098E8100C7C0D2 /* XCRemoteSwiftPackageReference "PartialSheet" */;
+			package = FB8AA20926098E8100C7C0D2 /* RemoteSwiftPackageReference */;
 			productName = PartialSheet;
 		};
-		FB8AA20E2609910500C7C0D2 /* QGrid */ = {
+		FB8AA20E2609910500C7C0D2 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FB8AA20D2609910500C7C0D2 /* XCRemoteSwiftPackageReference "QGrid" */;
+			package = FB8AA20D2609910500C7C0D2 /* RemoteSwiftPackageReference */;
 			productName = QGrid;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -36,11 +36,19 @@ struct LoginView: View {
                 }
             }
             
-            Image("google_icon")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 30, height: 30, alignment: .center)
-                .padding(.horizontal, 3)
+            Button(action: {
+                userLogin.logInGoogle()
+            }) {
+                Image("google_icon")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 30, height: 30, alignment: .center)
+                    .padding(.horizontal, 3)
+            }.onReceive(userLogin.objectWillChange) { _ in
+                if userLogin.isLogin {
+                    dismissAction()
+                }
+            }
             Image("apple_icon")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
