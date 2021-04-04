@@ -131,7 +131,7 @@ class UserLogin: NSObject, ObservableObject, LoginButtonDelegate, GIDSignInDeleg
         }
     }
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
-        <#code#>
+        
     }
     
 }
