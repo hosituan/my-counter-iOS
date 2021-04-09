@@ -12,3 +12,15 @@ struct CountRespone: Decodable {
     var url: String
     var fileName: String
 }
+
+struct CommonRespone: Decodable {
+    var success: Bool
+    var message: String
+}
+
+
+struct UploadRespone: Decodable {
+    var success: Bool
+    var message: String
+    var fileName: String
+}

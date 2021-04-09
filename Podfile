@@ -16,7 +16,7 @@ target 'My Counter' do
   pod 'Firebase/Storage'
   pod 'Firebase/Database'
   pod 'GoogleSignIn'
-  
+  pod 'MBProgressHUD'
 
   # Pods for My Counter
 
