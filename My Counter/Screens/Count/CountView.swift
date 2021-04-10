@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 import SDWebImageSwiftUI
 import Alamofire
-import ProgressHUD
 
 struct CountView: View {
     @Environment(\.viewController) var viewControllerHolder: ViewControllerHolder
@@ -119,6 +118,7 @@ struct CountView: View {
                 countViewModel.selectedImage = nil
                 countViewModel.countRespone = nil
                 countViewModel.tempImage = nil
+                AppDelegate.shared().dismissProgressHUD()
             }
         }
 }

@@ -12,7 +12,6 @@ import SwiftyJSON
 import FirebaseAuth
 import Firebase
 import SwiftUI
-import ProgressHUD
 import GoogleSignIn
 
 
@@ -39,7 +38,6 @@ class UserLogin: NSObject, ObservableObject, LoginButtonDelegate, GIDSignInDeleg
                 self.user = user
                 self.isLogin = true
             }
-            ProgressHUD.dismiss()
         }
     }
     
@@ -80,8 +78,7 @@ class UserLogin: NSObject, ObservableObject, LoginButtonDelegate, GIDSignInDeleg
     }
     
     func firebaseAuth() {
-        // `AccessToken` is generated after user logs in through Facebook SDK successfully
-        ProgressHUD.show()
+        // `AccessToken` is generated after user logs in through Facebook SDK successfull
         if let facebookToken = AccessToken.current?.tokenString {
             let credential = FacebookAuthProvider.credential(withAccessToken: facebookToken)
             Auth.auth().signIn(with: credential) { (result, error) in

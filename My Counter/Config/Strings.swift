@@ -53,8 +53,13 @@ struct Strings {
         static let TemplateAdded = "Template has been added!"
         static let OkTitle = "OK"
         
-    
         
+        //Add
+        static let AddTitle = "Add"
+        static let DescriptionAdd = "What about it?"
+        static let DescriptionTitle = "Description"
+        static let PlaceHolderName = "Chicken Egg"
+        static let Name = "Name"
         
     }
     

@@ -12,6 +12,9 @@ import SwiftUI
 import AVFoundation
 import Firebase
 import GoogleSignIn
+import FirebaseRemoteConfig
+import JGProgressHUD
+
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,13 +22,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     var currenUser: User?
+    var hud = JGProgressHUD(style: .light)
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: Color.Count.PrimaryTextColor.uiColor()]
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: Color.Count.PrimaryTextColor.uiColor()]
         FirebaseApp.configure()
-       
+        setupRemoteConfig()
         
+        // this will disable highlighting the cell when is selected
+        UITableViewCell.appearance().selectionStyle = .none
+
         return true
     }
     
@@ -47,6 +54,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
       -> Bool {
       return GIDSignIn.sharedInstance().handle(url)
+    }
+    
+    private func setupRemoteConfig() {
+        let remoteConfig = RemoteConfig.remoteConfig()
+        let settings = RemoteConfigSettings()
+        settings.minimumFetchInterval = 0
+        remoteConfig.configSettings = settings
+        remoteConfig.fetch { (status, error) in
+            if status == .success {
+                print("Config fetched!")
+                remoteConfig.activate { (success, erorr) in
+                    if success {
+                        apiUrl =  RemoteConfig.remoteConfig().configValue(forKey: "API_URL").stringValue ?? ""
+                        print("API URL: " + apiUrl)
+                    }
+                }
+              } else {
+                print("Config not fetched")
+                print("Error: \(error?.localizedDescription ?? "No error available.")")
+              }
+        }
     }
 }
 
@@ -114,6 +142,52 @@ extension AppDelegate {
     }
 }
 
+//MARK: -- Alert
+extension AppDelegate {
+    func showAlertWithTwoButton(title: String? = nil, message: String?, action: @escaping ((UIAlertAction?) -> Void)) {
+
+        let alert = UIAlertController(title: message, message: nil, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: action))
+        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    func showCommonAlett(message: String?) {
+        let alert = UIAlertController(title: message, message: nil, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    func showCommonAlertError(_ error: CountError?) {
+        let alert = UIAlertController(title: "Error", message: error?.reason, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func showProgressHUD() {
+        hud.show(in: (self.window?.rootViewController?.view)!)
+    }
+    func dismissProgressHUD() {
+        hud.dismiss()
+        hud = JGProgressHUD(style: .light)
+    }
+    
+    func showSuccess() {
+        hud.textLabel.text = "Done"
+        hud.detailTextLabel.text = nil
+        hud.indicatorView = JGProgressHUDSuccessIndicatorView()
+        hud.show(in: (self.window?.rootViewController?.view)!)
+        hud.dismiss(afterDelay: 2.0)
+        hud = JGProgressHUD(style: .light)
+    }
+    
+    func updateHUD(text: String, value: Int) {
+        hud.textLabel.text = text
+        hud.detailTextLabel.text = "\(value)s"
+    }
+}
+
+
+
+//MARK: -- Top ViewController
 extension UIApplication {
     class func topViewController(controller: UIViewController? = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController) -> UIViewController? {
         if let navigationController = controller as? UINavigationController {

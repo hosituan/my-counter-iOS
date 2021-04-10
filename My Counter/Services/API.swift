@@ -11,7 +11,7 @@ import Alamofire
 
 class API {
     
-    func uploadImage(image: UIImage, template: TemplateServer, completionHandler: @escaping (UploadRespone?, Error?) -> Void) {
+    func uploadImage(image: UIImage, template: TemplateServer, completionHandler: @escaping (UploadResponse?, CountError?) -> Void) {
         let parameters = [
             "name": template.name,
             "id": template.id
@@ -26,57 +26,71 @@ class API {
                 multipartFormData.append(value!.data(using: String.Encoding.utf8)!, withName: key)
             }
         },
-        to:apiUrl + Request.upload.rawValue, method: .post)
+        to:CountRequest.upload, method: .post)
         .responseJSON(completionHandler: { (response) in
             switch response.result {
             case .success(let JSON):
                 print("Success with JSON: \(JSON)")
                 if let data = response.data {
                     do {
-                        let result = try JSONDecoder().decode(CommonRespone.self, from: data)
+                        let result = try JSONDecoder().decode(CommonResponse.self, from: data)
                         if result.success {
-                            let uploadResponse = try JSONDecoder().decode(UploadRespone.self, from: data)
+                            let uploadResponse = try JSONDecoder().decode(UploadResponse.self, from: data)
                             completionHandler(uploadResponse, nil)
+                        }
+                        else {
+                            let error = CountError(reason: result.message)
+                            completionHandler(nil, error)
                         }
                     } catch let error as NSError {
                         print("Failed to load: \(error.localizedDescription)")
+                        let error = CountError(error)
                         completionHandler(nil, error)
                     }
                 }
             case .failure(let error):
+                let error = CountError(error)
                 completionHandler(nil, error)
             }
         })
     }
     
-    func requestCount(imageName: String, template: TemplateServer, completionHandler: @escaping (CountRespone?, Error?) -> Void) {
+    func requestCount(imageName: String, template: TemplateServer, completionHandler: @escaping (CountResponse?, CountError?) -> Void) {
         let parameters = [
             "imageName": imageName,
             "id": template.id,
             "name": template.name
         ]
-        AF.request(apiUrl + Request.count.rawValue, method: .post, parameters: parameters)
+        AF.request(CountRequest.count, method: .post, parameters: parameters)
             .responseJSON(completionHandler: { (response) in
                 switch response.result {
                 case .success(let JSON):
                     print("Success with JSON: \(JSON)")
                     if let data = response.data {
                         do {
-                            let result = try JSONDecoder().decode(CommonRespone.self, from: data)
+                            let result = try JSONDecoder().decode(CommonResponse.self, from: data)
                             if result.success {
-                                let countRespone = try JSONDecoder().decode(CountRespone.self, from: data)
+                                let countRespone = try JSONDecoder().decode(CountResponse.self, from: data)
                                 completionHandler(countRespone, nil)
+                            }
+                            else {
+                                let error = CountError(reason: result.message)
+                                completionHandler(nil, error)
                             }
                         } catch let error as NSError {
                             print("Failed to load: \(error.localizedDescription)")
+                            let error = CountError(error)
                             completionHandler(nil, error)
                         }
                     }
                 case .failure(let error):
+                    let error = CountError(error)
                     completionHandler(nil, error)
                 }
                 
             })
     }
 }
+
+
 

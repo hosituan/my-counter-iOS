@@ -6,18 +6,26 @@
 //
 
 import SwiftUI
+import SwiftUIListSeparator
 
 struct AddTemplateView: View {
     @Environment(\.viewController) var viewControllerHolder: ViewControllerHolder
     @ObservedObject var addTemplateViewModel = AddTemplateViewModel()
     var body: some View {
+        List {
             VStack(alignment: .leading) {
-                MainTextField(title: "Name:", placeHolder: "Chicken Egg", value: $addTemplateViewModel.name)
+                MainTextField(title: Strings.EN.Name + ":", placeHolder: Strings.EN.PlaceHolderName, value: $addTemplateViewModel.name)
                     .padding(.bottom)
-                MainTextField(title: "Description:", placeHolder: "What about it?", value: $addTemplateViewModel.description)
-                    .padding(.bottom)
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(Strings.EN.DescriptionTitle + ":")
+                        .modifier(TextSize14Bold())
+                        .padding(.bottom, 3)
+                    TextInputAutoHeight(text: $addTemplateViewModel.description, placeHolder: Strings.EN.DescriptionAdd)
+                        .padding(.bottom)
+                }
+                
                 HStack {
-                    Text(Strings.EN.SelectPhotoTitle + " :")
+                    Text(Strings.EN.SelectPhotoTitle + ":")
                         .modifier(TextSize14Bold())
                         .padding(.bottom, 3)
                         .padding(.trailing, 10)
@@ -37,15 +45,13 @@ struct AddTemplateView: View {
                 Button(action: {
                     addTemplateViewModel.addTemplate()
                 }) {
-                    MainButtonView(title: "Add")
+                    MainButtonView(title: Strings.EN.AddTitle)
                 }
                 
             }
-        .alert(isPresented: $addTemplateViewModel.showAlert, content: {
-            Alert(title: Text(addTemplateViewModel.alertTitle), message: Text(addTemplateViewModel.alertMessage), dismissButton: .default(Text(Strings.EN.OkTitle)))
-        })
-        .padding(.horizontal, 16)
-            .navigationBarTitle(Strings.EN.AddTemplateNavTitle)
+        }
+        .listSeparatorStyle(.none)
+        .navigationBarTitle(Strings.EN.AddTemplateNavTitle)
     }
     
     func showImagePicker() {

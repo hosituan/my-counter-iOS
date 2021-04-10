@@ -8,7 +8,6 @@
 import Foundation
 import Combine
 import UIKit
-import ProgressHUD
 import SDWebImage
 
 class CountViewModel: ObservableObject {
@@ -20,7 +19,7 @@ class CountViewModel: ObservableObject {
     @Published var selectedImage: UIImage?
     @Published var spentTime = 0
     @Published var countTime = 0
-    @Published var countRespone: CountRespone? {
+    @Published var countRespone: CountResponse? {
         didSet {
             tempImage = selectedImage
             selectedImage = countRespone != nil ? nil : selectedImage
@@ -55,38 +54,57 @@ class CountViewModel: ObservableObject {
             else { return }
             DispatchQueue.main.async() {
                 UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-                ProgressHUD.colorHUD = .clear
-                ProgressHUD.showSucceed()
+                AppDelegate.shared().showSuccess()
             }
         }.resume()
         
     }
     
+    @Published var showAlert: Bool = false {
+        didSet {
+            if showAlert {
+                AppDelegate.shared().showCommonAlertError(self.error)
+            }
+        }
+    }
+    @Published var error: CountError?
+    
     func startCount() {
         spentTime = 0
         self.countTime = 0
         if let img = selectedImage {
+            
+            AppDelegate.shared().showProgressHUD()
             let spentTime = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                ProgressHUD.show(Strings.EN.Uploading + " (\(self.spentTime)s).")
                 self.spentTime += 1
+                AppDelegate.shared().updateHUD(text: Strings.EN.Uploading, value: self.spentTime)
+                    
             }
             api.uploadImage(image: img, template: template) { (result, error) in
                 if error == nil {
                     spentTime.invalidate()
                     let countTime = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                        ProgressHUD.show(Strings.EN.Counting + " (\(self.countTime)s).")
                         self.countTime += 1
+                        AppDelegate.shared().updateHUD(text: Strings.EN.Counting, value: self.countTime)
                     }
                     self.api.requestCount(imageName: result?.fileName ?? "" , template: self.template) { (result, error) in
-                        self.countRespone = result
+                        if error == nil {
+                            self.countRespone = result
+                        }
+                        else {
+                            self.error = error
+                            self.showAlert = true
+                        }
                         countTime.invalidate()
-                        ProgressHUD.dismiss()
+                        AppDelegate.shared().dismissProgressHUD()
                         self.spentTime += self.countTime
                     }
                 }
                 else {
                     spentTime.invalidate()
-                    ProgressHUD.dismiss()
+                    AppDelegate.shared().dismissProgressHUD()
+                    self.error = error
+                    self.showAlert = true
                 }
             }
         }

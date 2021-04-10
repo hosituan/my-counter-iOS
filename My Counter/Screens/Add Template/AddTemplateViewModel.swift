@@ -8,7 +8,6 @@
 import Foundation
 import Combine
 import SwiftUI
-import ProgressHUD
 
 class AddTemplateViewModel: ObservableObject {
     @Published var name: String = ""
@@ -20,20 +19,21 @@ class AddTemplateViewModel: ObservableObject {
     let firebase = FirebaseManager()
     func addTemplate() {
         if let image = selectedImage, name != "" {
-            let template = Template(id: randomString(length: idLength), image: image, name: name, description: description)
-            ProgressHUD.show()
-            firebase.uploadTemplate(template: template) { (error) in
-                ProgressHUD.dismiss()
-                if error == nil {
-                    self.alertTitle = Strings.EN.DoneTitle
-                    self.alertMessage = Strings.EN.TemplateAdded
+            AppDelegate.shared().showAlertWithTwoButton(message: "\(name) will be added to template list!") { [self] _ in
+                let template = Template(id: randomString(length: idLength), image: image, name: name, description: description)
+                AppDelegate.shared().showProgressHUD()
+                firebase.uploadTemplate(template: template) { (error) in
+                    AppDelegate.shared().dismissProgressHUD()
+                    if error == nil {
+                        self.alertTitle = Strings.EN.DoneTitle
+                        self.alertMessage = Strings.EN.TemplateAdded
+                    }
+                    else {
+                        self.alertTitle = Strings.EN.ErrorTitle
+                        self.alertMessage = Strings.EN.ErrorMessage
+                    }
+                    self.showAlert = true
                 }
-                else {
-                    self.alertTitle = Strings.EN.ErrorTitle
-                    self.alertMessage = Strings.EN.ErrorMessage
-                }
-                self.showAlert = true
-                
             }
         }
         else {

@@ -8,6 +8,8 @@
 import SwiftUI
 import ASCollectionView_SwiftUI
 import QGrid
+import SwiftUIListSeparator
+import SwiftUIRefresh
 
 struct HomeView: View {
     var showMenuAction: (() -> Void)
@@ -15,39 +17,20 @@ struct HomeView: View {
     @EnvironmentObject var menuHandler: MenuHandler
     var body: some View {
         NavigationView {
-            VStack {
-                if #available(iOS 14, *) {
-                    ScrollView(showsIndicators: false) {
-                        LazyVStack {
-                            Section {
-                                Text("Select Template")
-                                    .bold()
-                                    .padding()
-                                TemplateCollectionView(templateList: homeViewModel.templateList)
-                            }
-                        }.padding()
-                    }
-                    .edgesIgnoringSafeArea(.bottom)
-                }
-                else {
-                    List {
-                        Section {
-                            Text("Select Template")
-                                .bold()
-                                .padding()
-                            TemplateCollectionView(templateList: homeViewModel.templateList)
-                        }
-                        
-                    }
-                    .edgesIgnoringSafeArea(.all)
-                    
-                }
-                
+            List {
+                Text("Select template")
+                    .bold()
+                    .padding()
+                TemplateCollectionView(templateList: homeViewModel.templateList, selection: $homeViewModel.selection, didTap: $homeViewModel.isShowCount)
             }
-            .buttonStyle(PlainButtonStyle())
-            .listStyle(PlainListStyle())
+            .pullToRefresh(isShowing: $homeViewModel.isShowingRefresh, onRefresh: {
+                homeViewModel.loadTemplate()
+            })
+            .listSeparatorStyle(.none)
             .background(navigationLinkList)
-            .navigationBarTitle("My Counter", displayMode: .large)
+            .edgesIgnoringSafeArea(.bottom)
+            .listStyle(PlainListStyle())
+            .navigationBarTitle("My Counter", displayMode: iOS14 ? .large : .inline)
             .navigationBarItems(trailing: Button(action: {
                 self.showMenuAction()
             }) {
@@ -62,10 +45,14 @@ struct HomeView: View {
                 }
             })
             .onAppear() {
+                UITableView.appearance().tableFooterView = UIView()
                 UITableView.appearance().separatorStyle = .none
             }
             
-        }.accentColor(Color.Count.PrimaryColor)
+        }
+        .buttonStyle(PlainButtonStyle())
+        .edgesIgnoringSafeArea(.bottom)
+        .accentColor(Color.Count.PrimaryColor)
         
     }
     
@@ -75,8 +62,9 @@ struct HomeView: View {
                 destination: AddTemplateView(),
                 isActive: $menuHandler.isShowAddTemplate,
                 label: {})
-            NavigationLink(destination: TemplateListView(), isActive: $menuHandler.isShowTemplateList) {}
-        }.isHidden(true)
+            NavigationLink(destination: TemplateListView(templates: homeViewModel.templateList), isActive: $menuHandler.isShowTemplateList) {}
+            NavigationLink(destination: CountView(template: homeViewModel.selected), isActive: $homeViewModel.isShowCount) {}
+        }.opacity(0)
     }
 }
 
@@ -89,42 +77,3 @@ struct HomeView: View {
 //    }
 //}
 
-struct HideRowSeparatorModifier: ViewModifier {
-    static let defaultListRowHeight: CGFloat = 44
-    var insets: EdgeInsets
-    var background: Color
-    
-    init(insets: EdgeInsets, background: Color) {
-        self.insets = insets
-        var alpha: CGFloat = 0
-        if #available(iOS 14.0, *) {
-            UIColor(background).getWhite(nil, alpha: &alpha)
-        } else {
-            // Fallback on earlier versions
-        }
-        assert(alpha == 1, "Setting background to a non-opaque color will result in separators remaining visible.")
-        self.background = background
-    }
-    
-    func body(content: Content) -> some View {
-        content
-            .padding(insets)
-            .frame(
-                minWidth: 0, maxWidth: .infinity,
-                minHeight: Self.defaultListRowHeight,
-                alignment: .leading
-            )
-            .listRowInsets(EdgeInsets())
-            .background(background)
-    }
-}
-
-extension EdgeInsets {
-    static let defaultListRowInsets = Self(top: 0, leading: 16, bottom: 0, trailing: 16)
-}
-
-extension View {
-    func hideRowSeparator(insets: EdgeInsets = .defaultListRowInsets, background: Color = .white) -> some View {
-        modifier(HideRowSeparatorModifier(insets: insets, background: background))
-    }
-}

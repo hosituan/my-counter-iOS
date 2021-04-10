@@ -24,16 +24,21 @@ class FirebaseManager {
                     guard let name = item["name"] as? String,
                           let id = item["id"] as? String,
                           let imageUrl = item["imageURL"] as? String,
-                          let des = item["description"] as? String
+                          let des = item["description"] as? String,
+                          let day = item["day"] as? String
                     else {
                         print("Error at get templates")
                         continue
                     }
-                    let object = TemplateServer(id: id, name: name, description: des, imageUrl: imageUrl)
+                    let object = TemplateServer(id: id, name: name, description: des, imageUrl: imageUrl, dayAdded: day)
                     templates.append(object)
                 }
                 
             }
+            templates.sort {
+                $0.dayAdded ?? "" > $1.dayAdded ?? ""
+            }
+            
             completionHandler(templates)
             
         }) { (error) in
@@ -42,11 +47,13 @@ class FirebaseManager {
         }
     }
     
-    func uploadTemplate(template: Template, completionHandler: @escaping (Error?) -> Void) {
-        
+    func uploadTemplate(template: Template, completionHandler: @escaping (CountError?) -> Void) {
+        let formater = DateFormatter()
+        formater.dateStyle = .short
+        let time = formater.string(from: Date())
         let storageRef = Storage.storage().reference(forURL: storageUrl).child(template.name)
         let metadata = StorageMetadata()
-        if let imageData = template.image.jpegData(compressionQuality: 1.0) {
+        if let imageData = template.image.jpegData(compressionQuality: 0.5) {
             metadata.contentType = "image/jpg"
             print(metadata)
             print(imageData)
@@ -55,7 +62,7 @@ class FirebaseManager {
                 (StorageMetadata, error) in
                 if error != nil {
                     print(error?.localizedDescription as Any)
-                    completionHandler(error)
+                    completionHandler(CountError(error))
                     return
                 }
                 else {
@@ -66,6 +73,7 @@ class FirebaseManager {
                                 "name": template.name,
                                 "imageURL": metaImageUrl,
                                 "id": template.id,
+                                "day": time,
                                 "description" : template.description
                             ]
                             Database.database().reference().child(templateChild).child(template.id).updateChildValues(dict, withCompletionBlock: {
@@ -81,7 +89,13 @@ class FirebaseManager {
                 }
             })
         }
-             
+        
     }
-
+    
+    func removeTemplate(template: TemplateServer, completionHandler: @escaping (CountError?) -> Void) {
+        Database.database().reference().child(templateChild).child(template.id ?? "").removeValue() { (error, ref) in
+            completionHandler(CountError(error))
+        }
+    }
+    
 }

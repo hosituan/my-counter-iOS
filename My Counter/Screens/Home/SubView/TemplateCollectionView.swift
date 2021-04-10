@@ -11,17 +11,27 @@ import SwiftUI
 struct TemplateCollectionView: View {
     var templateList: [TemplateServer]
     var columns = 3
+    @Binding var selection: Int
+    @Binding var didTap: Bool
     var body: some View {
-        ForEach(templateList.indices, id: \.self) { index in
-            HStack {
-                ForEach(0..<columns) { i in
-                    if index * columns + i < templateList.count {
-                        TemplateCell(template: templateList[index * columns + i])
-                    }
-                    
-                }.listRowBackground(Color.clear)
+        VStack {
+            ForEach(templateList.indices, id: \.self) { index in
+                HStack {
+                    ForEach(0..<columns) { i in
+                        if index * columns + i < templateList.count {
+                            Button(action: {
+                                selection  = index * columns + i
+                                didTap = true
+                            }) {
+                                TemplateCell(template: templateList[index * columns + i])
+                                    .buttonStyle(PlainButtonStyle())
+                            }
+                        }
+
+                    }.listRowBackground(Color.clear)
+                }
+                .listRowBackground(Color.clear)
             }
-            .listRowBackground(Color.clear)
         }
     }
 }

@@ -13,6 +13,7 @@ struct MainTextField: View {
     var subTitle: String?
     var placeHolder = ""
     var isSecure = false
+    var isEmail = false
     @Binding var value: String
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -37,7 +38,7 @@ struct MainTextField: View {
                     TextField(placeHolder, text: $value)
                         .textFieldStyle(PlainTextFieldStyle())
                         .autocapitalization(.none)
-                        .keyboardType(.emailAddress)
+                        .keyboardType(isEmail ? .emailAddress : .default)
                         .padding([.leading, .trailing], 16)
                         .frame(height: 56)
                         .border(Color(UIColor(hexString: "e7e9ef")), width: 1)
