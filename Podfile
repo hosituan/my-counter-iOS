@@ -6,7 +6,6 @@ target 'My Counter' do
   use_frameworks!
   pod 'SDWebImageSwiftUI'
   pod 'Alamofire', '~> 5.2'
-  pod 'ProgressHUD'
   pod 'KYDrawerController'
   pod 'ASCollectionView-SwiftUI', '~> 1.3'
   pod 'IQKeyboardManager'
@@ -16,7 +15,9 @@ target 'My Counter' do
   pod 'Firebase/Storage'
   pod 'Firebase/Database'
   pod 'GoogleSignIn'
-  
+  pod 'Firebase/RemoteConfig'
+  pod 'JGProgressHUD'
+  pod "SwiftUIRefresh"
 
   # Pods for My Counter
 

@@ -8,7 +8,6 @@
 import SwiftUI
 import SDWebImageSwiftUI
 import Alamofire
-import ProgressHUD
 
 struct ContentView: View {
     var showMenuAction: (() -> Void)

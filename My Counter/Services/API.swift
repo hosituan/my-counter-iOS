@@ -10,44 +10,87 @@ import UIKit
 import Alamofire
 
 class API {
-    func uploadForCounting(image: UIImage, template: TemplateServer, method: CountMethod = .defaultMethod, completionHandler: @escaping (CountRespone) -> Void) {
+    
+    func uploadImage(image: UIImage, template: TemplateServer, completionHandler: @escaping (UploadResponse?, CountError?) -> Void) {
         let parameters = [
             "name": template.name,
-            "id": template.id,
-            "method": method.rawValue
+            "id": template.id
         ]
         print(parameters)
         
-        let img = image.resizeImage(targetSize: CGSize(width: 500, height: 500))
+        let img = image.resizeImage(targetSize: CGSize(width: 1000, height: 1000))
         let imgData = img.jpegData(compressionQuality: 1)!
         AF.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(imgData, withName: "file",fileName: "file.jpg", mimeType: "image/jpg")
             for (key, value) in parameters {
                 multipartFormData.append(value!.data(using: String.Encoding.utf8)!, withName: key)
-                        }
+            }
         },
-        to:apiUrl, method: .post)
-        .responseDecodable(of: CountRespone.self) { resp in
-            if let countResponse = resp.value {
-                completionHandler(countResponse)
+        to:CountRequest.upload, method: .post)
+        .responseJSON(completionHandler: { (response) in
+            switch response.result {
+            case .success(let JSON):
+                print("Success with JSON: \(JSON)")
+                if let data = response.data {
+                    do {
+                        let result = try JSONDecoder().decode(CommonResponse.self, from: data)
+                        if result.success {
+                            let uploadResponse = try JSONDecoder().decode(UploadResponse.self, from: data)
+                            completionHandler(uploadResponse, nil)
+                        }
+                        else {
+                            let error = CountError(reason: result.message)
+                            completionHandler(nil, error)
+                        }
+                    } catch let error as NSError {
+                        print("Failed to load: \(error.localizedDescription)")
+                        let error = CountError(error)
+                        completionHandler(nil, error)
+                    }
+                }
+            case .failure(let error):
+                let error = CountError(error)
+                completionHandler(nil, error)
             }
-            else {
-                completionHandler(CountRespone(count: 0, url: "", fileName: ""))
-            }
-        }
+        })
     }
     
-    func convertStringToDictionary(text: String) -> [String:AnyObject]? {
-        if let data = text.data(using: .utf8) {
-            do {
-                let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:AnyObject]
-                return json
-            } catch {
-                print("Something went wrong")
-            }
-        }
-        return nil
+    func requestCount(imageName: String, template: TemplateServer, completionHandler: @escaping (CountResponse?, CountError?) -> Void) {
+        let parameters = [
+            "imageName": imageName,
+            "id": template.id,
+            "name": template.name
+        ]
+        AF.request(CountRequest.count, method: .post, parameters: parameters)
+            .responseJSON(completionHandler: { (response) in
+                switch response.result {
+                case .success(let JSON):
+                    print("Success with JSON: \(JSON)")
+                    if let data = response.data {
+                        do {
+                            let result = try JSONDecoder().decode(CommonResponse.self, from: data)
+                            if result.success {
+                                let countRespone = try JSONDecoder().decode(CountResponse.self, from: data)
+                                completionHandler(countRespone, nil)
+                            }
+                            else {
+                                let error = CountError(reason: result.message)
+                                completionHandler(nil, error)
+                            }
+                        } catch let error as NSError {
+                            print("Failed to load: \(error.localizedDescription)")
+                            let error = CountError(error)
+                            completionHandler(nil, error)
+                        }
+                    }
+                case .failure(let error):
+                    let error = CountError(error)
+                    completionHandler(nil, error)
+                }
+                
+            })
     }
-
 }
+
+
 

@@ -18,11 +18,10 @@
 		FB5A78B22609802D003BDD6A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A78B12609802D003BDD6A /* HomeView.swift */; };
 		FB5A78C526098159003BDD6A /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A78C426098159003BDD6A /* LaunchView.swift */; };
 		FB5A78C8260982A3003BDD6A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A78C7260982A3003BDD6A /* MenuView.swift */; };
-		FB8AA20B26098E8100C7C0D2 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = FB8AA20A26098E8100C7C0D2 /* SwiftPackageProductDependency */; };
-		FB8AA20F2609910500C7C0D2 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = FB8AA20E2609910500C7C0D2 /* SwiftPackageProductDependency */; };
+		FB683C9426204D80006FDE43 /* SwiftUIListSeparator in Frameworks */ = {isa = PBXBuildFile; productRef = FB683C9326204D80006FDE43 /* SwiftUIListSeparator */; };
+		FB8AA20B26098E8100C7C0D2 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = FB8AA20A26098E8100C7C0D2 /* PartialSheet */; };
 		FB8AA2122609944F00C7C0D2 /* TemplateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA2112609944F00C7C0D2 /* TemplateCell.swift */; };
 		FB8AA2162609947100C7C0D2 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA2152609947100C7C0D2 /* Template.swift */; };
-		FB8AA21A260996EA00C7C0D2 /* CountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA219260996EA00C7C0D2 /* CountResponse.swift */; };
 		FB8AA26E26099A5200C7C0D2 /* CountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA26D26099A5200C7C0D2 /* CountViewModel.swift */; };
 		FB9703F126141F7E00FB1319 /* AddTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9703F026141F7E00FB1319 /* AddTemplateView.swift */; };
 		FB9703F426144A9B00FB1319 /* TextSize16.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9703F326144A9B00FB1319 /* TextSize16.swift */; };
@@ -38,6 +37,15 @@
 		FBAD74F12608DDA600A22FF6 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAD74F02608DDA600A22FF6 /* API.swift */; };
 		FBAD74FA2608E40500A22FF6 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAD74F92608E40500A22FF6 /* UIImage+Resize.swift */; };
 		FBAD74FE26097CF800A22FF6 /* UIViewControllerHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAD74FD26097CF800A22FF6 /* UIViewControllerHolder.swift */; };
+		FBC8ECC82621D631006AA9D2 /* CountError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8ECC72621D631006AA9D2 /* CountError.swift */; };
+		FBC8ECCB2621D643006AA9D2 /* CommonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8ECCA2621D643006AA9D2 /* CommonResponse.swift */; };
+		FBC8ECCE2621D64F006AA9D2 /* UploadResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8ECCD2621D64F006AA9D2 /* UploadResponse.swift */; };
+		FBC8ECD32621D67A006AA9D2 /* CountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8ECD22621D67A006AA9D2 /* CountResponse.swift */; };
+		FBC8ECD62621D74E006AA9D2 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8ECD52621D74E006AA9D2 /* BaseResponse.swift */; };
+		FBE97F3626221C6F001D34EE /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE97F3526221C6F001D34EE /* ActivityIndicator.swift */; };
+		FBE97F3926221C89001D34EE /* TextInputAutoHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE97F3826221C89001D34EE /* TextInputAutoHeight.swift */; };
+		FBE97F3C26221CE0001D34EE /* UITextInputWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE97F3B26221CE0001D34EE /* UITextInputWrapper.swift */; };
+		FBE97F3F26221E3E001D34EE /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE97F3E26221E3E001D34EE /* UITextView+Extension.swift */; };
 		FBED48062612597700AF0BD4 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED48052612597700AF0BD4 /* MenuViewModel.swift */; };
 		FBED4809261259E800AF0BD4 /* UserLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED4808261259E800AF0BD4 /* UserLogin.swift */; };
 		FBED480C26125A3100AF0BD4 /* MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBED480B26125A3100AF0BD4 /* MenuHandler.swift */; };
@@ -80,7 +88,6 @@
 		FB5A78C7260982A3003BDD6A /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		FB8AA2112609944F00C7C0D2 /* TemplateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCell.swift; sourceTree = "<group>"; };
 		FB8AA2152609947100C7C0D2 /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
-		FB8AA219260996EA00C7C0D2 /* CountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountResponse.swift; sourceTree = "<group>"; };
 		FB8AA26D26099A5200C7C0D2 /* CountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountViewModel.swift; sourceTree = "<group>"; };
 		FB9703F026141F7E00FB1319 /* AddTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTemplateView.swift; sourceTree = "<group>"; };
 		FB9703F326144A9B00FB1319 /* TextSize16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSize16.swift; sourceTree = "<group>"; };
@@ -96,6 +103,15 @@
 		FBAD74F02608DDA600A22FF6 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		FBAD74F92608E40500A22FF6 /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		FBAD74FD26097CF800A22FF6 /* UIViewControllerHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerHolder.swift; sourceTree = "<group>"; };
+		FBC8ECC72621D631006AA9D2 /* CountError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountError.swift; sourceTree = "<group>"; };
+		FBC8ECCA2621D643006AA9D2 /* CommonResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonResponse.swift; sourceTree = "<group>"; };
+		FBC8ECCD2621D64F006AA9D2 /* UploadResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadResponse.swift; sourceTree = "<group>"; };
+		FBC8ECD22621D67A006AA9D2 /* CountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountResponse.swift; sourceTree = "<group>"; };
+		FBC8ECD52621D74E006AA9D2 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
+		FBE97F3526221C6F001D34EE /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		FBE97F3826221C89001D34EE /* TextInputAutoHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputAutoHeight.swift; sourceTree = "<group>"; };
+		FBE97F3B26221CE0001D34EE /* UITextInputWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextInputWrapper.swift; sourceTree = "<group>"; };
+		FBE97F3E26221E3E001D34EE /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
 		FBED48052612597700AF0BD4 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		FBED4808261259E800AF0BD4 /* UserLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLogin.swift; sourceTree = "<group>"; };
 		FBED480B26125A3100AF0BD4 /* MenuHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHandler.swift; sourceTree = "<group>"; };
@@ -129,8 +145,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB8AA20F2609910500C7C0D2 /* BuildFile in Frameworks */,
-				FB8AA20B26098E8100C7C0D2 /* BuildFile in Frameworks */,
+				FB683C9426204D80006FDE43 /* SwiftUIListSeparator in Frameworks */,
+				FB8AA20B26098E8100C7C0D2 /* PartialSheet in Frameworks */,
 				2A39F3F87785F335B97BF24C /* Pods_My_Counter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -177,6 +193,8 @@
 			isa = PBXGroup;
 			children = (
 				FB50017E26124DB700D17411 /* CheckView.swift */,
+				FBE97F3526221C6F001D34EE /* ActivityIndicator.swift */,
+				FBE97F3826221C89001D34EE /* TextInputAutoHeight.swift */,
 				FBED482226125CF900AF0BD4 /* SecureTextFiled.swift */,
 				FBED481A26125C8900AF0BD4 /* MainTextFiled.swift */,
 				FB50018126124DD100D17411 /* MainButtonView.swift */,
@@ -231,7 +249,6 @@
 			isa = PBXGroup;
 			children = (
 				FB8AA2152609947100C7C0D2 /* Template.swift */,
-				FB8AA219260996EA00C7C0D2 /* CountResponse.swift */,
 				FBED4854261303DA00AF0BD4 /* User.swift */,
 			);
 			path = Models;
@@ -278,6 +295,7 @@
 			children = (
 				FBAD74EA2608DAE200A22FF6 /* View+Hidden.swift */,
 				FBAD74F92608E40500A22FF6 /* UIImage+Resize.swift */,
+				FBE97F3E26221E3E001D34EE /* UITextView+Extension.swift */,
 				FBED4832261264E900AF0BD4 /* Color+Extension.swift */,
 				FBED482526125D7800AF0BD4 /* UIColor+Extension.swift */,
 			);
@@ -288,9 +306,22 @@
 			isa = PBXGroup;
 			children = (
 				FBAD74FD26097CF800A22FF6 /* UIViewControllerHolder.swift */,
+				FBE97F3B26221CE0001D34EE /* UITextInputWrapper.swift */,
 				FBAD74E22608D86E00A22FF6 /* PhotoPickerView.swift */,
 			);
 			path = "UIKit View";
+			sourceTree = "<group>";
+		};
+		FBC8ECC62621D61F006AA9D2 /* CountStruct */ = {
+			isa = PBXGroup;
+			children = (
+				FBC8ECC72621D631006AA9D2 /* CountError.swift */,
+				FBC8ECCA2621D643006AA9D2 /* CommonResponse.swift */,
+				FBC8ECD52621D74E006AA9D2 /* BaseResponse.swift */,
+				FBC8ECCD2621D64F006AA9D2 /* UploadResponse.swift */,
+				FBC8ECD22621D67A006AA9D2 /* CountResponse.swift */,
+			);
+			path = CountStruct;
 			sourceTree = "<group>";
 		};
 		FBED480E26125B2300AF0BD4 /* Login */ = {
@@ -368,6 +399,7 @@
 				FBF4A42C2608D6780012020C /* ContentView.swift */,
 				FBED4808261259E800AF0BD4 /* UserLogin.swift */,
 				FBED480B26125A3100AF0BD4 /* MenuHandler.swift */,
+				FBC8ECC62621D61F006AA9D2 /* CountStruct */,
 				FBED481D26125CA800AF0BD4 /* Modifier */,
 				FBED481926125BE800AF0BD4 /* Config */,
 				FB50017D26124D8D00D17411 /* CommonView */,
@@ -413,8 +445,8 @@
 			);
 			name = "My Counter";
 			packageProductDependencies = (
-				FB8AA20A26098E8100C7C0D2 /* SwiftPackageProductDependency */,
-				FB8AA20E2609910500C7C0D2 /* SwiftPackageProductDependency */,
+				FB8AA20A26098E8100C7C0D2 /* PartialSheet */,
+				FB683C9326204D80006FDE43 /* SwiftUIListSeparator */,
 			);
 			productName = "My Counter";
 			productReference = FBF4A4252608D6780012020C /* My Counter.app */;
@@ -444,8 +476,8 @@
 			);
 			mainGroup = FBF4A41C2608D6780012020C;
 			packageReferences = (
-				FB8AA20926098E8100C7C0D2 /* RemoteSwiftPackageReference */,
-				FB8AA20D2609910500C7C0D2 /* RemoteSwiftPackageReference */,
+				FB8AA20926098E8100C7C0D2 /* XCRemoteSwiftPackageReference "PartialSheet" */,
+				FB683C9226204D80006FDE43 /* XCRemoteSwiftPackageReference "SwiftUIListSeparator" */,
 			);
 			productRefGroup = FBF4A4262608D6780012020C /* Products */;
 			projectDirPath = "";
@@ -557,15 +589,19 @@
 				FB8AA2122609944F00C7C0D2 /* TemplateCell.swift in Sources */,
 				FB970431261459B700FB1319 /* TemplateListView.swift in Sources */,
 				FBF4A4292608D6780012020C /* AppDelegate.swift in Sources */,
-				FB8AA21A260996EA00C7C0D2 /* CountResponse.swift in Sources */,
 				FBF4A42B2608D6780012020C /* SceneDelegate.swift in Sources */,
 				FBF4A42D2608D6780012020C /* ContentView.swift in Sources */,
 				FB5A78B22609802D003BDD6A /* HomeView.swift in Sources */,
 				FB5A78C8260982A3003BDD6A /* MenuView.swift in Sources */,
 				FB2F37532609E685004629A4 /* TemplateCollectionView.swift in Sources */,
 				FBED48062612597700AF0BD4 /* MenuViewModel.swift in Sources */,
+				FBC8ECCE2621D64F006AA9D2 /* UploadResponse.swift in Sources */,
+				FBC8ECD32621D67A006AA9D2 /* CountResponse.swift in Sources */,
+				FBE97F3626221C6F001D34EE /* ActivityIndicator.swift in Sources */,
 				FB8AA26E26099A5200C7C0D2 /* CountViewModel.swift in Sources */,
+				FBC8ECD62621D74E006AA9D2 /* BaseResponse.swift in Sources */,
 				FBAD74E32608D86E00A22FF6 /* PhotoPickerView.swift in Sources */,
+				FBE97F3F26221E3E001D34EE /* UITextView+Extension.swift in Sources */,
 				FB97043926145CA700FB1319 /* TemplateRow.swift in Sources */,
 				FB50018226124DD100D17411 /* MainButtonView.swift in Sources */,
 				FBED481426125B6B00AF0BD4 /* LoginViewModel.swift in Sources */,
@@ -577,9 +613,13 @@
 				FBED481B26125C8900AF0BD4 /* MainTextFiled.swift in Sources */,
 				FBAD74EE2608DB6800A22FF6 /* Config.swift in Sources */,
 				FBED48422612F26D00AF0BD4 /* ResetPasswordView.swift in Sources */,
+				FBE97F3C26221CE0001D34EE /* UITextInputWrapper.swift in Sources */,
 				FBED48462612F4C200AF0BD4 /* Colors.swift in Sources */,
+				FBC8ECC82621D631006AA9D2 /* CountError.swift in Sources */,
 				FB5A78AB26097FA6003BDD6A /* CountView.swift in Sources */,
 				FBED4833261264E900AF0BD4 /* Color+Extension.swift in Sources */,
+				FBC8ECCB2621D643006AA9D2 /* CommonResponse.swift in Sources */,
+				FBE97F3926221C89001D34EE /* TextInputAutoHeight.swift in Sources */,
 				FBAD74F12608DDA600A22FF6 /* API.swift in Sources */,
 				FBED481F26125CB200AF0BD4 /* TextSize12.swift in Sources */,
 			);
@@ -787,7 +827,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		FB8AA20926098E8100C7C0D2 /* RemoteSwiftPackageReference */ = {
+		FB683C9226204D80006FDE43 /* XCRemoteSwiftPackageReference "SwiftUIListSeparator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SchmidtyApps/SwiftUIListSeparator";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		FB8AA20926098E8100C7C0D2 /* XCRemoteSwiftPackageReference "PartialSheet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AndreaMiotto/PartialSheet.git";
 			requirement = {
@@ -795,26 +843,18 @@
 				minimumVersion = 2.1.11;
 			};
 		};
-		FB8AA20D2609910500C7C0D2 /* RemoteSwiftPackageReference */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Q-Mobile/QGrid";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.4;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FB8AA20A26098E8100C7C0D2 /* SwiftPackageProductDependency */ = {
+		FB683C9326204D80006FDE43 /* SwiftUIListSeparator */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FB8AA20926098E8100C7C0D2 /* RemoteSwiftPackageReference */;
-			productName = PartialSheet;
+			package = FB683C9226204D80006FDE43 /* XCRemoteSwiftPackageReference "SwiftUIListSeparator" */;
+			productName = SwiftUIListSeparator;
 		};
-		FB8AA20E2609910500C7C0D2 /* SwiftPackageProductDependency */ = {
+		FB8AA20A26098E8100C7C0D2 /* PartialSheet */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FB8AA20D2609910500C7C0D2 /* RemoteSwiftPackageReference */;
-			productName = QGrid;
+			package = FB8AA20926098E8100C7C0D2 /* XCRemoteSwiftPackageReference "PartialSheet" */;
+			productName = PartialSheet;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

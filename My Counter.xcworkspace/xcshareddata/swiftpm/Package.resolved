@@ -11,12 +11,12 @@
         }
       },
       {
-        "package": "QGrid",
-        "repositoryURL": "https://github.com/Q-Mobile/QGrid",
+        "package": "SwiftUIListSeparator",
+        "repositoryURL": "https://github.com/SchmidtyApps/SwiftUIListSeparator",
         "state": {
           "branch": null,
-          "revision": "804e59f8cb9f66b226685e9369fb82029742b83a",
-          "version": "0.1.4"
+          "revision": "4761aa9ec6142d348adc570fdb55f5cf19400f1a",
+          "version": "1.0.0"
         }
       }
     ]

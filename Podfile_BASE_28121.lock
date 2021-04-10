@@ -31,14 +31,9 @@ PODS:
   - Firebase/Database (7.9.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (~> 7.9.0)
-  - Firebase/RemoteConfig (7.9.0):
-    - Firebase/CoreOnly
-    - FirebaseRemoteConfig (~> 7.9.0)
   - Firebase/Storage (7.9.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 7.9.0)
-  - FirebaseABTesting (7.9.0):
-    - FirebaseCore (~> 7.0)
   - FirebaseAuth (7.9.0):
     - FirebaseCore (~> 7.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
@@ -56,17 +51,6 @@ PODS:
   - FirebaseDatabase (7.9.0):
     - FirebaseCore (~> 7.0)
     - leveldb-library (~> 1.22)
-  - FirebaseInstallations (7.9.0):
-    - FirebaseCore (~> 7.0)
-    - GoogleUtilities/Environment (~> 7.0)
-    - GoogleUtilities/UserDefaults (~> 7.0)
-    - PromisesObjC (~> 1.2)
-  - FirebaseRemoteConfig (7.9.0):
-    - FirebaseABTesting (~> 7.0)
-    - FirebaseCore (~> 7.0)
-    - FirebaseInstallations (~> 7.0)
-    - GoogleUtilities/Environment (~> 7.0)
-    - "GoogleUtilities/NSData+zlib (~> 7.0)"
   - FirebaseStorage (7.9.0):
     - FirebaseCore (~> 7.0)
     - GTMSessionFetcher/Core (~> 1.4)
@@ -93,15 +77,11 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.3.1)"
   - GoogleUtilities/Reachability (7.3.1):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.3.1):
-    - GoogleUtilities/Logger
   - GTMAppAuth (1.2.1):
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.5.0)
-  - Introspect (0.1.3)
   - IQKeyboardManager (6.5.6)
-  - JGProgressHUD (2.2)
   - KYDrawerController (2.1.0)
   - leveldb-library (1.22.1)
   - nanopb (2.30907.0):
@@ -109,14 +89,13 @@ PODS:
     - nanopb/encode (= 2.30907.0)
   - nanopb/decode (2.30907.0)
   - nanopb/encode (2.30907.0)
+  - ProgressHUD (13.5)
   - PromisesObjC (1.2.12)
   - SDWebImage (5.11.0):
     - SDWebImage/Core (= 5.11.0)
   - SDWebImage/Core (5.11.0)
   - SDWebImageSwiftUI (2.0.2):
     - SDWebImage (~> 5.10)
-  - SwiftUIRefresh (0.0.3):
-    - Introspect (~> 0.1.0)
   - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
@@ -125,14 +104,12 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - Firebase/Auth
   - Firebase/Database
-  - Firebase/RemoteConfig
   - Firebase/Storage
   - GoogleSignIn
   - IQKeyboardManager
-  - JGProgressHUD
   - KYDrawerController
+  - ProgressHUD
   - SDWebImageSwiftUI
-  - SwiftUIRefresh
   - SwiftyJSON
 
 SPEC REPOS:
@@ -144,29 +121,24 @@ SPEC REPOS:
     - FBSDKCoreKit
     - FBSDKLoginKit
     - Firebase
-    - FirebaseABTesting
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseDatabase
-    - FirebaseInstallations
-    - FirebaseRemoteConfig
     - FirebaseStorage
     - GoogleDataTransport
     - GoogleSignIn
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
-    - Introspect
     - IQKeyboardManager
-    - JGProgressHUD
     - KYDrawerController
     - leveldb-library
     - nanopb
+    - ProgressHUD
     - PromisesObjC
     - SDWebImage
     - SDWebImageSwiftUI
-    - SwiftUIRefresh
     - SwiftyJSON
 
 SPEC CHECKSUMS:
@@ -177,31 +149,26 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: a00fe2efd780c195a5e09201bf51c56106245b40
   FBSDKLoginKit: d98498c598ec09de657385a9349a1f21119b7f86
   Firebase: d8bd6bd34b4c7ed57bfdd056c66ff5adcdde53ab
-  FirebaseABTesting: f6853447dc61fa785df777748747c845f40fa7cd
   FirebaseAuth: 20625f04fdd213995249a82375b3dab39b1c136c
   FirebaseCore: 0798738ad1ae0fda67e17c7b9081241c431c6859
   FirebaseCoreDiagnostics: 3d36e05da74cb8b7ce30e6594a8f201b982c725c
   FirebaseDatabase: b62e6e05aac439fe603d7ba68a2c764ca7357a58
-  FirebaseInstallations: 5e777e6640fa060405cc7632447b6c5ca5af4742
-  FirebaseRemoteConfig: ad9b7af6a1308d8dd26787b1702ce9e7d609d22e
   FirebaseStorage: 0646be9a7552aac5703d095961081942e693967d
   GoogleDataTransport: 8b0e733ea77c9218778e5a9e34ba9508b8328939
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   GoogleUtilities: e1d9ed4e544fc32a93e00e721400cbc3f377200d
   GTMAppAuth: 5b53231ef6920f149ab84b2969cb0ab572da3077
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
-  Introspect: 2be020f30f084ada52bb4387fff83fa52c5c400e
   IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
-  JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   KYDrawerController: baad0e63b09c0cb564bd48f0f7f70f45d9176ebc
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
+  ProgressHUD: 028e3828c7b582022c34a74604fc6073f8628d99
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SDWebImage: 7acbb57630ac7db4a495547fb73916ff3e432f6b
   SDWebImageSwiftUI: 8a3923c95108312b03a599ec1498754af55a6819
-  SwiftUIRefresh: ca6ae2718d25aad5dd68bbf5d2ae36ef6ade98bf
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: b7f77c3a8a812f2f9af9d5eedd441d994e290d6c
+PODFILE CHECKSUM: ea97db4384ab05d134d862b18061c258a3b5e03a
 
 COCOAPODS: 1.10.1

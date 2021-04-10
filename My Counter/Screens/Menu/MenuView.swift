@@ -60,7 +60,12 @@ struct MenuView: View {
                     .font(.system(size: 20))
                 if let user = userLogin.user, userLogin.isLogin {
                     ProfileMenuView(user: user)
-                    Divider()
+                    Rectangle()
+                        .fill(Color(hex: "#ecf0f1"))
+                        .frame(height: 4)
+                        .cornerRadius(2)
+                        .padding(.horizontal, 24)
+                        .padding(.bottom)
                 }
                 else {
                     Button(action: {

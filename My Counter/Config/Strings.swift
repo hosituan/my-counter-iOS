@@ -24,10 +24,14 @@ struct Strings {
         static let ChangePhotoTitle = "Change Photo"
         static let CountResultTitle = "Number of "
         static let Counting = "Counting..."
+        static let Uploading = "Uploading..."
         static let SelectFromLibrary = "Select from Library"
         static let TakePhoto = "Take Photo"
         static let CancelTitle = "Cancel"
         static let DefaultMethodTitle = "Default method."
+        static let SpentTime = "Total time spent: "
+        static let CountTime = "Count time: "
+        static let SaveTitle = "Save"
         
         //Login Screen
         static let LoginTitle = "Login"
@@ -49,8 +53,13 @@ struct Strings {
         static let TemplateAdded = "Template has been added!"
         static let OkTitle = "OK"
         
-    
         
+        //Add
+        static let AddTitle = "Add"
+        static let DescriptionAdd = "What about it?"
+        static let DescriptionTitle = "Description"
+        static let PlaceHolderName = "Chicken Egg"
+        static let Name = "Name"
         
     }
     

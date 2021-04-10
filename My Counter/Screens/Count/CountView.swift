@@ -9,14 +9,14 @@ import Foundation
 import SwiftUI
 import SDWebImageSwiftUI
 import Alamofire
-import ProgressHUD
 
 struct CountView: View {
     @Environment(\.viewController) var viewControllerHolder: ViewControllerHolder
     @State var showActionSheet = false
-    @ObservedObject var countViewModel = CountViewModel()
-    let api = API()
-    var template: TemplateServer
+    @ObservedObject var countViewModel: CountViewModel
+    init(template: TemplateServer) {
+        self.countViewModel = CountViewModel(template: template)
+    }
     
     var sheet: ActionSheet {
         ActionSheet(
@@ -47,10 +47,12 @@ struct CountView: View {
         }
     }
     
+
+    
     var body: some View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    Text(template.description ?? "")
+                    Text(countViewModel.template.description ?? "")
                         .bold()
                         .italic()
                         .font(.system(size: 14))
@@ -76,7 +78,7 @@ struct CountView: View {
                     }
                     
                     if let url = URL(string: countViewModel.countRespone?.url ?? "") {
-                        VStack {
+                        VStack(alignment: .leading) {
                             WebImage(url: url)
                                 .resizable()
                                 .placeholder(content: {
@@ -88,23 +90,20 @@ struct CountView: View {
                                 .aspectRatio(contentMode: .fill)
                                 .cornerRadius(8)
                                 .padding(.bottom)
-                            Text("\(Strings.EN.CountResultTitle)\(template.name ?? ""): \(countViewModel.countRespone?.count ?? 0)")
+                            Text("\(Strings.EN.CountResultTitle)\(countViewModel.template.name ?? ""): \(countViewModel.countRespone?.count ?? 0)")
+                                .bold()
+                            Text("\(Strings.EN.SpentTime): \(countViewModel.spentTime) seconds")
+                                .bold()
+                            Text("\(Strings.EN.CountTime): \(countViewModel.countTime) seconds")
                                 .bold()
                         }
                     }
                     
-                    CheckView(isChecked: $countViewModel.isDefault, title: Strings.EN.DefaultMethodTitle)
-                        .padding(.vertical)
                     Button(action: {
-                        if let img = countViewModel.selectedImage {
-                            ProgressHUD.show(Strings.EN.Counting)
-                            api.uploadForCounting(image: img, template: template, method: countViewModel.method) { result in
-                                self.countViewModel.countRespone = result
-                                ProgressHUD.dismiss()
-                            }
-                        }
+                        countViewModel.start()
+
                     }, label: {
-                        MainButtonView(title: Strings.EN.CountTitle)
+                        MainButtonView(title: countViewModel.selectedImage != nil ? Strings.EN.CountTitle: Strings.EN.SaveTitle)
                     })
                     .isHidden(self.countViewModel.selectedImage == nil && self.countViewModel.tempImage == nil)
                     .padding(.bottom)
@@ -114,14 +113,17 @@ struct CountView: View {
                     sheet
                 }
             }
-            .navigationBarTitle(template.name ?? "")
+            .navigationBarTitle(countViewModel.template.name ?? "")
             .onDisappear() {
                 countViewModel.selectedImage = nil
                 countViewModel.countRespone = nil
                 countViewModel.tempImage = nil
+                AppDelegate.shared().dismissProgressHUD()
             }
         }
 }
+
+
 
 
 //struct ContentView_Previews: PreviewProvider {

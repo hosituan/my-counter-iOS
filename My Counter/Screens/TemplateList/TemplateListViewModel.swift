@@ -8,17 +8,32 @@
 import Foundation
 import Combine
 import SwiftUI
-import ProgressHUD
+
 
 class TemplateViewModel: ObservableObject {
     let firebaseManager = FirebaseManager()
     @Published var templates: [TemplateServer] = [TemplateServer]()
-    
+    @Published var isShowingRefresh = false
     func loadTemplate() {
-        ProgressHUD.show()
         firebaseManager.loadTemplate { (result) in
             self.templates = result
-            ProgressHUD.dismiss()
+            self.isShowingRefresh = false
+        }
+    }
+    
+    func deleteTemplate(at offset: IndexSet) {
+        if let first = offset.first {
+            AppDelegate.shared().showProgressHUD()
+            firebaseManager.removeTemplate(template: templates[first]) { (error) in
+                self.templates.remove(at: first)
+//                if error == nil {
+//
+//                }
+//                else {
+//                    AppDelegate.shared().showCommonAlertError(error!)
+//                }
+                AppDelegate.shared().dismissProgressHUD()
+            }
         }
     }
 }
