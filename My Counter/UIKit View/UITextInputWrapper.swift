@@ -32,7 +32,7 @@ struct UITextInputWrapper: UIViewRepresentable {
         if nil != onDone {
             textField.returnKeyType = .done
         }
-        textField.font = .systemFont(ofSize: 14)
+        textField.font = .systemFont(ofSize: 16)
         textField.applyLineSpacing(1, alignment: .left)
         textField.textContainerInset = UIEdgeInsets(top: 18, left: 16, bottom: 0, right: 48)
         textField.placeholder = placeHolder

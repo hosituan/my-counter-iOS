@@ -111,19 +111,21 @@ struct LoginView: View {
                     Spacer()
                     
                 }
-                .padding(.horizontal, 16)
-                .navigationBarTitle(Text(Strings.EN.LoginTitle))
-                .navigationBarItems(leading: Button(action: {
-                    self.dismissAction()
-                }, label: {
-                    Image(systemName: "chevron.down")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 24, height: 24, alignment: .center)
-                        .foregroundColor(.black)
-                    
-                }))
+
             }
+            .listSeparatorStyle(.none)
+            .padding(.horizontal, 16)
+            .navigationBarTitle(Text(Strings.EN.LoginTitle))
+            .navigationBarItems(leading: Button(action: {
+                self.dismissAction()
+            }, label: {
+                Image(systemName: "chevron.down")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 24, height: 24, alignment: .center)
+                    .foregroundColor(.black)
+                
+            }))
             
         }
         
