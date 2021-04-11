@@ -64,6 +64,7 @@ struct HomeView: View {
                 label: {})
             NavigationLink(destination: TemplateListView(templates: homeViewModel.templateList), isActive: $menuHandler.isShowTemplateList) {}
             NavigationLink(destination: CountView(template: homeViewModel.selected), isActive: $homeViewModel.isShowCount) {}
+            NavigationLink(destination: HistoryView(), isActive: $menuHandler.isShowHistory) {}
         }.opacity(0)
     }
 }

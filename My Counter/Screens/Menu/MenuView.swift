@@ -28,7 +28,7 @@ struct MenuView: View {
     
     var adminActionView: some View {
         VStack {
-            MenuActionRowView(title: "Add Template")
+            MenuActionRowView(title: Strings.EN.AddTemplateNavTitle)
                 .onTapGesture {
                     let scene = UIApplication.shared.connectedScenes.first
                     if let sd: SceneDelegate = (scene?.delegate as? SceneDelegate) {
@@ -39,13 +39,29 @@ struct MenuView: View {
                     }
                 }
             Divider()
-            MenuActionRowView(title: "Template List")
+            MenuActionRowView(title: Strings.EN.TemplateListNavTitle)
                 .onTapGesture {
                     let scene = UIApplication.shared.connectedScenes.first
                     if let sd: SceneDelegate = (scene?.delegate as? SceneDelegate) {
                         sd.hideMenu()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
                             menuHandler.isShowTemplateList = true
+                        })
+                    }
+                }
+            Divider()
+        }
+    }
+    
+    var normalUserActionView: some View {
+        VStack {
+            MenuActionRowView(title: Strings.EN.HistoryNavTitle)
+                .onTapGesture {
+                    let scene = UIApplication.shared.connectedScenes.first
+                    if let sd: SceneDelegate = (scene?.delegate as? SceneDelegate) {
+                        sd.hideMenu()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+                            menuHandler.isShowHistory = true
                         })
                     }
                 }
@@ -77,6 +93,8 @@ struct MenuView: View {
                     }
                 }
                 adminActionView
+                    .isHidden(!userLogin.isLogin)
+                normalUserActionView
                     .isHidden(!userLogin.isLogin)
                 Spacer()
                 logoutView

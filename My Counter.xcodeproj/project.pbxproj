@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2A39F3F87785F335B97BF24C /* Pods_My_Counter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB541778B7D713A85A8F7C98 /* Pods_My_Counter.framework */; };
+		FB2A463D2622AD1A00BD7AFB /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2A463C2622AD1A00BD7AFB /* HistoryView.swift */; };
+		FB2A46402622B52B00BD7AFB /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2A463F2622B52B00BD7AFB /* Date+Extension.swift */; };
 		FB2F37502609D4AC004629A4 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2F374F2609D4AC004629A4 /* HomeViewModel.swift */; };
 		FB2F37532609E685004629A4 /* TemplateCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2F37522609E685004629A4 /* TemplateCollectionView.swift */; };
 		FB2F37582609E7DA004629A4 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2F37572609E7D9004629A4 /* Strings.swift */; };
@@ -23,6 +25,10 @@
 		FB8AA2122609944F00C7C0D2 /* TemplateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA2112609944F00C7C0D2 /* TemplateCell.swift */; };
 		FB8AA2162609947100C7C0D2 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA2152609947100C7C0D2 /* Template.swift */; };
 		FB8AA26E26099A5200C7C0D2 /* CountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA26D26099A5200C7C0D2 /* CountViewModel.swift */; };
+		FB92D8732622BC8000599B59 /* CountHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB92D8722622BC8000599B59 /* CountHistory.swift */; };
+		FB92D87A2622D97600599B59 /* PreviewImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB92D8792622D97600599B59 /* PreviewImage.swift */; };
+		FB92D8A12622DDC100599B59 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB92D8A02622DDC100599B59 /* HistoryViewModel.swift */; };
+		FB92D8A52622E02100599B59 /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB92D8A42622E02100599B59 /* HistoryRow.swift */; };
 		FB9703F126141F7E00FB1319 /* AddTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9703F026141F7E00FB1319 /* AddTemplateView.swift */; };
 		FB9703F426144A9B00FB1319 /* TextSize16.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9703F326144A9B00FB1319 /* TextSize16.swift */; };
 		FB9703F726144AFF00FB1319 /* MenuActionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9703F626144AFF00FB1319 /* MenuActionRowView.swift */; };
@@ -76,6 +82,8 @@
 		573B9A88502A9B5DE04D2ECE /* Pods-My Counter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Counter.release.xcconfig"; path = "Target Support Files/Pods-My Counter/Pods-My Counter.release.xcconfig"; sourceTree = "<group>"; };
 		901CF62BA4A7F6B67C2865DF /* Pods-My Counter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Counter.debug.xcconfig"; path = "Target Support Files/Pods-My Counter/Pods-My Counter.debug.xcconfig"; sourceTree = "<group>"; };
 		EB541778B7D713A85A8F7C98 /* Pods_My_Counter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_My_Counter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB2A463C2622AD1A00BD7AFB /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		FB2A463F2622B52B00BD7AFB /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		FB2F374F2609D4AC004629A4 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		FB2F37522609E685004629A4 /* TemplateCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCollectionView.swift; sourceTree = "<group>"; };
 		FB2F37572609E7D9004629A4 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -89,6 +97,10 @@
 		FB8AA2112609944F00C7C0D2 /* TemplateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCell.swift; sourceTree = "<group>"; };
 		FB8AA2152609947100C7C0D2 /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		FB8AA26D26099A5200C7C0D2 /* CountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountViewModel.swift; sourceTree = "<group>"; };
+		FB92D8722622BC8000599B59 /* CountHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountHistory.swift; sourceTree = "<group>"; };
+		FB92D8792622D97600599B59 /* PreviewImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImage.swift; sourceTree = "<group>"; };
+		FB92D8A02622DDC100599B59 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
+		FB92D8A42622E02100599B59 /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
 		FB9703F026141F7E00FB1319 /* AddTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTemplateView.swift; sourceTree = "<group>"; };
 		FB9703F326144A9B00FB1319 /* TextSize16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSize16.swift; sourceTree = "<group>"; };
 		FB9703F626144AFF00FB1319 /* MenuActionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuActionRowView.swift; sourceTree = "<group>"; };
@@ -171,6 +183,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		FB2A463B2622319900BD7AFB /* History */ = {
+			isa = PBXGroup;
+			children = (
+				FB2A463C2622AD1A00BD7AFB /* HistoryView.swift */,
+				FB92D8A32622E01900599B59 /* SubView */,
+				FB92D8A02622DDC100599B59 /* HistoryViewModel.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
 		FB2F37552609E693004629A4 /* SubView */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +228,7 @@
 		FB5A78A926097F84003BDD6A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				FB2A463B2622319900BD7AFB /* History */,
 				FB97042F261459A700FB1319 /* TemplateList */,
 				FB9703EF26141F2700FB1319 /* Add Template */,
 				FBED480E26125B2300AF0BD4 /* Login */,
@@ -254,6 +277,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		FB92D8A32622E01900599B59 /* SubView */ = {
+			isa = PBXGroup;
+			children = (
+				FB92D8A42622E02100599B59 /* HistoryRow.swift */,
+			);
+			path = SubView;
+			sourceTree = "<group>";
+		};
 		FB9703EF26141F2700FB1319 /* Add Template */ = {
 			isa = PBXGroup;
 			children = (
@@ -294,6 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				FBAD74EA2608DAE200A22FF6 /* View+Hidden.swift */,
+				FB2A463F2622B52B00BD7AFB /* Date+Extension.swift */,
 				FBAD74F92608E40500A22FF6 /* UIImage+Resize.swift */,
 				FBE97F3E26221E3E001D34EE /* UITextView+Extension.swift */,
 				FBED4832261264E900AF0BD4 /* Color+Extension.swift */,
@@ -308,6 +340,7 @@
 				FBAD74FD26097CF800A22FF6 /* UIViewControllerHolder.swift */,
 				FBE97F3B26221CE0001D34EE /* UITextInputWrapper.swift */,
 				FBAD74E22608D86E00A22FF6 /* PhotoPickerView.swift */,
+				FB92D8792622D97600599B59 /* PreviewImage.swift */,
 			);
 			path = "UIKit View";
 			sourceTree = "<group>";
@@ -319,6 +352,7 @@
 				FBC8ECCA2621D643006AA9D2 /* CommonResponse.swift */,
 				FBC8ECD52621D74E006AA9D2 /* BaseResponse.swift */,
 				FBC8ECCD2621D64F006AA9D2 /* UploadResponse.swift */,
+				FB92D8722622BC8000599B59 /* CountHistory.swift */,
 				FBC8ECD22621D67A006AA9D2 /* CountResponse.swift */,
 			);
 			path = CountStruct;
@@ -570,6 +604,8 @@
 				FB8AA2162609947100C7C0D2 /* Template.swift in Sources */,
 				FBED4809261259E800AF0BD4 /* UserLogin.swift in Sources */,
 				FBED482626125D7800AF0BD4 /* UIColor+Extension.swift in Sources */,
+				FB2A46402622B52B00BD7AFB /* Date+Extension.swift in Sources */,
+				FB92D8A52622E02100599B59 /* HistoryRow.swift in Sources */,
 				FB2F37502609D4AC004629A4 /* HomeViewModel.swift in Sources */,
 				FB2F37582609E7DA004629A4 /* Strings.swift in Sources */,
 				FB50017F26124DB700D17411 /* CheckView.swift in Sources */,
@@ -577,6 +613,7 @@
 				FBAD74FE26097CF800A22FF6 /* UIViewControllerHolder.swift in Sources */,
 				FBED48362612665D00AF0BD4 /* RectangleButton.swift in Sources */,
 				FB9703FA26144D2F00FB1319 /* AddTemplateViewModel.swift in Sources */,
+				FB92D8A12622DDC100599B59 /* HistoryViewModel.swift in Sources */,
 				FB5A78C526098159003BDD6A /* LaunchView.swift in Sources */,
 				FB9703FD26144E6E00FB1319 /* FirebaseManager.swift in Sources */,
 				FB97043526145C2A00FB1319 /* TemplateListViewModel.swift in Sources */,
@@ -597,14 +634,17 @@
 				FBED48062612597700AF0BD4 /* MenuViewModel.swift in Sources */,
 				FBC8ECCE2621D64F006AA9D2 /* UploadResponse.swift in Sources */,
 				FBC8ECD32621D67A006AA9D2 /* CountResponse.swift in Sources */,
+				FB2A463D2622AD1A00BD7AFB /* HistoryView.swift in Sources */,
 				FBE97F3626221C6F001D34EE /* ActivityIndicator.swift in Sources */,
 				FB8AA26E26099A5200C7C0D2 /* CountViewModel.swift in Sources */,
+				FB92D8732622BC8000599B59 /* CountHistory.swift in Sources */,
 				FBC8ECD62621D74E006AA9D2 /* BaseResponse.swift in Sources */,
 				FBAD74E32608D86E00A22FF6 /* PhotoPickerView.swift in Sources */,
 				FBE97F3F26221E3E001D34EE /* UITextView+Extension.swift in Sources */,
 				FB97043926145CA700FB1319 /* TemplateRow.swift in Sources */,
 				FB50018226124DD100D17411 /* MainButtonView.swift in Sources */,
 				FBED481426125B6B00AF0BD4 /* LoginViewModel.swift in Sources */,
+				FB92D87A2622D97600599B59 /* PreviewImage.swift in Sources */,
 				FBAD74FA2608E40500A22FF6 /* UIImage+Resize.swift in Sources */,
 				FBED4855261303DA00AF0BD4 /* User.swift in Sources */,
 				FBED481026125B2B00AF0BD4 /* LoginView.swift in Sources */,

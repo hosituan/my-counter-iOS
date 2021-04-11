@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 import Alamofire
-
+import SwiftUI
 class API {
-    
+    let firebaseManagere = FirebaseManager()
     func uploadImage(image: UIImage, template: TemplateServer, completionHandler: @escaping (UploadResponse?, CountError?) -> Void) {
         let parameters = [
             "name": template.name,
@@ -71,6 +71,7 @@ class API {
                             let result = try JSONDecoder().decode(CommonResponse.self, from: data)
                             if result.success {
                                 let countRespone = try JSONDecoder().decode(CountResponse.self, from: data)
+                                self.firebaseManagere.uploadHistory(countRespone, userID: AppDelegate.shared().currenUser?.uid ?? "guest")
                                 completionHandler(countRespone, nil)
                             }
                             else {

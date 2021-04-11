@@ -18,7 +18,7 @@ target 'My Counter' do
   pod 'Firebase/RemoteConfig'
   pod 'JGProgressHUD'
   pod "SwiftUIRefresh"
-
+  pod 'Lightbox'
   # Pods for My Counter
 
 end

@@ -28,7 +28,7 @@ class HomeViewModel: ObservableObject {
     @Published var isShowingRefresh = false
     func loadTemplate() {
         if isFirstLoad {
-            AppDelegate.shared().showProgressHUD()
+            //AppDelegate.shared().showProgressHUD()
         }
         firebaseManager.loadTemplate { (result) in
             self.templateList = result

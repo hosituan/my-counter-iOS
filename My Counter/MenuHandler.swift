@@ -29,6 +29,7 @@ class MenuHandler: ObservableObject {
             
         }
     }
+    @Published var isShowHistory = false
     
     @Published var numberOfNoti = 0
     @Published var didUpdateTemplate: Bool = false

@@ -80,6 +80,7 @@ class FirebaseManager {
                                 (error, ref) in
                                 if error == nil {
                                     print("Uploaded template.")
+                                    
                                     completionHandler(nil)
                                 }
                             })
@@ -92,9 +93,62 @@ class FirebaseManager {
         
     }
     
+    func uploadHistory(_ countResponse: CountResponse, userID: String) {
+        let dict: Dictionary<String, Any>  = [
+            "fileName": countResponse.fileName,
+            "imageURL": countResponse.url,
+            "day": Date.getCurrentDate(withTime: true),
+            "count": countResponse.count,
+            "name": countResponse.name
+        ]
+        Database.database().reference().child(historyChild).child(userID).child(Date.getCurrentDate(withTime: true)).updateChildValues(dict, withCompletionBlock: {
+            (error, ref) in
+            if error == nil {
+                print("Uploaded response")
+            }
+        })
+    }
+    
     func removeTemplate(template: TemplateServer, completionHandler: @escaping (CountError?) -> Void) {
         Database.database().reference().child(templateChild).child(template.id ?? "").removeValue() { (error, ref) in
             completionHandler(CountError(error))
+        }
+    }
+    
+    func loadHistory(completionHandler: @escaping ([CountHistory]?, CountError?) -> Void) {
+        var countHistory = [CountHistory]()
+        Database.database().reference().child(historyChild).child(AppDelegate.shared().currenUser?.uid ?? "guest").queryLimited(toLast: 1000).observeSingleEvent(of: .value, with: { (snapshot) in
+            if let data = snapshot.value as? [String: Any] {
+                let dataArray = Array(data)
+                
+                let values = dataArray.map { $0.1 }
+                for dict in values {
+                    if let item = dict as? NSDictionary {
+                        
+                        guard let name = item["name"] as? String,
+                              let imageUrl = item["imageURL"] as? String,
+                              let day = item["day"] as? String,
+                              let count = item["count"] as? Int,
+                              let fileName = item["fileName"] as? String
+                        else {
+                            print("Error at get history")
+                            continue
+                        }
+                        let object = CountHistory(date: day, url: imageUrl, imageName: fileName, name: name, count: count)
+                        countHistory.append(object)
+                    }
+                }
+                
+            }
+            countHistory.sort {
+                $0.date > $1.date
+            }
+            
+            completionHandler(countHistory, nil)
+            
+        }) { (error) in
+            print(error.localizedDescription)
+            completionHandler(nil, CountError(error))
         }
     }
     

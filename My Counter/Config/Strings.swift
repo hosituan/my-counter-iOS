@@ -61,6 +61,10 @@ struct Strings {
         static let PlaceHolderName = "Chicken Egg"
         static let Name = "Name"
         
+        
+        //History
+        static let HistoryNavTitle = "Count History"
+        
     }
     
 }

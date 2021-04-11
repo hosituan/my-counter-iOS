@@ -11,5 +11,6 @@ struct CountResponse: BaseResponse {
     var message: String
     var url: String
     var fileName: String
+    var name: String
     var count: Int
 }

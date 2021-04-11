@@ -26,7 +26,11 @@ class UserLogin: NSObject, ObservableObject, LoginButtonDelegate, GIDSignInDeleg
             self.objectWillChange.send()
         }
     }
-    @Published var user: User?
+    @Published var user: User? {
+        didSet {
+            AppDelegate.shared().currenUser = user
+        }
+    }
     
     func logout() {
         fbLoginButton.sendActions(for: .touchUpInside)
@@ -132,6 +136,3 @@ class UserLogin: NSObject, ObservableObject, LoginButtonDelegate, GIDSignInDeleg
     }
     
 }
-
-
-
