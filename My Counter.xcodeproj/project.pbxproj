@@ -21,6 +21,10 @@
 		FB5A78C526098159003BDD6A /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A78C426098159003BDD6A /* LaunchView.swift */; };
 		FB5A78C8260982A3003BDD6A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A78C7260982A3003BDD6A /* MenuView.swift */; };
 		FB683C9426204D80006FDE43 /* SwiftUIListSeparator in Frameworks */ = {isa = PBXBuildFile; productRef = FB683C9326204D80006FDE43 /* SwiftUIListSeparator */; };
+		FB6A18DC26257CFA00BAD0CB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6A18DB26257CFA00BAD0CB /* ProfileView.swift */; };
+		FB6A18E026257D0A00BAD0CB /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6A18DF26257D0A00BAD0CB /* ProfileViewModel.swift */; };
+		FB6A1908262583AB00BAD0CB /* ProfileUIKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6A1907262583AB00BAD0CB /* ProfileUIKitView.swift */; };
+		FB6A195C262592EB00BAD0CB /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6A195B262592EB00BAD0CB /* RatingView.swift */; };
 		FB8AA20B26098E8100C7C0D2 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = FB8AA20A26098E8100C7C0D2 /* PartialSheet */; };
 		FB8AA2122609944F00C7C0D2 /* TemplateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA2112609944F00C7C0D2 /* TemplateCell.swift */; };
 		FB8AA2162609947100C7C0D2 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8AA2152609947100C7C0D2 /* Template.swift */; };
@@ -94,6 +98,10 @@
 		FB5A78B12609802D003BDD6A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		FB5A78C426098159003BDD6A /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		FB5A78C7260982A3003BDD6A /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		FB6A18DB26257CFA00BAD0CB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		FB6A18DF26257D0A00BAD0CB /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		FB6A1907262583AB00BAD0CB /* ProfileUIKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUIKitView.swift; sourceTree = "<group>"; };
+		FB6A195B262592EB00BAD0CB /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		FB8AA2112609944F00C7C0D2 /* TemplateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCell.swift; sourceTree = "<group>"; };
 		FB8AA2152609947100C7C0D2 /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		FB8AA26D26099A5200C7C0D2 /* CountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountViewModel.swift; sourceTree = "<group>"; };
@@ -215,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				FB50017E26124DB700D17411 /* CheckView.swift */,
+				FB6A195B262592EB00BAD0CB /* RatingView.swift */,
 				FBE97F3526221C6F001D34EE /* ActivityIndicator.swift */,
 				FBE97F3826221C89001D34EE /* TextInputAutoHeight.swift */,
 				FBED482226125CF900AF0BD4 /* SecureTextFiled.swift */,
@@ -228,6 +237,7 @@
 		FB5A78A926097F84003BDD6A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				FB6A18DA26257CF000BAD0CB /* Profile */,
 				FB2A463B2622319900BD7AFB /* History */,
 				FB97042F261459A700FB1319 /* TemplateList */,
 				FB9703EF26141F2700FB1319 /* Add Template */,
@@ -266,6 +276,16 @@
 				FB50017B26124B0100D17411 /* SubView */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		FB6A18DA26257CF000BAD0CB /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				FB6A18DB26257CFA00BAD0CB /* ProfileView.swift */,
+				FB6A1907262583AB00BAD0CB /* ProfileUIKitView.swift */,
+				FB6A18DF26257D0A00BAD0CB /* ProfileViewModel.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		FB8AA2142609946500C7C0D2 /* Models */ = {
@@ -614,11 +634,13 @@
 				FBED48362612665D00AF0BD4 /* RectangleButton.swift in Sources */,
 				FB9703FA26144D2F00FB1319 /* AddTemplateViewModel.swift in Sources */,
 				FB92D8A12622DDC100599B59 /* HistoryViewModel.swift in Sources */,
+				FB6A18E026257D0A00BAD0CB /* ProfileViewModel.swift in Sources */,
 				FB5A78C526098159003BDD6A /* LaunchView.swift in Sources */,
 				FB9703FD26144E6E00FB1319 /* FirebaseManager.swift in Sources */,
 				FB97043526145C2A00FB1319 /* TemplateListViewModel.swift in Sources */,
 				FB9703F726144AFF00FB1319 /* MenuActionRowView.swift in Sources */,
 				FBAD74EB2608DAE200A22FF6 /* View+Hidden.swift in Sources */,
+				FB6A18DC26257CFA00BAD0CB /* ProfileView.swift in Sources */,
 				FB9703F426144A9B00FB1319 /* TextSize16.swift in Sources */,
 				FBED48392612673800AF0BD4 /* TextSize14.swift in Sources */,
 				FBED483D2612F1B700AF0BD4 /* RegisterView.swift in Sources */,
@@ -631,12 +653,14 @@
 				FB5A78B22609802D003BDD6A /* HomeView.swift in Sources */,
 				FB5A78C8260982A3003BDD6A /* MenuView.swift in Sources */,
 				FB2F37532609E685004629A4 /* TemplateCollectionView.swift in Sources */,
+				FB6A195C262592EB00BAD0CB /* RatingView.swift in Sources */,
 				FBED48062612597700AF0BD4 /* MenuViewModel.swift in Sources */,
 				FBC8ECCE2621D64F006AA9D2 /* UploadResponse.swift in Sources */,
 				FBC8ECD32621D67A006AA9D2 /* CountResponse.swift in Sources */,
 				FB2A463D2622AD1A00BD7AFB /* HistoryView.swift in Sources */,
 				FBE97F3626221C6F001D34EE /* ActivityIndicator.swift in Sources */,
 				FB8AA26E26099A5200C7C0D2 /* CountViewModel.swift in Sources */,
+				FB6A1908262583AB00BAD0CB /* ProfileUIKitView.swift in Sources */,
 				FB92D8732622BC8000599B59 /* CountHistory.swift in Sources */,
 				FBC8ECD62621D74E006AA9D2 /* BaseResponse.swift in Sources */,
 				FBAD74E32608D86E00A22FF6 /* PhotoPickerView.swift in Sources */,

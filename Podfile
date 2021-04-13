@@ -19,6 +19,7 @@ target 'My Counter' do
   pod 'JGProgressHUD'
   pod "SwiftUIRefresh"
   pod 'Lightbox'
+  pod 'MXParallaxHeader'
   # Pods for My Counter
 
 end

@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: Color.Count.PrimaryTextColor.uiColor()]
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: Color.Count.PrimaryTextColor.uiColor()]
+        UITableView.appearance().showsVerticalScrollIndicator = false
         FirebaseApp.configure()
         setupRemoteConfig()
         

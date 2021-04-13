@@ -21,8 +21,12 @@ class CountViewModel: ObservableObject {
     @Published var countTime = 0
     @Published var countRespone: CountResponse? {
         didSet {
-            tempImage = selectedImage
-            selectedImage = countRespone != nil ? nil : selectedImage
+            if let safeRespone = countRespone {
+                tempImage = selectedImage
+                selectedImage = countRespone != nil ? nil : selectedImage
+                date = Date.getCurrentDate(withTime: true)
+                FirebaseManager().uploadHistory(safeRespone, userID: AppDelegate.shared().currenUser?.uid ?? "guest", day: date)
+            }
         }
     }
     @Published var tempImage: UIImage?
@@ -33,7 +37,12 @@ class CountViewModel: ObservableObject {
         }
     }
     @Published var method: CountMethod = .defaultMethod
-    
+    @Published var date: String = Date.getCurrentDate(withTime: true)
+    @Published var rating: Int = 0 {
+        didSet {
+            FirebaseManager().updateHistory(rate: rating, userID: AppDelegate.shared().currenUser?.uid ?? "guest", day: date)
+        }
+    }
     func start() {
         if selectedImage == nil {
             saveImage()

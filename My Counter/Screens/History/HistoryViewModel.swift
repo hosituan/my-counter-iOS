@@ -12,9 +12,6 @@ class HistoryViewModel: ObservableObject {
     @Published var historyList: [CountHistory] = []
     @Published var isRefresh = false
     @Published var isFirstLoad = true
-    init() {
-        loadHistory()
-    }
     func loadHistory() {
         if isFirstLoad {
             AppDelegate.shared().showProgressHUD()
@@ -36,4 +33,22 @@ class HistoryViewModel: ObservableObject {
             }
         }
     }
+    
+    func deleteHistory(at offset: IndexSet) {
+        if let first = offset.first {
+            AppDelegate.shared().showProgressHUD()
+            let history = historyList[first]
+            self.historyList.remove(at: first)
+            firebaseManager.removeHistory(countHistory: history) { (error) in
+                if error == nil {
+                    
+                }
+                else {
+                    AppDelegate.shared().showCommonAlertError(error!)
+                }
+                AppDelegate.shared().dismissProgressHUD()
+            }
+        }
+    }
+
 }

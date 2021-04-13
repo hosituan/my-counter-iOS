@@ -19,7 +19,7 @@ class AddTemplateViewModel: ObservableObject {
     let firebase = FirebaseManager()
     func addTemplate() {
         if let image = selectedImage, name != "" {
-            AppDelegate.shared().showAlertWithTwoButton(message: "\(name) will be added to template list!") { [self] _ in
+            AppDelegate.shared().showAlertWithTwoButton(message: name + Strings.EN.VerifyMessageAdd) { [self] _ in
                 let template = Template(id: randomString(length: idLength), image: image, name: name, description: description)
                 AppDelegate.shared().showProgressHUD()
                 firebase.uploadTemplate(template: template) { (error) in
@@ -39,7 +39,7 @@ class AddTemplateViewModel: ObservableObject {
         else {
             self.alertTitle = Strings.EN.ErrorTitle
             self.alertMessage = Strings.EN.WrongInput
-            showAlert = true
+            AppDelegate.shared().showCommonAlett(message: Strings.EN.WrongField)
         }
     }
     

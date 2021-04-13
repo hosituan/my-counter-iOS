@@ -32,6 +32,7 @@ struct Strings {
         static let SpentTime = "Total time spent: "
         static let CountTime = "Count time: "
         static let SaveTitle = "Save"
+        static let RateMessage = "Is this accurate? \nHelp us impove this: "
         
         //Login Screen
         static let LoginTitle = "Login"
@@ -60,10 +61,16 @@ struct Strings {
         static let DescriptionTitle = "Description"
         static let PlaceHolderName = "Chicken Egg"
         static let Name = "Name"
+        static let WrongField = "Please fill all information!"
+        static let VerifyMessageAdd  = " will be added to template list?"
         
         
         //History
         static let HistoryNavTitle = "Count History"
+        
+        //Profile
+        
+        static let ProfileTitle = "Profile"
         
     }
     

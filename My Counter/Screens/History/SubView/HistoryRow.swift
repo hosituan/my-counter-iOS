@@ -32,9 +32,8 @@ struct HistoryRow: View {
                         .foregroundColor(Color.Count.ContentGrayTextColor)
                         .font(.system(size: 12))
                         .italic()
-                }
+                }.padding([.leading, .top])
             }
-            Divider()
         }.buttonStyle(PlainButtonStyle())
     }
 }

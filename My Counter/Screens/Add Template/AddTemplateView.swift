@@ -38,15 +38,17 @@ struct AddTemplateView: View {
                             .frame(width: 20, height: 20, alignment: .center)
                     }
                 }
-                Image(uiImage: addTemplateViewModel.selectedImage ?? UIImage())
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(.vertical)
+                if let image = addTemplateViewModel.selectedImage {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(.vertical)
+                }
                 Button(action: {
                     addTemplateViewModel.addTemplate()
                 }) {
                     MainButtonView(title: Strings.EN.AddTitle)
-                }
+                }.padding(.top)
                 
             }
         }

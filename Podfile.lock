@@ -109,6 +109,7 @@ PODS:
   - leveldb-library (1.22.1)
   - Lightbox (2.5.0):
     - Imaginary (~> 5.0.0)
+  - MXParallaxHeader (1.1.0)
   - nanopb (2.30907.0):
     - nanopb/decode (= 2.30907.0)
     - nanopb/encode (= 2.30907.0)
@@ -137,6 +138,7 @@ DEPENDENCIES:
   - JGProgressHUD
   - KYDrawerController
   - Lightbox
+  - MXParallaxHeader
   - SDWebImageSwiftUI
   - SwiftUIRefresh
   - SwiftyJSON
@@ -171,6 +173,7 @@ SPEC REPOS:
     - KYDrawerController
     - leveldb-library
     - Lightbox
+    - MXParallaxHeader
     - nanopb
     - PromisesObjC
     - SDWebImage
@@ -207,6 +210,7 @@ SPEC CHECKSUMS:
   KYDrawerController: baad0e63b09c0cb564bd48f0f7f70f45d9176ebc
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Lightbox: cc3d5124f024fa8197fd23f913160db1c61a1852
+  MXParallaxHeader: de3c867e10ba46e8f6e20c8ee1f2a910372b3b94
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SDWebImage: 7acbb57630ac7db4a495547fb73916ff3e432f6b
@@ -214,6 +218,6 @@ SPEC CHECKSUMS:
   SwiftUIRefresh: ca6ae2718d25aad5dd68bbf5d2ae36ef6ade98bf
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: ee3c63d2dc211f173dec3f1d9f9a7c67386b4ccc
+PODFILE CHECKSUM: 8757468b22723bde84af23f9d22fb56b87177baf
 
 COCOAPODS: 1.10.1

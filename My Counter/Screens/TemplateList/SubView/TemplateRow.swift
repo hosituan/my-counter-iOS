@@ -32,6 +32,7 @@ struct TemplateRow: View {
                         .padding()
                 }
             }
+            Divider()
         }
     }
 }

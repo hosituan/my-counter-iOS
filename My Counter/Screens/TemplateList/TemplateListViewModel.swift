@@ -25,13 +25,12 @@ class TemplateViewModel: ObservableObject {
         if let first = offset.first {
             AppDelegate.shared().showProgressHUD()
             firebaseManager.removeTemplate(template: templates[first]) { (error) in
-                self.templates.remove(at: first)
-//                if error == nil {
-//
-//                }
-//                else {
-//                    AppDelegate.shared().showCommonAlertError(error!)
-//                }
+                if error == nil {
+                    self.templates.remove(at: first)
+                }
+                else {
+                    AppDelegate.shared().showCommonAlertError(error!)
+                }
                 AppDelegate.shared().dismissProgressHUD()
             }
         }

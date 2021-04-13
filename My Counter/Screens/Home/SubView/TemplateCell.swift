@@ -29,7 +29,7 @@ struct TemplateCell: View {
                 .italic()
                 .font(.system(size: 12))
                 .lineLimit(1)
-            Divider()
+            Spacer()
         }
         .buttonStyle(PlainButtonStyle())
         

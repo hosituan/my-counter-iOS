@@ -93,15 +93,19 @@ class FirebaseManager {
         
     }
     
-    func uploadHistory(_ countResponse: CountResponse, userID: String) {
+    func updateHistory(rate: Int, userID: String, day: String) {
+        Database.database().reference().child(historyChild).child(userID).child(day).child("rate").setValue(rate)
+    }
+    func uploadHistory(_ countResponse: CountResponse, userID: String, day: String) {
         let dict: Dictionary<String, Any>  = [
             "fileName": countResponse.fileName,
             "imageURL": countResponse.url,
             "day": Date.getCurrentDate(withTime: true),
             "count": countResponse.count,
-            "name": countResponse.name
+            "name": countResponse.name,
+            "rate": -1
         ]
-        Database.database().reference().child(historyChild).child(userID).child(Date.getCurrentDate(withTime: true)).updateChildValues(dict, withCompletionBlock: {
+        Database.database().reference().child(historyChild).child(userID).child(day).updateChildValues(dict, withCompletionBlock: {
             (error, ref) in
             if error == nil {
                 print("Uploaded response")
@@ -111,6 +115,9 @@ class FirebaseManager {
     
     func removeTemplate(template: TemplateServer, completionHandler: @escaping (CountError?) -> Void) {
         Database.database().reference().child(templateChild).child(template.id ?? "").removeValue() { (error, ref) in
+            if error == nil {
+                completionHandler(nil)
+            }
             completionHandler(CountError(error))
         }
     }
@@ -149,6 +156,18 @@ class FirebaseManager {
         }) { (error) in
             print(error.localizedDescription)
             completionHandler(nil, CountError(error))
+        }
+    }
+    
+    func removeHistory(countHistory: CountHistory?, completionHandler: @escaping ((CountError?) -> Void)) {
+        Database.database().reference().child(historyChild).child(AppDelegate.shared().currenUser?.uid ?? "guest").child(countHistory?.date ?? "").removeValue { (error, ref) in
+            if error == nil {
+                completionHandler(nil)
+            }
+            else {
+                completionHandler(CountError(error))
+            }
+            
         }
     }
     

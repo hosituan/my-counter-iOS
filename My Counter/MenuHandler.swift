@@ -12,7 +12,7 @@ class MenuHandler: ObservableObject {
     
     var dismissAction: (() -> Void) = {}
     @Published var isShowSearch = false
-    @Published var isTapAvatar = false
+    @Published var isTapAvatar = false 
     @Published var isTapNotification = false {
         didSet {
             

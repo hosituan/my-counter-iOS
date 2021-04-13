@@ -30,11 +30,13 @@ struct HistoryView: View {
                             
                         }
                     }
-            }
+            }.onDelete(perform: historyViewModel.deleteHistory(at:))
         }
         .listSeparatorStyle(.none)
-
-        .padding()
+        .onAppear() {
+            historyViewModel.loadHistory()
+        }
+        .padding(.top)
         .navigationBarTitle(Strings.EN.HistoryNavTitle)
     }
 }

@@ -14,6 +14,7 @@ struct CountView: View {
     @Environment(\.viewController) var viewControllerHolder: ViewControllerHolder
     @State var showActionSheet = false
     @ObservedObject var countViewModel: CountViewModel
+    @State var rate = 0.0
     init(template: TemplateServer) {
         self.countViewModel = CountViewModel(template: template)
     }
@@ -98,7 +99,14 @@ struct CountView: View {
                                 .bold()
                         }
                     }
-                    
+                    HStack {
+                        Text(Strings.EN.RateMessage)
+                            .italic()
+                            .modifier(TextSize12Bold())
+                        RatingView(rating: $countViewModel.rating)
+                    }
+                    .isHidden(countViewModel.countRespone == nil)
+                    .padding(.vertical)
                     Button(action: {
                         countViewModel.start()
 
