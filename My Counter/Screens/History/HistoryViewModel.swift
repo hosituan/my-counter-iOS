@@ -9,7 +9,11 @@ import Foundation
 import SwiftUI
 class HistoryViewModel: ObservableObject {
     let firebaseManager = FirebaseManager()
-    @Published var historyList: [CountHistory] = []
+    @Published var historyList: [CountHistory] = [] {
+        didSet {
+            objectWillChange.send()
+        }
+    }
     @Published var isRefresh = false
     @Published var isFirstLoad = true
     func loadHistory() {
@@ -36,12 +40,13 @@ class HistoryViewModel: ObservableObject {
     
     func deleteHistory(at offset: IndexSet) {
         if let first = offset.first {
-            AppDelegate.shared().showProgressHUD()
             let history = historyList[first]
-            self.historyList.remove(at: first)
+            AppDelegate.shared().showProgressHUD()
+
             firebaseManager.removeHistory(countHistory: history) { (error) in
                 if error == nil {
-                    
+                    self.historyList.remove(atOffsets: offset)
+                    self.objectWillChange.send()
                 }
                 else {
                     AppDelegate.shared().showCommonAlertError(error!)
@@ -49,6 +54,7 @@ class HistoryViewModel: ObservableObject {
                 AppDelegate.shared().dismissProgressHUD()
             }
         }
+        
     }
 
 }

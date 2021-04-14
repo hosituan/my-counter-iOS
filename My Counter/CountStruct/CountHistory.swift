@@ -13,4 +13,5 @@ struct CountHistory {
     var imageName: String
     var name: String
     var count: Int
+    var rate: Int
 }

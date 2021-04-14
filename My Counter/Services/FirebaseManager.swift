@@ -48,9 +48,7 @@ class FirebaseManager {
     }
     
     func uploadTemplate(template: Template, completionHandler: @escaping (CountError?) -> Void) {
-        let formater = DateFormatter()
-        formater.dateStyle = .short
-        let time = formater.string(from: Date())
+        let time = Date.getCurrentDate(withTime: true)
         let storageRef = Storage.storage().reference(forURL: storageUrl).child(template.name)
         let metadata = StorageMetadata()
         if let imageData = template.image.jpegData(compressionQuality: 0.5) {
@@ -118,7 +116,9 @@ class FirebaseManager {
             if error == nil {
                 completionHandler(nil)
             }
-            completionHandler(CountError(error))
+            else {
+                completionHandler(CountError(error))
+            }
         }
     }
     
@@ -136,12 +136,13 @@ class FirebaseManager {
                               let imageUrl = item["imageURL"] as? String,
                               let day = item["day"] as? String,
                               let count = item["count"] as? Int,
-                              let fileName = item["fileName"] as? String
+                              let fileName = item["fileName"] as? String,
+                              let rate = item["rate"] as? Int
                         else {
                             print("Error at get history")
                             continue
                         }
-                        let object = CountHistory(date: day, url: imageUrl, imageName: fileName, name: name, count: count)
+                        let object = CountHistory(date: day, url: imageUrl, imageName: fileName, name: name, count: count, rate: rate)
                         countHistory.append(object)
                     }
                 }

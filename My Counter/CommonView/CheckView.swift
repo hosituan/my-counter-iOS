@@ -14,9 +14,13 @@ struct CheckView: View {
     func toggle(){isChecked = !isChecked}
     var body: some View {
         Button(action: toggle){
-            HStack{
+            HStack (alignment: .top) {
                 Image(systemName: isChecked ? "checkmark.square": "square")
+                    .foregroundColor(Color.Count.PrimaryColor)
                 Text(title)
+                    .font(.system(size: 14))
+                    .italic()
+                    .foregroundColor(Color.Count.PrimaryColor)
             }
 
         }

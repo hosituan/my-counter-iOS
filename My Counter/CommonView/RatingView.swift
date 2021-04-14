@@ -10,6 +10,7 @@ import SwiftUI
 
 struct RatingView: View {
     @Binding var rating: Int
+    var date: String?
     var max: Int = 5
     var body: some View {
         HStack {
@@ -18,6 +19,9 @@ struct RatingView: View {
                     .foregroundColor(Color.orange)
                     .onTapGesture {
                         self.rating = index
+                        if let date = date {
+                            FirebaseManager().updateHistory(rate: self.rating, userID: AppDelegate.shared().currenUser?.uid ?? "guest", day: date)
+                        }
                     }
             }
         }

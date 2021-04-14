@@ -32,6 +32,7 @@ struct TemplateCollectionView: View {
                 }
                 .listRowBackground(Color.clear)
             }
+            Spacer()
         }
     }
 }

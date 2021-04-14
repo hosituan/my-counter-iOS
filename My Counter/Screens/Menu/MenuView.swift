@@ -92,10 +92,11 @@ struct MenuView: View {
                             .padding(.vertical)
                     }
                 }
-                adminActionView
-                    .isHidden(!userLogin.isLogin)
+                if userLogin.isLogin {
+                    adminActionView
+                }
                 normalUserActionView
-                    .isHidden(!userLogin.isLogin)
+                    //.isHidden(!userLogin.isLogin)
                 Spacer()
                 logoutView
                     .isHidden(!userLogin.isLogin)

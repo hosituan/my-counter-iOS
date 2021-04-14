@@ -14,7 +14,7 @@ struct TemplateRow: View {
     var body: some View {
         VStack {
             HStack {
-                VStack {
+                VStack(alignment: .leading) {
                     Text(teamplate.name ?? "")
                         .modifier(TextSize14Bold())
                     Text(teamplate.description ?? "")

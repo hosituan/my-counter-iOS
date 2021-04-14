@@ -14,7 +14,6 @@ struct CountView: View {
     @Environment(\.viewController) var viewControllerHolder: ViewControllerHolder
     @State var showActionSheet = false
     @ObservedObject var countViewModel: CountViewModel
-    @State var rate = 0.0
     init(template: TemplateServer) {
         self.countViewModel = CountViewModel(template: template)
     }
@@ -48,87 +47,110 @@ struct CountView: View {
         }
     }
     
-
+    
     
     var body: some View {
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading) {
-                    Text(countViewModel.template.description ?? "")
-                        .bold()
-                        .italic()
-                        .font(.system(size: 14))
-                        .padding(.bottom)
-                    Button(action: {
-                        AppDelegate.shared().requestCameraAccess() { result in
-                            if result {
-                                showActionSheet = true
-                                countViewModel.countRespone = nil
-                            }
-                        }
-       
-                    }, label: {
-                        MainButtonView(title: self.countViewModel.selectedImage == nil ? Strings.EN.SelectPhotoTitle : Strings.EN.ChangePhotoTitle)
-                    })
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading) {
+                Text(countViewModel.template.description ?? "")
+                    .bold()
+                    .italic()
+                    .font(.system(size: 14))
                     .padding(.bottom)
-                    if let img = self.countViewModel.selectedImage {
-                        Image(uiImage: img)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .cornerRadius(8)
-                            .padding(.bottom)
+                Button(action: {
+                    AppDelegate.shared().requestCameraAccess() { result in
+                        if result {
+                            showActionSheet = true
+                        }
                     }
                     
-                    if let url = URL(string: countViewModel.countRespone?.url ?? "") {
-                        VStack(alignment: .leading) {
-                            WebImage(url: url)
-                                .resizable()
-                                .placeholder(content: {
-                                    Image(uiImage: countViewModel.tempImage!)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .cornerRadius(8)
-                                })
-                                .aspectRatio(contentMode: .fill)
-                                .cornerRadius(8)
-                                .padding(.bottom)
-                            Text("\(Strings.EN.CountResultTitle)\(countViewModel.template.name ?? ""): \(countViewModel.countRespone?.count ?? 0)")
-                                .bold()
-                            Text("\(Strings.EN.SpentTime): \(countViewModel.spentTime) seconds")
-                                .bold()
-                            Text("\(Strings.EN.CountTime): \(countViewModel.countTime) seconds")
-                                .bold()
-                        }
-                    }
-                    HStack {
-                        Text(Strings.EN.RateMessage)
-                            .italic()
-                            .modifier(TextSize12Bold())
-                        RatingView(rating: $countViewModel.rating)
-                    }
-                    .isHidden(countViewModel.countRespone == nil)
-                    .padding(.vertical)
-                    Button(action: {
-                        countViewModel.start()
+                }, label: {
+                    MainButtonView(title: self.countViewModel.selectedImage == nil ? Strings.EN.SelectPhotoTitle : Strings.EN.ChangePhotoTitle)
+                })
+                .padding(.bottom)
+               
+                
+                if let url = URL(string: countViewModel.countResponse?.url ?? "") {
+                    VStack(alignment: .leading) {
+                        WebImage(url: url)
+                            .resizable()
+                            .placeholder(content: {
+                                Image(uiImage: countViewModel.selectedImage!)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .cornerRadius(8)
+                            })
 
-                    }, label: {
-                        MainButtonView(title: countViewModel.selectedImage != nil ? Strings.EN.CountTitle: Strings.EN.SaveTitle)
-                    })
-                    .isHidden(self.countViewModel.selectedImage == nil && self.countViewModel.tempImage == nil)
-                    .padding(.bottom)
+                            .aspectRatio(contentMode: .fill)
+                            .cornerRadius(8)
+                            .padding(.bottom)
+                            .onTapGesture {
+                                viewControllerHolder.value?.present(style: .fullScreen) {
+                                    ZStack(alignment: .top) {
+                                        PreviewViewImage(link: countViewModel.countResponse?.url ?? "")
+                                            .edgesIgnoringSafeArea(.all)
+                                        Text("\(Strings.EN.CountResultTitle)\(countViewModel.countResponse?.name ?? ""): \(countViewModel.countResponse?.count ?? 0)")
+                                            .bold()
+                                            .foregroundColor(.white)
+                                            .padding(.top)
+                                    }
+                                    
+                                }
+                            }
+ 
+                        Text("\(Strings.EN.CountResultTitle)\(countViewModel.template.name ?? ""): \(countViewModel.countResponse?.count ?? 0)")
+                            .bold()
+                        Text("\(Strings.EN.SpentTime): \(countViewModel.spentTime) seconds")
+                            .bold()
+                        Text("\(Strings.EN.CountTime): \(countViewModel.countTime) seconds")
+                            .bold()
+                        HStack {
+                            Text(Strings.EN.RateMessage)
+                                .italic()
+                                .modifier(TextSize12Bold())
+                            RatingView(rating: $countViewModel.rating)
+                        }
+                        .padding(.top)
+        
+                    }
                 }
-                .padding()
-                .actionSheet(isPresented: $showActionSheet) {
-                    sheet
+                else if let img = self.countViewModel.selectedImage {
+                    Image(uiImage: img)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(8)
+                        .padding(.bottom)
                 }
+                
+                
+                CheckView(isChecked: $countViewModel.showConfidence, title: Strings.EN.ShowConfince)
+                    .padding(.top)
+                    .isHidden(self.countViewModel.selectedImage == nil)
+                CheckView(isChecked: $countViewModel.isAdvanced, title: Strings.EN.AdvancedMethod)
+                    .padding(.top, 4)
+                    .isHidden(self.countViewModel.selectedImage == nil)
+                
+                Button(action: {
+                    countViewModel.start()
+                    
+                }, label: {
+                    MainButtonView(title: countViewModel.countResponse == nil ? Strings.EN.CountTitle: Strings.EN.SaveTitle)
+                })
+                .isHidden(self.countViewModel.selectedImage == nil)
+                .padding(.bottom)
             }
-            .navigationBarTitle(countViewModel.template.name ?? "")
-            .onDisappear() {
-                countViewModel.selectedImage = nil
-                countViewModel.countRespone = nil
-                countViewModel.tempImage = nil
-                AppDelegate.shared().dismissProgressHUD()
+            .padding()
+            .actionSheet(isPresented: $showActionSheet) {
+                sheet
             }
         }
+        .navigationBarTitle(countViewModel.template.name ?? "")
+        .onDisappear() {
+            countViewModel.selectedImage = nil
+            countViewModel.countResponse = nil
+            AppDelegate.shared().dismissProgressHUD()
+        }
+    }
 }
 
 

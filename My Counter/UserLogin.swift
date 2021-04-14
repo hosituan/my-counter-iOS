@@ -23,6 +23,9 @@ class UserLogin: NSObject, ObservableObject, LoginButtonDelegate, GIDSignInDeleg
     {
         didSet {
             UserDefaults.standard.set(isLogin, forKey: "isLogin")
+            if !isLogin {
+                AppDelegate.shared().currenUser = nil
+            }
             self.objectWillChange.send()
         }
     }

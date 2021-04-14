@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import SDWebImageSwiftUI
 struct HistoryRow: View {
-    var item: CountHistory
+    @State var item: CountHistory
     var body: some View {
         VStack {
             HStack {
@@ -17,11 +17,11 @@ struct HistoryRow: View {
                     WebImage(url: url)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(height: 100, alignment: .center)
+                        .frame(width: 160, height: 90, alignment: .center)
                         .cornerRadius(2)
                         .clipped()
                 }
-                Spacer()
+                
                 VStack(alignment: .leading) {
                     Text(item.name)
                         .modifier(TextSize14Bold())
@@ -32,8 +32,11 @@ struct HistoryRow: View {
                         .foregroundColor(Color.Count.ContentGrayTextColor)
                         .font(.system(size: 12))
                         .italic()
+                    RatingView(rating: $item.rate, date: item.date)
                 }.padding([.leading, .top])
+                Spacer()
             }
+            .frame(width: UIScreen.main.bounds.width - 32)
         }.buttonStyle(PlainButtonStyle())
     }
 }

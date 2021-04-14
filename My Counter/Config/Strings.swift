@@ -32,7 +32,9 @@ struct Strings {
         static let SpentTime = "Total time spent: "
         static let CountTime = "Count time: "
         static let SaveTitle = "Save"
-        static let RateMessage = "Is this accurate? \nHelp us impove this: "
+        static let RateMessage = "Is it accurate? \nHelp us impove it: "
+        static let ShowConfince = "Show Confidence"
+        static let AdvancedMethod = "Advanced Method \nIt will take more time, but high accucacy"
         
         //Login Screen
         static let LoginTitle = "Login"

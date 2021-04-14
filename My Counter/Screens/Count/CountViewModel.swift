@@ -19,23 +19,28 @@ class CountViewModel: ObservableObject {
     @Published var selectedImage: UIImage?
     @Published var spentTime = 0
     @Published var countTime = 0
-    @Published var countRespone: CountResponse? {
+    @Published var countResponse: CountResponse? {
         didSet {
-            if let safeRespone = countRespone {
-                tempImage = selectedImage
-                selectedImage = countRespone != nil ? nil : selectedImage
+            if let safeRespone = countResponse {
+                self.rating = 0
                 date = Date.getCurrentDate(withTime: true)
                 FirebaseManager().uploadHistory(safeRespone, userID: AppDelegate.shared().currenUser?.uid ?? "guest", day: date)
             }
         }
     }
-    @Published var tempImage: UIImage?
+    
     @Published var sourceType: UIImagePickerController.SourceType = .camera
     @Published var isDefault: Bool = true {
         didSet {
             method = isDefault ? .defaultMethod : .advanced
         }
     }
+    @Published var isAdvanced = true {
+        didSet {
+            countResponse = nil
+        }
+    }
+    @Published var showConfidence: Bool = false
     @Published var method: CountMethod = .defaultMethod
     @Published var date: String = Date.getCurrentDate(withTime: true)
     @Published var rating: Int = 0 {
@@ -44,16 +49,16 @@ class CountViewModel: ObservableObject {
         }
     }
     func start() {
-        if selectedImage == nil {
-            saveImage()
+        if countResponse == nil && selectedImage != nil {
+            startCount()
         }
         else {
-            startCount()
+            saveImage()
         }
     }
     
     func saveImage() {
-        guard let url = URL(string: countRespone?.url ?? "") else { return }
+        guard let url = URL(string: countResponse?.url ?? "") else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard
                 let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
@@ -89,16 +94,16 @@ class CountViewModel: ObservableObject {
                 AppDelegate.shared().updateHUD(text: Strings.EN.Uploading, value: self.spentTime)
                     
             }
-            api.uploadImage(image: img, template: template) { (result, error) in
+            api.uploadImage(image: img, template: template, advanced: isAdvanced) { (result, error) in
                 if error == nil {
                     spentTime.invalidate()
                     let countTime = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                         self.countTime += 1
                         AppDelegate.shared().updateHUD(text: Strings.EN.Counting, value: self.countTime)
                     }
-                    self.api.requestCount(imageName: result?.fileName ?? "" , template: self.template) { (result, error) in
+                    self.api.requestCount(imageName: result?.fileName ?? "" , template: self.template, showConfidence: self.showConfidence) { (result, error) in
                         if error == nil {
-                            self.countRespone = result
+                            self.countResponse = result
                         }
                         else {
                             self.error = error
@@ -125,3 +130,5 @@ enum CountMethod: String {
     case advanced = "2"
     case other = ""
 }
+
+

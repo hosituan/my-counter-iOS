@@ -11,14 +11,20 @@ import Alamofire
 import SwiftUI
 class API {
     let firebaseManagere = FirebaseManager()
-    func uploadImage(image: UIImage, template: TemplateServer, completionHandler: @escaping (UploadResponse?, CountError?) -> Void) {
+    func uploadImage(image: UIImage, template: TemplateServer, advanced: Bool = false, completionHandler: @escaping (UploadResponse?, CountError?) -> Void) {
         let parameters = [
             "name": template.name,
             "id": template.id
         ]
         print(parameters)
+        var img = image
+        print(image.size)
+        if !advanced {
+            if (image.size.width < 1000 || image.size.height < 1000) {
+                img = image.resizeImage(targetSize: CGSize(width: 1000, height: 1000))
+            }
+        }
         
-        let img = image.resizeImage(targetSize: CGSize(width: 1000, height: 1000))
         let imgData = img.jpegData(compressionQuality: 1)!
         AF.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(imgData, withName: "file",fileName: "file.jpg", mimeType: "image/jpg")
@@ -55,12 +61,14 @@ class API {
         })
     }
     
-    func requestCount(imageName: String, template: TemplateServer, completionHandler: @escaping (CountResponse?, CountError?) -> Void) {
+    func requestCount(imageName: String, template: TemplateServer, showConfidence: Bool = false, completionHandler: @escaping (CountResponse?, CountError?) -> Void) {
+        let con: Int = showConfidence ? 0 : 1
         let parameters = [
             "imageName": imageName,
-            "id": template.id,
-            "name": template.name
-        ]
+            "id": template.id ?? "",
+            "name": template.name ?? "default",
+            "showConfidence": con
+        ] as [String : Any]
         AF.request(CountRequest.count, method: .post, parameters: parameters)
             .responseJSON(completionHandler: { (response) in
                 switch response.result {

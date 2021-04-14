@@ -31,7 +31,10 @@ struct TemplateCell: View {
                 .lineLimit(1)
             Spacer()
         }
+        
+        .frame(maxHeight: UIScreen.main.bounds.height / 2, alignment: .center)
         .buttonStyle(PlainButtonStyle())
+        
         
     }
 }
