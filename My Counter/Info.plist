@@ -101,5 +101,10 @@
 	</array>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>&quot;Save photo&quot;</string>
+    <key>NSAppTransportSecurity</key>
+      <dict>
+          <key>NSAllowsArbitraryLoads</key>
+          <true/>
+      </dict>
 </dict>
 </plist>

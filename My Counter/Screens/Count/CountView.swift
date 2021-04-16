@@ -9,13 +9,16 @@ import Foundation
 import SwiftUI
 import SDWebImageSwiftUI
 import Alamofire
+import SocketIO
 
 struct CountView: View {
     @Environment(\.viewController) var viewControllerHolder: ViewControllerHolder
     @State var showActionSheet = false
     @ObservedObject var countViewModel: CountViewModel
+    
     init(template: TemplateServer) {
         self.countViewModel = CountViewModel(template: template)
+        
     }
     
     var sheet: ActionSheet {
@@ -47,11 +50,10 @@ struct CountView: View {
         }
     }
     
-    
-    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
+                
                 Text(countViewModel.template.description ?? "")
                     .bold()
                     .italic()
@@ -115,11 +117,13 @@ struct CountView: View {
                     }
                 }
                 else if let img = self.countViewModel.selectedImage {
-                    Image(uiImage: img)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(8)
-                        .padding(.bottom)
+                    ZStack {
+                        Image(uiImage: img)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .cornerRadius(8)
+                            .padding(.bottom)
+                    }
                 }
                 
                 
@@ -144,11 +148,14 @@ struct CountView: View {
                 sheet
             }
         }
+        .onAppear {
+            
+        }
         .navigationBarTitle(countViewModel.template.name ?? "")
         .onDisappear() {
-            countViewModel.selectedImage = nil
-            countViewModel.countResponse = nil
-            AppDelegate.shared().dismissProgressHUD()
+//            countViewModel.selectedImage = nil
+//            countViewModel.countResponse = nil
+//            AppDelegate.shared().dismissProgressHUD()
         }
     }
 }

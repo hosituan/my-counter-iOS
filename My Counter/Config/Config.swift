@@ -20,6 +20,8 @@ var apiUrl = "http://34.71.32.225" //default
 struct CountRequest {
     static let upload = apiUrl + "/upload"
     static let count = apiUrl + "/count"
+    static let countWithStep = apiUrl + "/countStep"
+    static let countWithBox = apiUrl + "/countWithBox"
 }
 
 

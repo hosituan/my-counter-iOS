@@ -15,7 +15,6 @@ class CountViewModel: ObservableObject {
         self.template = template
     }
     var template: TemplateServer
-    let api = API()
     @Published var selectedImage: UIImage?
     @Published var spentTime = 0
     @Published var countTime = 0
@@ -48,6 +47,20 @@ class CountViewModel: ObservableObject {
             FirebaseManager().updateHistory(rate: rating, userID: AppDelegate.shared().currenUser?.uid ?? "guest", day: date)
         }
     }
+    
+    @Published var boxResult: [Box]? {
+        didSet {
+            if let boxes = boxResult {
+                selectedImage = selectedImage?.circle(diameter: 50)
+//                for box in boxes{
+//
+//                }
+            }
+
+        }
+    }
+    
+
     func start() {
         if countResponse == nil && selectedImage != nil {
             startCount()
@@ -83,44 +96,79 @@ class CountViewModel: ObservableObject {
     }
     @Published var error: CountError?
     
+    func subscribeCountResult() {
+        AppDelegate.shared().api?.socket?.connect()
+        AppDelegate.shared().api?.socket!.on("countResult") { data, ack in
+            guard let dataInfo = data.first as? [String: Any], let json = dataInfo.jsonStringRepresentation  else { return }
+            do {
+                let result = try JSONDecoder().decode(CommonResponse.self, from: json)
+                if result.success, result.message == "Start counting", !self.startCounting {
+                    self.startCounting = true
+                }
+            }
+            catch let error as NSError {
+                print("Failed to load: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    var countTimeCounter: Timer?
+    var spentTimeCounter: Timer?
+    @Published var startCounting = false {
+        didSet {
+            if startCounting {
+                spentTimeCounter?.invalidate()
+                countTimeCounter = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                    self.countTime += 1
+                    self.spentTime += 1
+                    AppDelegate.shared().updateHUD(text: Strings.EN.Counting, value: self.countTime)
+                }
+            }
+        }
+    }
+    
     func startCount() {
-        spentTime = 0
+        self.startCounting = false
+        self.spentTime = 0
         self.countTime = 0
         if let img = selectedImage {
-            
             AppDelegate.shared().showProgressHUD()
-            let spentTime = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            subscribeCountResult()
+            spentTimeCounter = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                 self.spentTime += 1
                 AppDelegate.shared().updateHUD(text: Strings.EN.Uploading, value: self.spentTime)
-                    
             }
-            api.uploadImage(image: img, template: template, advanced: isAdvanced) { (result, error) in
-                if error == nil {
-                    spentTime.invalidate()
-                    let countTime = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                        self.countTime += 1
-                        AppDelegate.shared().updateHUD(text: Strings.EN.Counting, value: self.countTime)
-                    }
-                    self.api.requestCount(imageName: result?.fileName ?? "" , template: self.template, showConfidence: self.showConfidence) { (result, error) in
-                        if error == nil {
-                            self.countResponse = result
-                        }
-                        else {
-                            self.error = error
-                            self.showAlert = true
-                        }
-                        countTime.invalidate()
-                        AppDelegate.shared().dismissProgressHUD()
-                        self.spentTime += self.countTime
-                    }
-                }
-                else {
-                    spentTime.invalidate()
+            if false {
+                AppDelegate.shared().api?.requestBoxCount(image: selectedImage!, template: template, advanced: isAdvanced) { (result, error) in
+                    AppDelegate.shared().api?.socket?.disconnect()
                     AppDelegate.shared().dismissProgressHUD()
-                    self.error = error
-                    self.showAlert = true
+                    self.countTimeCounter?.invalidate()
+                    self.spentTimeCounter?.invalidate()
+                    if error == nil {
+                        self.boxResult = result?.result
+                    }
+                    else {
+                        self.error = error
+                        self.showAlert = true
+                    }
                 }
             }
+            else {
+                AppDelegate.shared().api?.count(image: img, template: template, advanced: isAdvanced, showConfidence: showConfidence) { (res, error) in
+                    AppDelegate.shared().api?.socket?.disconnect()
+                    AppDelegate.shared().dismissProgressHUD()
+                    self.countTimeCounter?.invalidate()
+                    self.spentTimeCounter?.invalidate()
+                    if error == nil {
+                        self.countResponse = res
+                    }
+                    else {
+                        self.error = error
+                        self.showAlert = true
+                    }
+                }
+            }
+            
         }
     }
 }
@@ -132,3 +180,20 @@ enum CountMethod: String {
 }
 
 
+extension UIImage {
+    func circle(diameter: CGFloat, color: UIColor = .green) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: diameter, height: diameter), false, 0)
+        let ctx = UIGraphicsGetCurrentContext()!
+        ctx.saveGState()
+
+        let rect = CGRect(x: 0, y: 0, width: diameter, height: diameter)
+        ctx.setFillColor(color.cgColor)
+        ctx.fillEllipse(in: rect)
+
+        ctx.restoreGState()
+        let img = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+
+        return img
+    }
+}

@@ -20,12 +20,8 @@ struct HistoryView: View {
                     .onTapGesture {
                         viewControllerHolder.value?.present(style: .fullScreen) {
                             ZStack(alignment: .top) {
-                                PreviewViewImage(link: historyViewModel.historyList[index].url)
+                                PreviewViewImage(link: historyViewModel.historyList[index].url, text: "\(Strings.EN.CountResultTitle)\(historyViewModel.historyList[index].name): \(historyViewModel.historyList[index].count)")
                                     .edgesIgnoringSafeArea(.all)
-                                Text("\(Strings.EN.CountResultTitle)\(historyViewModel.historyList[index].name): \(historyViewModel.historyList[index].count)")
-                                    .bold()
-                                    .foregroundColor(.white)
-                                    .padding(.top)
                             }
                             
                         }
@@ -36,7 +32,6 @@ struct HistoryView: View {
         .onAppear() {
             historyViewModel.loadHistory()
         }
-        .padding(.top)
         .navigationBarTitle(Strings.EN.HistoryNavTitle)
     }
 }

@@ -14,7 +14,7 @@ import Firebase
 import GoogleSignIn
 import FirebaseRemoteConfig
 import JGProgressHUD
-
+import SocketIO
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var currenUser: User?
     var hud = JGProgressHUD(style: .light)
+    var api: API?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: Color.Count.PrimaryTextColor.uiColor()]
@@ -33,8 +34,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // this will disable highlighting the cell when is selected
         UITableViewCell.appearance().selectionStyle = .none
-
         return true
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        //SocketManager.sharedInstance.closeConnection()
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        //SocketManager.sharedInstance.establishConnection()
     }
     
     
@@ -53,8 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
-      -> Bool {
-      return GIDSignIn.sharedInstance().handle(url)
+    -> Bool {
+        return GIDSignIn.sharedInstance().handle(url)
     }
     
     private func setupRemoteConfig() {
@@ -65,16 +73,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         remoteConfig.fetch { (status, error) in
             if status == .success {
                 print("Config fetched!")
+                self.api = API()
                 remoteConfig.activate { (success, erorr) in
                     if success {
                         apiUrl =  RemoteConfig.remoteConfig().configValue(forKey: "API_URL").stringValue ?? ""
                         print("API URL: " + apiUrl)
+                        
                     }
                 }
-              } else {
+            } else {
                 print("Config not fetched")
                 print("Error: \(error?.localizedDescription ?? "No error available.")")
-              }
+            }
         }
     }
 }
@@ -87,30 +97,30 @@ extension AppDelegate {
     func requestCameraAccess(completionHandler: @escaping (Bool) -> Void) {
         // handler in .requestAccess is needed to process user's answer to our request
         switch AVCaptureDevice.authorizationStatus(for: .video) {
-            case .authorized: // The user has previously granted access to the camera.
-                completionHandler(true)
+        case .authorized: // The user has previously granted access to the camera.
+            completionHandler(true)
             
-            case .notDetermined: // The user has not yet been asked for camera access.
-                AVCaptureDevice.requestAccess(for: .video) { granted in
-                    if granted {
-                        completionHandler(true)
-                    }
+        case .notDetermined: // The user has not yet been asked for camera access.
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted {
+                    completionHandler(true)
                 }
+            }
             
-            case .denied: // The user has previously denied access.
-                camDenied()
-                return
-
-            case .restricted: // The user can't grant access due to restrictions.
-                let alert = UIAlertController(title: "Restricted",
-                                                      message: "You've been restricted from using the camera on this device. Without camera access this feature won't work. Please contact the device owner so they can give you access.",
-                                                      preferredStyle: .alert)
-
-                        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                        alert.addAction(okAction)
-                UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
-                completionHandler(false)
-                return
+        case .denied: // The user has previously denied access.
+            camDenied()
+            return
+            
+        case .restricted: // The user can't grant access due to restrictions.
+            let alert = UIAlertController(title: "Restricted",
+                                          message: "You've been restricted from using the camera on this device. Without camera access this feature won't work. Please contact the device owner so they can give you access.",
+                                          preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
+            completionHandler(false)
+            return
         @unknown default:
             break
         }
@@ -121,21 +131,21 @@ extension AppDelegate {
         DispatchQueue.main.async
         {
             var alertText = "It looks like your privacy settings are preventing us from accessing your camera to do barcode scanning. You can fix this by doing the following:\n\n1. Close this app.\n\n2. Open the Settings app.\n\n3. Scroll to the bottom and select this app in the list.\n\n4. Turn the Camera on.\n\n5. Open this app and try again."
-
+            
             var alertButton = "OK"
             var goAction = UIAlertAction(title: alertButton, style: .default, handler: nil)
-
+            
             if UIApplication.shared.canOpenURL(URL(string: UIApplication.openSettingsURLString)!)
             {
                 alertText = "It looks like your privacy settings are preventing us from accessing your camera to do barcode scanning. You can fix this by doing the following:\n\n1. Touch the Go button below to open the Settings app.\n\n2. Turn the Camera on.\n\n3. Open this app and try again."
-
+                
                 alertButton = "Go"
-
+                
                 goAction = UIAlertAction(title: alertButton, style: .default, handler: {(alert: UIAlertAction!) -> Void in
                     UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
                 })
             }
-
+            
             let alert = UIAlertController(title: "Error", message: alertText, preferredStyle: .alert)
             alert.addAction(goAction)
             UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
@@ -146,7 +156,7 @@ extension AppDelegate {
 //MARK: -- Alert
 extension AppDelegate {
     func showAlertWithTwoButton(title: String? = nil, message: String?, action: @escaping ((UIAlertAction?) -> Void)) {
-
+        
         let alert = UIAlertController(title: message, message: nil, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: action))

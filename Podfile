@@ -20,6 +20,9 @@ target 'My Counter' do
   pod "SwiftUIRefresh"
   pod 'Lightbox'
   pod 'MXParallaxHeader'
+  pod 'SnapKit'
+  pod 'OpenCV'
+  pod 'Socket.IO-Client-Swift'
   # Pods for My Counter
 
 end
