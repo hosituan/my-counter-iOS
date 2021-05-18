@@ -11,7 +11,7 @@ import SwiftUI
 struct TextSize16Bold: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .foregroundColor(Color.Count.PrimaryTextColor)
+            .foregroundColor(Color.Count.PrimaryColor)
             .font(.system(size: 16, weight: .bold, design: .default))
             
     }

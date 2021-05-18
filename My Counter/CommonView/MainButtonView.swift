@@ -11,7 +11,7 @@ import SwiftUI
 struct MainButtonView: View {
     var title = Strings.EN.DefaultButtonTitle
     var backgroundColor = Color.Count.PrimaryColor
-    var textColor = Color.white
+    var textColor = Color.Count.PrimaryTextColor
     var body: some View {
         ZStack {
             Rectangle()

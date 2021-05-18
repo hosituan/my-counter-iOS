@@ -26,9 +26,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var api: API?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: Color.Count.PrimaryTextColor.uiColor()]
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: Color.Count.PrimaryTextColor.uiColor()]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.black]
+        UIBarButtonItem.appearance().tintColor = .black
         UITableView.appearance().showsVerticalScrollIndicator = false
+        
+        UITableView.appearance().separatorStyle = .none
+        UITableViewCell.appearance().backgroundColor = .clear
+        UITableView.appearance().backgroundColor = .clear
+        
+        
         FirebaseApp.configure()
         setupRemoteConfig()
         
@@ -231,7 +238,6 @@ extension UIApplication {
         return nil
     }
 }
-
 
 
 

@@ -18,6 +18,7 @@ struct ProfileView: View {
                 Spacer()
             }
         }.navigationBarTitle(Text(profileViewModel.user?.displayName ?? Strings.EN.ProfileTitle))
+        .background(LinearGradient(gradient: Gradient(colors: [Color.Count.TopBackgroundColor, Color.Count.BackgroundColor]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all))
     }
 }
 

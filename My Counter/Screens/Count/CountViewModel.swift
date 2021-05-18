@@ -9,13 +9,30 @@ import Foundation
 import Combine
 import UIKit
 import SDWebImage
+import SwiftUI
+import UIImageColors
 
 class CountViewModel: ObservableObject {
     init(template: TemplateServer) {
         self.template = template
     }
     var template: TemplateServer
-    @Published var selectedImage: UIImage?
+    @Published var selectedImage: UIImage? {
+        didSet {
+            selectedImage?.getColors { color in
+                if let primaryColor = color?.primary, let secondaryColor = color?.secondary, let backgroundColor = color?.background {
+                    Color.Count.BackgroundColor = Color(backgroundColor)
+                    Color.Count.PrimaryColor = Color(primaryColor)
+                    Color.Count.PrimaryTextColor = Color(secondaryColor)
+                    
+                    self.objectWillChange.send()
+                }
+
+            }
+            
+            countResponse = nil
+        }
+    }
     @Published var spentTime = 0
     @Published var countTime = 0
     @Published var countResponse: CountResponse? {
@@ -138,7 +155,7 @@ class CountViewModel: ObservableObject {
                 self.spentTime += 1
                 AppDelegate.shared().updateHUD(text: Strings.EN.Uploading, value: self.spentTime)
             }
-            if false {
+            if true {
                 AppDelegate.shared().api?.requestBoxCount(image: selectedImage!, template: template, advanced: isAdvanced) { (result, error) in
                     AppDelegate.shared().api?.socket?.disconnect()
                     AppDelegate.shared().dismissProgressHUD()

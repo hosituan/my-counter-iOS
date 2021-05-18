@@ -7,7 +7,6 @@
 
 import SwiftUI
 import ASCollectionView_SwiftUI
-import QGrid
 import SwiftUIListSeparator
 import SwiftUIRefresh
 
@@ -21,12 +20,14 @@ struct HomeView: View {
                 Text("Select template")
                     .bold()
                     .padding()
+                    .listRowBackground(Color.clear)
                 TemplateCollectionView(templateList: homeViewModel.templateList, selection: $homeViewModel.selection, didTap: $homeViewModel.isShowCount)
+                    .listRowBackground(Color.clear)
             }
             .pullToRefresh(isShowing: $homeViewModel.isShowingRefresh, onRefresh: {
                 homeViewModel.loadTemplate()
             })
-            .listSeparatorStyle(.none)
+            
             .background(navigationLinkList)
             .edgesIgnoringSafeArea(.bottom)
             .listStyle(PlainListStyle())
@@ -37,36 +38,43 @@ struct HomeView: View {
                 ZStack(alignment: .topTrailing) {
                     Image("nav-menu")
                         .renderingMode(.template)
-                        .foregroundColor(Color.Count.PrimaryTextColor)
+                        .foregroundColor(Color.Count.PrimaryColor)
                         .foregroundColor(.black)
                         .padding(.vertical)
                         .padding(.leading)
                         .padding(.trailing, 4)
                 }
             })
+            .background(LinearGradient(gradient: Gradient(colors: [Color.Count.TopBackgroundColor, Color.Count.BackgroundColor]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all))
+            .listSeparatorStyle(.none)
             .onAppear() {
                 UITableView.appearance().tableFooterView = UIView()
                 UITableView.appearance().separatorStyle = .none
             }
             
         }
+
+        
         .buttonStyle(PlainButtonStyle())
         .edgesIgnoringSafeArea(.bottom)
         .accentColor(Color.Count.PrimaryColor)
-        
     }
     
     var navigationLinkList: some View {
-        VStack {
-            NavigationLink(
-                destination: AddTemplateView(),
-                isActive: $menuHandler.isShowAddTemplate,
-                label: {})
-            NavigationLink(destination: TemplateListView(templates: homeViewModel.templateList), isActive: $menuHandler.isShowTemplateList) {}
-            NavigationLink(destination: CountView(template: homeViewModel.selected), isActive: $homeViewModel.isShowCount) {}
-            NavigationLink(destination: HistoryView(), isActive: $menuHandler.isShowHistory) {}
-            NavigationLink(destination: ProfileView(), isActive: $menuHandler.isTapAvatar) {}
-        }.opacity(0)
+        ZStack {
+            VStack {
+                NavigationLink(
+                    destination: AddTemplateView(),
+                    isActive: $menuHandler.isShowAddTemplate,
+                    label: {})
+                NavigationLink(destination: TemplateListView(templates: homeViewModel.templateList), isActive: $menuHandler.isShowTemplateList) {}
+                NavigationLink(destination: CountView(template: homeViewModel.selected), isActive: $homeViewModel.isShowCount) {}
+                NavigationLink(destination: HistoryView(), isActive: $menuHandler.isShowHistory) {}
+                NavigationLink(destination: ProfileView(), isActive: $menuHandler.isTapAvatar) {}
+            }
+            .background(Color.red)
+        }
+
     }
 }
 

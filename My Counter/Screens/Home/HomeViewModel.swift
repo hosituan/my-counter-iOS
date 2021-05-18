@@ -19,7 +19,11 @@ class HomeViewModel: ObservableObject {
         }
     }
     @Published var isFirstLoad = true
-    @Published var selected: TemplateServer = TemplateServer()
+    @Published var selected: TemplateServer = TemplateServer() {
+        didSet {
+            
+        }
+    }
     @Published var isShowCount: Bool = false {
         willSet {
             objectWillChange.send()

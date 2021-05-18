@@ -50,9 +50,11 @@ struct AddTemplateView: View {
                     MainButtonView(title: Strings.EN.AddTitle)
                 }.padding(.top)
                 
-            }
+            }.listRowBackground(Color.clear)
+            
         }
         .listSeparatorStyle(.none)
+        .background(LinearGradient(gradient: Gradient(colors: [Color.Count.TopBackgroundColor, Color.Count.BackgroundColor]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all))
         .navigationBarTitle(Strings.EN.AddTemplateNavTitle)
     }
     

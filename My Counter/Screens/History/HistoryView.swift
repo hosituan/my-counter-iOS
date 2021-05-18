@@ -26,12 +26,15 @@ struct HistoryView: View {
                             
                         }
                     }
+                    .listRowBackground(Color.clear)
             }.onDelete(perform: historyViewModel.deleteHistory(at:))
+            
         }
         .listSeparatorStyle(.none)
         .onAppear() {
             historyViewModel.loadHistory()
         }
+        .background(LinearGradient(gradient: Gradient(colors: [Color.Count.TopBackgroundColor, Color.Count.BackgroundColor]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all))
         .navigationBarTitle(Strings.EN.HistoryNavTitle)
     }
 }

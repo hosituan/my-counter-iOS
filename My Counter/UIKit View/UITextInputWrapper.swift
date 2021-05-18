@@ -22,7 +22,7 @@ struct UITextInputWrapper: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<UITextInputWrapper>) -> UITextView {
         let textField = UITextView()
         textField.delegate = context.coordinator
-
+        textField.backgroundColor = .clear
         textField.isEditable = true
         textField.font = UIFont.preferredFont(forTextStyle: .body)
         textField.isSelectable = true

@@ -50,6 +50,26 @@ struct CountView: View {
         }
     }
     
+    var rateView: some View {
+        VStack(alignment: .leading) {
+            CheckView(isChecked: $countViewModel.showConfidence, title: Strings.EN.ShowConfince)
+                .padding(.top)
+                .isHidden(self.countViewModel.selectedImage == nil)
+            CheckView(isChecked: $countViewModel.isAdvanced, title: Strings.EN.AdvancedMethod)
+                .padding(.top, 4)
+                .isHidden(self.countViewModel.selectedImage == nil)
+            
+            Button(action: {
+                countViewModel.start()
+                
+            }, label: {
+                MainButtonView(title: countViewModel.countResponse == nil ? Strings.EN.CountTitle: Strings.EN.SaveTitle)
+            })
+            .isHidden(self.countViewModel.selectedImage == nil)
+            .padding(.bottom)
+        }
+    }
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
@@ -126,36 +146,20 @@ struct CountView: View {
                     }
                 }
                 
+                rateView
                 
-                CheckView(isChecked: $countViewModel.showConfidence, title: Strings.EN.ShowConfince)
-                    .padding(.top)
-                    .isHidden(self.countViewModel.selectedImage == nil)
-                CheckView(isChecked: $countViewModel.isAdvanced, title: Strings.EN.AdvancedMethod)
-                    .padding(.top, 4)
-                    .isHidden(self.countViewModel.selectedImage == nil)
-                
-                Button(action: {
-                    countViewModel.start()
-                    
-                }, label: {
-                    MainButtonView(title: countViewModel.countResponse == nil ? Strings.EN.CountTitle: Strings.EN.SaveTitle)
-                })
-                .isHidden(self.countViewModel.selectedImage == nil)
-                .padding(.bottom)
             }
             .padding()
             .actionSheet(isPresented: $showActionSheet) {
                 sheet
             }
         }
-        .onAppear {
-            
-        }
+        .background(LinearGradient(gradient: Gradient(colors: [Color.Count.TopBackgroundColor, Color.Count.BackgroundColor]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all))
         .navigationBarTitle(countViewModel.template.name ?? "")
         .onDisappear() {
-//            countViewModel.selectedImage = nil
-//            countViewModel.countResponse = nil
-//            AppDelegate.shared().dismissProgressHUD()
+            countViewModel.selectedImage = nil
+            countViewModel.countResponse = nil
+            AppDelegate.shared().dismissProgressHUD()
         }
     }
 }

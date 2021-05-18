@@ -129,6 +129,7 @@ PODS:
   - SwiftUIRefresh (0.0.3):
     - Introspect (~> 0.1.0)
   - SwiftyJSON (5.0.1)
+  - UIImageColors (2.1.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
@@ -150,6 +151,7 @@ DEPENDENCIES:
   - Socket.IO-Client-Swift
   - SwiftUIRefresh
   - SwiftyJSON
+  - UIImageColors
 
 SPEC REPOS:
   trunk:
@@ -192,6 +194,7 @@ SPEC REPOS:
     - Starscream
     - SwiftUIRefresh
     - SwiftyJSON
+    - UIImageColors
 
 SPEC CHECKSUMS:
   Alamofire: bfbc4c2fe5909b1d94fb4ef2277c6b3727ef5dae
@@ -233,7 +236,8 @@ SPEC CHECKSUMS:
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   SwiftUIRefresh: ca6ae2718d25aad5dd68bbf5d2ae36ef6ade98bf
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+  UIImageColors: d2ef3b0877d203cbb06489eeb78ea8b7788caabe
 
-PODFILE CHECKSUM: af97bfa4ff964afe62ea71ad52c770be485baf73
+PODFILE CHECKSUM: a2798d105b434a6ec67bfe8c2b15945f6b9bf500
 
 COCOAPODS: 1.10.1

@@ -23,6 +23,7 @@ target 'My Counter' do
   pod 'SnapKit'
   pod 'OpenCV'
   pod 'Socket.IO-Client-Swift'
+  pod 'UIImageColors'
   # Pods for My Counter
 
 end

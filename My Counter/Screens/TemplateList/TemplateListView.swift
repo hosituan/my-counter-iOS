@@ -19,6 +19,7 @@ struct TemplateListView: View {
                 ForEach(templateViewModel.templates.indices, id: \.self) { index in
                     let template = templateViewModel.templates[index]
                     TemplateRow(teamplate: template)
+                        .listRowBackground(Color.clear)
                 }.onDelete(perform: templateViewModel.deleteTemplate(at:))
             }
             .listSeparatorStyle(.none)
@@ -26,6 +27,7 @@ struct TemplateListView: View {
                 templateViewModel.loadTemplate()
             }
         }.navigationBarTitle(Strings.EN.TemplateListNavTitle)
+        .background(LinearGradient(gradient: Gradient(colors: [Color.Count.TopBackgroundColor, Color.Count.BackgroundColor]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all))
     }
     
 }
