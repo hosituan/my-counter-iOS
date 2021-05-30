@@ -10,7 +10,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct TemplateCell: View {
-    var template: TemplateServer
+    var template: Template
     var body: some View {
         VStack {
             if let urlStr = template.imageUrl, let url = URL(string: urlStr) {

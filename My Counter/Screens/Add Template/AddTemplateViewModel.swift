@@ -23,9 +23,9 @@ class AddTemplateViewModel: ObservableObject {
         if let image = selectedImage, name != "", driveID != "" {
             let id = randomString(length: idLength)
             AppDelegate.shared().showAlertWithTwoButton(message: name + Strings.EN.VerifyMessageAdd) { [self] _ in
-                let template = Template(id: id, image: image, name: name, description: description, driveID: driveID)
+                let template = Template(id: id, name: name, description: description, driveID: driveID)
                 AppDelegate.shared().showProgressHUD()
-                firebase.uploadTemplate(template: template) { (error) in
+                firebase.uploadTemplate(template: template, image: image) { (error) in
                     AppDelegate.shared().dismissProgressHUD()
                     if error == nil {
                         self.alertTitle = Strings.EN.DoneTitle

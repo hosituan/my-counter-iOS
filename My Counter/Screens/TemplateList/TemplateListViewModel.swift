@@ -12,7 +12,7 @@ import SwiftUI
 
 class TemplateViewModel: ObservableObject {
     let firebaseManager = FirebaseManager()
-    @Published var templates: [TemplateServer] = [TemplateServer]()
+    @Published var templates: [Template] = [Template]()
     @Published var isShowingRefresh = false
     func loadTemplate() {
         firebaseManager.loadTemplate { (result) in

@@ -55,21 +55,14 @@ class API {
     }
     
     
-    func count(image: UIImage, template: TemplateServer, advanced: Bool = false, completionHandler: @escaping (BoxResponse?, CountError?) -> Void) {
+    func count(image: UIImage, template: Template, completionHandler: @escaping (BoxResponse?, CountError?) -> Void) {
         let parameters = [
             "name": template.name,
             "id": template.id,
         ]
         print(parameters)
-        var img = image
         print(image.size)
-        if !advanced {
-            if (image.size.width < 1000 || image.size.height < 1000) {
-                img = image.resizeImage(targetSize: CGSize(width: 1000, height: 1000))
-            }
-        }
-        
-        let imgData = img.jpegData(compressionQuality: 1)!
+        let imgData = image.jpegData(compressionQuality: 1)!
         AF.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(imgData, withName: "file",fileName: "file.jpg", mimeType: "image/jpg")
             for (key, value) in parameters {
@@ -105,7 +98,7 @@ class API {
         })
     }
     
-    func uploadImage(image: UIImage, template: TemplateServer, advanced: Bool = false, completionHandler: @escaping (UploadResponse?, CountError?) -> Void) {
+    func uploadImage(image: UIImage, template: Template, advanced: Bool = false, completionHandler: @escaping (UploadResponse?, CountError?) -> Void) {
         let parameters = [
             "name": template.name,
             "id": template.id
@@ -113,6 +106,7 @@ class API {
         print(parameters)
         var img = image
         print(image.size)
+        
         if !advanced {
             if (image.size.width < 1000 || image.size.height < 1000) {
                 img = image.resizeImage(targetSize: CGSize(width: 1000, height: 1000))

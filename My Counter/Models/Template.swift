@@ -7,16 +7,8 @@
 
 import Foundation
 import SwiftUI
-struct Template: Identifiable {
-    var id: String = ""
-    var image: UIImage = UIImage()
-    var name: String = ""
-    var description = ""
-    var driveID = ""
-}
 
-
-struct TemplateServer: Codable {
+struct Template: Codable {
     var id: String?
     var name: String?
     var description: String?

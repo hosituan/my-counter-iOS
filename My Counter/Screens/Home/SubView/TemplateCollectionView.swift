@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TemplateCollectionView: View {
-    var templateList: [TemplateServer]
+    var templateList: [Template]
     var columns = 3
     @Binding var selection: Int
     @Binding var didTap: Bool

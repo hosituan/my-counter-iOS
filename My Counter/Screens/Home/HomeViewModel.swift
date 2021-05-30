@@ -12,14 +12,14 @@ import UIKit
 class HomeViewModel: ObservableObject {
     //let objectWillChange: ObservableObjectPublisher = ObservableObjectPublisher()
     let firebaseManager = FirebaseManager()
-    @Published var templateList: [TemplateServer] = [TemplateServer]()
+    @Published var templateList: [Template] = [Template]()
     @Published var selection: Int = 0 {
         didSet {
             selected = templateList[selection]
         }
     }
     @Published var isFirstLoad = true
-    @Published var selected: TemplateServer = TemplateServer() {
+    @Published var selected: Template = Template() {
         didSet {
             AppDelegate.shared().api?.prepare(id: selected.id ?? "", completionHandler: { (res) in
                 print(res)

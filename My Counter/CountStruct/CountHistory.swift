@@ -10,7 +10,6 @@ import Foundation
 struct CountHistory {
     var date: String
     var url: String
-    var imageName: String
     var name: String
     var count: Int
     var rate: Int

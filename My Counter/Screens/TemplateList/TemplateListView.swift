@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TemplateListView: View {
     @ObservedObject var templateViewModel = TemplateViewModel()
-    init(templates: [TemplateServer]) {
+    init(templates: [Template]) {
         templateViewModel.templates = templates
     }
     var body: some View {

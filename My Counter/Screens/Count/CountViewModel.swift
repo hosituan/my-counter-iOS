@@ -13,10 +13,10 @@ import SwiftUI
 import UIImageColors
 
 class CountViewModel: ObservableObject {
-    init(template: TemplateServer) {
+    init(template: Template) {
         self.template = template
     }
-    var template: TemplateServer
+    var template: Template
     
     var tempImage: UIImage?
     @Published var resultImage: UIImage?
@@ -37,15 +37,12 @@ class CountViewModel: ObservableObject {
     @Published var spentTime = 0
     @Published var countTime = 0
     @Published var sourceType: UIImagePickerController.SourceType = .camera
-    @Published var isAdvanced = true {
-        didSet {
-            resultImage = nil
-            boxResponse = nil
-        }
-    }
     @Published var showConfidence: Bool = false {
         didSet {
-            
+            if let boxResponse = boxResponse, let selectedImage = selectedImage {
+                resultImage = selectedImage
+                resultImage = resultImage?.drawEclipseOnImage(boxes: boxResponse.result, showConfident: showConfidence)
+            }
         }
     }
     @Published var date: String = Date.getCurrentDate(withTime: true)
@@ -60,15 +57,10 @@ class CountViewModel: ObservableObject {
             if let boxResponse = boxResponse, let selectedImage = selectedImage {
                 resultImage = selectedImage
                 let boxes = boxResponse.result
-                self.rating = 0
                 date = Date.getCurrentDate(withTime: true)
-                var rects = [CGRect]()
-                for box in boxes {
-                    let rect = CGRect(x: box.x, y: box.y , width: box.width, height: box.height)
-                    rects.append(rect)
-                }
-                resultImage = resultImage?.drawEclipseOnImage(rects: rects)
-                FirebaseManager().uploadHistory(boxResponse, userID: AppDelegate.shared().currenUser?.uid ?? "guest", day: date)
+                self.rating = 0
+                resultImage = resultImage?.drawEclipseOnImage(boxes: boxes, showConfident: showConfidence)
+                FirebaseManager().uploadHistory(resultImage, name: template.name, count: boxes.count, userID: AppDelegate.shared().currenUser?.uid ?? "guest", day: date)
             }
         }
     }
@@ -132,20 +124,24 @@ class CountViewModel: ObservableObject {
         }
     }
     
-
-    
     func startCount() {
         self.startCounting = false
         self.spentTime = 0
         self.countTime = 0
         if let img = selectedImage {
+            if (img.size.width < 1000 || img.size.height < 1000) {
+                selectedImage = img.resizeImage(targetSize: CGSize(width: 1000, height: 1000))
+            }
             AppDelegate.shared().showProgressHUD()
             subscribeCountResult()
             spentTimeCounter = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                 self.spentTime += 1
                 AppDelegate.shared().updateHUD(text: Strings.EN.Uploading, value: self.spentTime)
             }
-            AppDelegate.shared().api?.count(image: img, template: template, advanced: isAdvanced) { (result, error) in
+            guard let selectedImage = selectedImage else {
+                return
+            }
+            AppDelegate.shared().api?.count(image: selectedImage, template: template) { (result, error) in
                 AppDelegate.shared().api?.socket?.disconnect()
                 AppDelegate.shared().dismissProgressHUD()
                 self.countTimeCounter?.invalidate()
@@ -160,23 +156,5 @@ class CountViewModel: ObservableObject {
             }
             
         }
-    }
-}
-
-extension UIImage {
-    func circle(diameter: CGFloat, color: UIColor = .green) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: diameter, height: diameter), false, 0)
-        let ctx = UIGraphicsGetCurrentContext()!
-        ctx.saveGState()
-        
-        let rect = CGRect(x: 0, y: 0, width: diameter, height: diameter)
-        ctx.setFillColor(color.cgColor)
-        ctx.fillEllipse(in: rect)
-        
-        ctx.restoreGState()
-        let img = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        
-        return img
     }
 }

@@ -16,9 +16,8 @@ struct CountView: View {
     @State var showActionSheet = false
     @ObservedObject var countViewModel: CountViewModel
     
-    init(template: TemplateServer) {
+    init(template: Template) {
         self.countViewModel = CountViewModel(template: template)
-        
     }
     
     var sheet: ActionSheet {
@@ -55,8 +54,6 @@ struct CountView: View {
             CheckView(isChecked: $countViewModel.showConfidence, title: Strings.EN.ShowConfince)
                 .padding(.top)
                 .isHidden(self.countViewModel.selectedImage == nil)
-            CheckView(isChecked: $countViewModel.isAdvanced, title: Strings.EN.AdvancedMethod)
-                .isHidden(self.countViewModel.selectedImage == nil)
             if countViewModel.boxResponse != nil {
                 VStack(alignment: .leading) {
                     Text("\(Strings.EN.CountResultTitle)\(countViewModel.template.name ?? ""): \(countViewModel.boxResponse?.result.count ?? 0)")
@@ -73,7 +70,7 @@ struct CountView: View {
                         RatingView(rating: $countViewModel.rating)
                     }
                     .padding(.top, 4)
-                    .padding(.bottom, 4)
+                    .padding(.bottom)
                 }.padding(.top, 4)
             }
             Button(action: {

@@ -10,7 +10,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct TemplateRow: View {
-    var teamplate: TemplateServer
+    var teamplate: Template
     var body: some View {
         VStack {
             HStack {
