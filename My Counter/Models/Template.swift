@@ -12,6 +12,7 @@ struct Template: Identifiable {
     var image: UIImage = UIImage()
     var name: String = ""
     var description = ""
+    var driveID = ""
 }
 
 
@@ -21,4 +22,5 @@ struct TemplateServer: Codable {
     var description: String?
     var imageUrl: String?
     var dayAdded: String?
+    var driveID: String?
 }

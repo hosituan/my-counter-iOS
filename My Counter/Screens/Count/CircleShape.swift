@@ -11,7 +11,7 @@ import SwiftUI
 struct CircleShape: View {
     var rect: CGRect
     init(box: Box) {
-        self.rect = CGRect(x: box.x - box.radius, y: box.y - box.radius, width: box.radius * 2, height: box.radius * 2)
+        self.rect = CGRect(x: box.x + 50, y: box.y + 50 , width: box.width - 100, height: box.height - 100)
     }
     var body: some View {
         Path { path in

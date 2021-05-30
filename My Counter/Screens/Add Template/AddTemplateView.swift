@@ -16,6 +16,8 @@ struct AddTemplateView: View {
             VStack(alignment: .leading) {
                 MainTextField(title: Strings.EN.Name + ":", placeHolder: Strings.EN.PlaceHolderName, value: $addTemplateViewModel.name)
                     .padding(.bottom)
+                MainTextField(title: Strings.EN.DriveID + ":", value: $addTemplateViewModel.driveID)
+                    .padding(.bottom)
                 VStack(alignment: .leading, spacing: 0) {
                     Text(Strings.EN.DescriptionTitle + ":")
                         .modifier(TextSize14Bold())

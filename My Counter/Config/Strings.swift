@@ -32,7 +32,7 @@ struct Strings {
         static let SpentTime = "Total time spent: "
         static let CountTime = "Count time: "
         static let SaveTitle = "Save"
-        static let RateMessage = "Is it accurate? \nHelp us impove it: "
+        static let RateMessage = "Is it accurate? \nHelp us to impove it: "
         static let ShowConfince = "Show Confidence"
         static let AdvancedMethod = "Advanced Method \nIt will take more time, but high accucacy"
         
@@ -63,6 +63,7 @@ struct Strings {
         static let DescriptionTitle = "Description"
         static let PlaceHolderName = "Chicken Egg"
         static let Name = "Name"
+        static let DriveID = "Drive file ID"
         static let WrongField = "Please fill all information!"
         static let VerifyMessageAdd  = " will be added to template list?"
         

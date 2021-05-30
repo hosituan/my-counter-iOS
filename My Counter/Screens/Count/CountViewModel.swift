@@ -17,6 +17,9 @@ class CountViewModel: ObservableObject {
         self.template = template
     }
     var template: TemplateServer
+    
+    var tempImage: UIImage?
+    @Published var resultImage: UIImage?
     @Published var selectedImage: UIImage? {
         didSet {
             selectedImage?.getColors { color in
@@ -24,40 +27,27 @@ class CountViewModel: ObservableObject {
                     Color.Count.BackgroundColor = Color(backgroundColor)
                     Color.Count.PrimaryColor = Color(primaryColor)
                     Color.Count.PrimaryTextColor = Color(secondaryColor)
-                    
                     self.objectWillChange.send()
                 }
-
             }
-            
-            countResponse = nil
+            resultImage = nil
+            boxResponse = nil
         }
     }
     @Published var spentTime = 0
     @Published var countTime = 0
-    @Published var countResponse: CountResponse? {
-        didSet {
-            if let safeRespone = countResponse {
-                self.rating = 0
-                date = Date.getCurrentDate(withTime: true)
-                FirebaseManager().uploadHistory(safeRespone, userID: AppDelegate.shared().currenUser?.uid ?? "guest", day: date)
-            }
-        }
-    }
-    
     @Published var sourceType: UIImagePickerController.SourceType = .camera
-    @Published var isDefault: Bool = true {
-        didSet {
-            method = isDefault ? .defaultMethod : .advanced
-        }
-    }
     @Published var isAdvanced = true {
         didSet {
-            countResponse = nil
+            resultImage = nil
+            boxResponse = nil
         }
     }
-    @Published var showConfidence: Bool = false
-    @Published var method: CountMethod = .defaultMethod
+    @Published var showConfidence: Bool = false {
+        didSet {
+            
+        }
+    }
     @Published var date: String = Date.getCurrentDate(withTime: true)
     @Published var rating: Int = 0 {
         didSet {
@@ -65,21 +55,26 @@ class CountViewModel: ObservableObject {
         }
     }
     
-    @Published var boxResult: [Box]? {
+    @Published var boxResponse: BoxResponse? {
         didSet {
-            if let boxes = boxResult {
-                selectedImage = selectedImage?.circle(diameter: 50)
-//                for box in boxes{
-//
-//                }
+            if let boxResponse = boxResponse, let selectedImage = selectedImage {
+                resultImage = selectedImage
+                let boxes = boxResponse.result
+                self.rating = 0
+                date = Date.getCurrentDate(withTime: true)
+                var rects = [CGRect]()
+                for box in boxes {
+                    let rect = CGRect(x: box.x, y: box.y , width: box.width, height: box.height)
+                    rects.append(rect)
+                }
+                resultImage = resultImage?.drawEclipseOnImage(rects: rects)
+                FirebaseManager().uploadHistory(boxResponse, userID: AppDelegate.shared().currenUser?.uid ?? "guest", day: date)
             }
-
         }
     }
     
-
     func start() {
-        if countResponse == nil && selectedImage != nil {
+        if boxResponse == nil && selectedImage != nil {
             startCount()
         }
         else {
@@ -88,20 +83,12 @@ class CountViewModel: ObservableObject {
     }
     
     func saveImage() {
-        guard let url = URL(string: countResponse?.url ?? "") else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-            else { return }
+        if let selectedImage = resultImage {
             DispatchQueue.main.async() {
-                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                UIImageWriteToSavedPhotosAlbum(selectedImage, nil, nil, nil)
                 AppDelegate.shared().showSuccess()
             }
-        }.resume()
-        
+        }
     }
     
     @Published var showAlert: Bool = false {
@@ -111,6 +98,7 @@ class CountViewModel: ObservableObject {
             }
         }
     }
+    
     @Published var error: CountError?
     
     func subscribeCountResult() {
@@ -144,6 +132,8 @@ class CountViewModel: ObservableObject {
         }
     }
     
+
+    
     func startCount() {
         self.startCounting = false
         self.spentTime = 0
@@ -155,34 +145,17 @@ class CountViewModel: ObservableObject {
                 self.spentTime += 1
                 AppDelegate.shared().updateHUD(text: Strings.EN.Uploading, value: self.spentTime)
             }
-            if true {
-                AppDelegate.shared().api?.requestBoxCount(image: selectedImage!, template: template, advanced: isAdvanced) { (result, error) in
-                    AppDelegate.shared().api?.socket?.disconnect()
-                    AppDelegate.shared().dismissProgressHUD()
-                    self.countTimeCounter?.invalidate()
-                    self.spentTimeCounter?.invalidate()
-                    if error == nil {
-                        self.boxResult = result?.result
-                    }
-                    else {
-                        self.error = error
-                        self.showAlert = true
-                    }
+            AppDelegate.shared().api?.count(image: img, template: template, advanced: isAdvanced) { (result, error) in
+                AppDelegate.shared().api?.socket?.disconnect()
+                AppDelegate.shared().dismissProgressHUD()
+                self.countTimeCounter?.invalidate()
+                self.spentTimeCounter?.invalidate()
+                if error == nil {
+                    self.boxResponse = result
                 }
-            }
-            else {
-                AppDelegate.shared().api?.count(image: img, template: template, advanced: isAdvanced, showConfidence: showConfidence) { (res, error) in
-                    AppDelegate.shared().api?.socket?.disconnect()
-                    AppDelegate.shared().dismissProgressHUD()
-                    self.countTimeCounter?.invalidate()
-                    self.spentTimeCounter?.invalidate()
-                    if error == nil {
-                        self.countResponse = res
-                    }
-                    else {
-                        self.error = error
-                        self.showAlert = true
-                    }
+                else {
+                    self.error = error
+                    self.showAlert = true
                 }
             }
             
@@ -190,27 +163,20 @@ class CountViewModel: ObservableObject {
     }
 }
 
-enum CountMethod: String {
-    case defaultMethod = "1"
-    case advanced = "2"
-    case other = ""
-}
-
-
 extension UIImage {
     func circle(diameter: CGFloat, color: UIColor = .green) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: diameter, height: diameter), false, 0)
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.saveGState()
-
+        
         let rect = CGRect(x: 0, y: 0, width: diameter, height: diameter)
         ctx.setFillColor(color.cgColor)
         ctx.fillEllipse(in: rect)
-
+        
         ctx.restoreGState()
         let img = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-
+        
         return img
     }
 }

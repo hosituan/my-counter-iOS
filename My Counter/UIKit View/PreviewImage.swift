@@ -14,10 +14,20 @@ import SnapKit
 struct PreviewViewImage: UIViewControllerRepresentable {
     
     var link: String?
+    var image: UIImage?
     var text: String = ""
     func makeUIViewController(context: Context) -> some LightboxController {
-        guard let link = link, let url = URL(string: link) else { return LightboxController() }
-        let images = [LightboxImage(imageURL: url) ]
+        var images: [LightboxImage] = []
+        if let link = link, let url = URL(string: link) {
+            images = [LightboxImage(imageURL: url) ]
+        }
+        else if let image = image {
+            images = [LightboxImage(image: image)]
+        }
+        else {
+            return LightboxController()
+        }
+        
         let controller = LightboxController(images: images)
         LightboxConfig.CloseButton.text = ""
         LightboxConfig.CloseButton.image = UIImage(systemName: "xmark")

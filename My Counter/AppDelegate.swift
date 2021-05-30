@@ -169,7 +169,7 @@ extension AppDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: action))
         self.window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
-    func showCommonAlett(message: String?) {
+    func showCommonAlert(message: String?) {
         let alert = UIAlertController(title: message, message: nil, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.window?.rootViewController?.present(alert, animated: true, completion: nil)

@@ -25,12 +25,13 @@ class FirebaseManager {
                           let id = item["id"] as? String,
                           let imageUrl = item["imageURL"] as? String,
                           let des = item["description"] as? String,
-                          let day = item["day"] as? String
+                          let day = item["day"] as? String,
+                          let driveID = item["driveID"] as? String
                     else {
                         print("Error at get templates")
                         continue
                     }
-                    let object = TemplateServer(id: id, name: name, description: des, imageUrl: imageUrl, dayAdded: day)
+                    let object = TemplateServer(id: id, name: name, description: des, imageUrl: imageUrl, dayAdded: day, driveID: driveID)
                     templates.append(object)
                 }
                 
@@ -72,7 +73,8 @@ class FirebaseManager {
                                 "imageURL": metaImageUrl,
                                 "id": template.id,
                                 "day": time,
-                                "description" : template.description
+                                "description" : template.description,
+                                "driveID": template.driveID
                             ]
                             Database.database().reference().child(templateChild).child(template.id).updateChildValues(dict, withCompletionBlock: {
                                 (error, ref) in
@@ -94,14 +96,13 @@ class FirebaseManager {
     func updateHistory(rate: Int, userID: String, day: String) {
         Database.database().reference().child(historyChild).child(userID).child(day).child("rate").setValue(rate)
     }
-    func uploadHistory(_ countResponse: CountResponse, userID: String, day: String) {
-        let dict: Dictionary<String, Any>  = [
-            "fileName": countResponse.fileName,
-            "imageURL": countResponse.url,
-            "day": Date.getCurrentDate(withTime: true),
-            "count": countResponse.count,
-            "name": countResponse.name,
-            "rate": -1
+    func uploadHistory(_ boxResponse: BoxResponse, userID: String, day: String) {
+        
+        let dict: Dictionary<String, Any>  = [:
+//            "imageURL": countResponse.url,
+//            "day": Date.getCurrentDate(withTime: true),
+//            "count": boxResponse.result.count,
+//            "rate": -1
         ]
         Database.database().reference().child(historyChild).child(userID).child(day).updateChildValues(dict, withCompletionBlock: {
             (error, ref) in

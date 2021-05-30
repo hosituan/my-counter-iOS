@@ -18,6 +18,7 @@ struct BoxResponse: BaseResponse {
 struct Box: Decodable {
     var x: Int
     var y: Int
-    var radius: Int
+    var height: Int
+    var width: Int
     var score: Double
 }

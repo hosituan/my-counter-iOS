@@ -116,11 +116,21 @@ static UIImage *RestoreUIImageOrientation(UIImage *processed, UIImage *original)
 }
 
 
+//+ (nonnull UIImage *)drawRect:(nonnull UIImage *) image rect:(nonnull CGRect *)rect {
+//    int x = 0;
+//    int y = 0;
+//    int width = 10;
+//    int height = 20;
+//    cv::Rect rect(x, y, width, height);
+//    cv::Point pt1(x, y);
+//    cv::Point pt2(x + width, y + height);
+//    cv::rectangle(image, pt1, pt2, cv::Scalar(0, 255, 0));
+//    cv::rectangle(image, rect, cv::Scalar(0, 255, 0))
+//}
+
 
 + (nonnull UIImage *)inRange:(nonnull UIImage *) image lowerRange:(nonnull NSInteger*)lowerRange upperRange:(nonnull NSInteger*)upperRange {
     cv::Mat bgrMat;
-    
-    
     UIImageToMat(image, bgrMat);
     cv::Mat rangeMat;
     int lowH = (int) lowerRange[0];

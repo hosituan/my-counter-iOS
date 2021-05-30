@@ -50,30 +50,70 @@ struct CountView: View {
         }
     }
     
-    var rateView: some View {
+    var countActionView: some View {
         VStack(alignment: .leading) {
             CheckView(isChecked: $countViewModel.showConfidence, title: Strings.EN.ShowConfince)
                 .padding(.top)
                 .isHidden(self.countViewModel.selectedImage == nil)
             CheckView(isChecked: $countViewModel.isAdvanced, title: Strings.EN.AdvancedMethod)
-                .padding(.top, 4)
                 .isHidden(self.countViewModel.selectedImage == nil)
-            
+            if countViewModel.boxResponse != nil {
+                VStack(alignment: .leading) {
+                    Text("\(Strings.EN.CountResultTitle)\(countViewModel.template.name ?? ""): \(countViewModel.boxResponse?.result.count ?? 0)")
+                        .bold()
+                    Text("\(Strings.EN.SpentTime): \(countViewModel.spentTime) seconds")
+                        .bold()
+                    Text("\(Strings.EN.CountTime): \(countViewModel.countTime) seconds")
+                        .bold()
+                    HStack {
+                        Text(Strings.EN.RateMessage)
+                            .italic()
+                            .fixedSize(horizontal: false, vertical: true)
+                            .modifier(TextSize14Bold())
+                        RatingView(rating: $countViewModel.rating)
+                    }
+                    .padding(.top, 4)
+                    .padding(.bottom, 4)
+                }.padding(.top, 4)
+            }
             Button(action: {
                 countViewModel.start()
-                
             }, label: {
-                MainButtonView(title: countViewModel.countResponse == nil ? Strings.EN.CountTitle: Strings.EN.SaveTitle)
+                MainButtonView(title: countViewModel.boxResponse == nil ? Strings.EN.CountTitle: Strings.EN.SaveTitle)
             })
             .isHidden(self.countViewModel.selectedImage == nil)
             .padding(.bottom)
         }
     }
     
+    func imageView(image: UIImage?) -> some View {
+        ZStack {
+            if let image = image {
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .cornerRadius(8)
+                    .padding(.bottom)
+                    .onTapGesture {
+                        viewControllerHolder.value?.present(style: .fullScreen) {
+                            ZStack(alignment: .top) {
+                                PreviewViewImage(image: image)
+                                    .edgesIgnoringSafeArea(.all)
+                                Text("\(Strings.EN.CountResultTitle)\(countViewModel.template.name ?? ""): \(countViewModel.boxResponse?.result.count ?? 0)")
+                                    .bold()
+                                    .foregroundColor(.white)
+                                    .padding(.top)
+                            }
+                            
+                        }
+                    }
+            }
+        }
+    }
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
-                
                 Text(countViewModel.template.description ?? "")
                     .bold()
                     .italic()
@@ -85,68 +125,14 @@ struct CountView: View {
                             showActionSheet = true
                         }
                     }
-                    
                 }, label: {
                     MainButtonView(title: self.countViewModel.selectedImage == nil ? Strings.EN.SelectPhotoTitle : Strings.EN.ChangePhotoTitle)
                 })
                 .padding(.bottom)
-               
                 
-                if let url = URL(string: countViewModel.countResponse?.url ?? "") {
-                    VStack(alignment: .leading) {
-                        WebImage(url: url)
-                            .resizable()
-                            .placeholder(content: {
-                                Image(uiImage: countViewModel.selectedImage!)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .cornerRadius(8)
-                            })
-
-                            .aspectRatio(contentMode: .fill)
-                            .cornerRadius(8)
-                            .padding(.bottom)
-                            .onTapGesture {
-                                viewControllerHolder.value?.present(style: .fullScreen) {
-                                    ZStack(alignment: .top) {
-                                        PreviewViewImage(link: countViewModel.countResponse?.url ?? "")
-                                            .edgesIgnoringSafeArea(.all)
-                                        Text("\(Strings.EN.CountResultTitle)\(countViewModel.countResponse?.name ?? ""): \(countViewModel.countResponse?.count ?? 0)")
-                                            .bold()
-                                            .foregroundColor(.white)
-                                            .padding(.top)
-                                    }
-                                    
-                                }
-                            }
- 
-                        Text("\(Strings.EN.CountResultTitle)\(countViewModel.template.name ?? ""): \(countViewModel.countResponse?.count ?? 0)")
-                            .bold()
-                        Text("\(Strings.EN.SpentTime): \(countViewModel.spentTime) seconds")
-                            .bold()
-                        Text("\(Strings.EN.CountTime): \(countViewModel.countTime) seconds")
-                            .bold()
-                        HStack {
-                            Text(Strings.EN.RateMessage)
-                                .italic()
-                                .modifier(TextSize12Bold())
-                            RatingView(rating: $countViewModel.rating)
-                        }
-                        .padding(.top)
-        
-                    }
-                }
-                else if let img = self.countViewModel.selectedImage {
-                    ZStack {
-                        Image(uiImage: img)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .cornerRadius(8)
-                            .padding(.bottom)
-                    }
-                }
-                
-                rateView
+                imageView(image: self.countViewModel.resultImage != nil ? self.countViewModel.resultImage : self.countViewModel.selectedImage)
+                countActionView
+                    .isHidden(countViewModel.selectedImage == nil)
                 
             }
             .padding()
@@ -157,14 +143,10 @@ struct CountView: View {
         .background(LinearGradient(gradient: Gradient(colors: [Color.Count.TopBackgroundColor, Color.Count.BackgroundColor]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all))
         .navigationBarTitle(countViewModel.template.name ?? "")
         .onDisappear() {
-            countViewModel.selectedImage = nil
-            countViewModel.countResponse = nil
             AppDelegate.shared().dismissProgressHUD()
         }
     }
 }
-
-
 
 
 //struct ContentView_Previews: PreviewProvider {

@@ -21,7 +21,9 @@ class HomeViewModel: ObservableObject {
     @Published var isFirstLoad = true
     @Published var selected: TemplateServer = TemplateServer() {
         didSet {
-            
+            AppDelegate.shared().api?.prepare(id: selected.id ?? "", completionHandler: { (res) in
+                print(res)
+            })
         }
     }
     @Published var isShowCount: Bool = false {
