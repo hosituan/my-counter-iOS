@@ -15,4 +15,5 @@ struct Template: Codable {
     var imageUrl: String?
     var dayAdded: String?
     var driveID: String?
+    var isCircle: Bool?
 }

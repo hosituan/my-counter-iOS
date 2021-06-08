@@ -16,9 +16,8 @@ struct TemplateRow: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text(teamplate.name ?? "")
-                        .modifier(TextSize14Bold())
+                        .font(.system(size: 14, weight: .bold, design: .default))
                     Text(teamplate.description ?? "")
-                        .foregroundColor(Color.Count.ContentGrayTextColor)
                         .font(.system(size: 12))
                         .italic()
                 }

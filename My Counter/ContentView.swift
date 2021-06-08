@@ -15,7 +15,9 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if self.isActive {
-                HomeView(showMenuAction: showMenuAction)
+                NavigationView {
+                    HomeView(showMenuAction: showMenuAction)
+                }
                     
             } else {
                 LaunchView()

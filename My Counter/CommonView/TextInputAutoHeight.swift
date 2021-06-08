@@ -20,7 +20,7 @@ struct TextInputAutoHeight: View {
                 .fill(Color.clear)
                 .frame(height: textHeight + 24)
             UITextInputWrapper(text: $text, calculatedHeight: $textHeight, isFocus: $isTextFocus, placeHolder: placeHolder)
-                .border(Color(hex: "#e7e9ef"), width: 1)
+                .border(Color.Count.PrimaryColor, width: 1)
                 .frame(minHeight: textHeight, maxHeight: textHeight)
                 .padding(.bottom, 16)
         }

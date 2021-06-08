@@ -23,46 +23,39 @@ extension UIImage {
         return newImage!
     }
     
-    func drawEclipseOnImage(boxes: [Box], showConfident: Bool = false) -> UIImage? {
+    func drawOnImage(boxes: [Box], showConfident: Bool = false, isEclipse: Bool = true, score: Double = 0.95) -> UIImage? {
         
         let scale: CGFloat = 0
         UIGraphicsBeginImageContextWithOptions(self.size, false, scale)
         self.draw(at: CGPoint.zero)
         var count = 1
         for box in boxes {
-            let rect = CGRect(x: box.x, y: box.y , width: box.width, height: box.height)
-            let textSize: CGFloat = CGFloat(box.width / 5)
-            let context = UIGraphicsGetCurrentContext()
-            context?.setLineWidth(5.0)
-            context?.setStrokeColor(UIColor.green.cgColor)
-            context?.addEllipse(in: rect)
-            context?.strokePath()
-            let countText: NSString = "\(count)" as NSString
-            countText.draw(at: CGPoint(x: rect.midX - textSize / 2, y: rect.midY - textSize / 2), withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize, weight: .bold), NSAttributedString.Key.foregroundColor: UIColor.red])
-            if showConfident {
-                let scoreText: NSString = "\(box.score)" as NSString
-                scoreText.draw(at: CGPoint(x: rect.midX - textSize / 2 - 4, y: rect.midY + textSize / 2), withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize - 4, weight: .light), NSAttributedString.Key.foregroundColor: UIColor.red])
+            if box.score >= score {
+                let rect = CGRect(x: box.x, y: box.y , width: box.width, height: box.height)
+                let textSize: CGFloat = CGFloat(box.width / 5)
+                let context = UIGraphicsGetCurrentContext()
+                context?.setLineWidth(5.0)
+                context?.setStrokeColor(UIColor.green.cgColor)
+                if isEclipse {
+                    context?.addEllipse(in: rect)
+                }
+                else {
+                    context?.addRect(rect)
+                }
+                
+                context?.strokePath()
+                let countText: NSString = "\(count)" as NSString
+                countText.draw(at: CGPoint(x: rect.midX - textSize / 2, y: rect.midY - textSize / 2), withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize, weight: .bold), NSAttributedString.Key.foregroundColor: UIColor.red])
+                if showConfident {
+                    let scoreText: NSString = "\(box.score)" as NSString
+                    scoreText.draw(at: CGPoint(x: rect.midX - textSize / 2 - 4, y: rect.midY + textSize / 2), withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: textSize - 4, weight: .light), NSAttributedString.Key.foregroundColor: UIColor.red])
+                }
+                count += 1
             }
-            count += 1
         }
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
     }
     
-    func drawRectangleOnImage(rects: [CGRect]) -> UIImage? {
-        let scale: CGFloat = 0
-        UIGraphicsBeginImageContextWithOptions(self.size, false, scale)
-        self.draw(at: CGPoint.zero)
-        for rect in rects {
-            let context = UIGraphicsGetCurrentContext()
-            context?.setLineWidth(5.0)
-            context?.setStrokeColor(UIColor.green.cgColor)
-            context?.addRect(rect)
-            context?.strokePath()
-        }
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage
-    }
 }

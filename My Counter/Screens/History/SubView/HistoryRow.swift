@@ -29,7 +29,6 @@ struct HistoryRow: View {
                         .bold()
                         .font(.system(size: 14))
                     Text(item.date)
-                        .foregroundColor(Color.Count.ContentGrayTextColor)
                         .font(.system(size: 12))
                         .italic()
                     RatingView(rating: $item.rate, date: item.date)

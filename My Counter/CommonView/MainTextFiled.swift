@@ -32,7 +32,7 @@ struct MainTextField: View {
                         .textFieldStyle(PlainTextFieldStyle())
                         .padding([.leading, .trailing], 16)
                         .frame(height: 56)
-                        .border(Color(UIColor(hexString: "e7e9ef")), width: 1)
+                        .border(Color.Count.PrimaryColor, width: 1)
                 }
                 else {
                     TextField(placeHolder, text: $value)
@@ -41,7 +41,7 @@ struct MainTextField: View {
                         .keyboardType(isEmail ? .emailAddress : .default)
                         .padding([.leading, .trailing], 16)
                         .frame(height: 56)
-                        .border(Color(UIColor(hexString: "e7e9ef")), width: 1)
+                        .border(Color.Count.PrimaryColor, width: 1)
                 }
             }.padding(.top, 8)
         }

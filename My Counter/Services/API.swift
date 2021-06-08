@@ -10,6 +10,8 @@ import UIKit
 import Alamofire
 import SwiftUI
 import SocketIO
+import Parse
+
 
 class API {
     let firebaseManagere = FirebaseManager()
@@ -54,6 +56,27 @@ class API {
             }
     }
     
+    func countInBackground(image: UIImage, template: Template, resultBlock block: PFIdResultBlock?) {
+        print("Start upload")
+        let result = ImageObject.makeFile(image)
+        if let file = result as? PFFileObject {
+            file.saveInBackground(block: { (result, error) in
+                if result {
+                    print("After upload image: \(result)")
+                    
+                }
+            })
+            
+        } else if let err = result as? Error {
+            //completion?(nil, err)
+        }
+//        var params: [String: Any]?
+//        params = ["role": role.rawValue, "email": email]
+//        ClientQuery.callFunctionInBackground(ApiName.checkAccountByEmail.rawValue,
+//                                             withParameters: params,
+//                                             block:block)
+    }
+    
     
     func count(image: UIImage, template: Template, completionHandler: @escaping (BoxResponse?, CountError?) -> Void) {
         let parameters = [
@@ -63,6 +86,7 @@ class API {
         print(parameters)
         print(image.size)
         let imgData = image.jpegData(compressionQuality: 1)!
+        //let utilityQueue = DispatchQueue.global(qos: .utility)
         AF.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(imgData, withName: "file",fileName: "file.jpg", mimeType: "image/jpg")
             for (key, value) in parameters {

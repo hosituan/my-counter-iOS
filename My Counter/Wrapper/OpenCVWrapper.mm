@@ -20,12 +20,12 @@
 static void UIImageToMat(UIImage *image, cv::Mat &mat) {
     assert(image.size.width > 0 && image.size.height > 0);
     assert(image.CGImage != nil || image.CIImage != nil);
-
+    
     // Create a pixel buffer.
     NSInteger width = image.size.width;
     NSInteger height = image.size.height;
     cv::Mat mat8uc4 = cv::Mat((int)height, (int)width, CV_8UC4);
-
+    
     // Draw all pixels to the buffer.
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     if (image.CGImage) {
@@ -43,17 +43,17 @@ static void UIImageToMat(UIImage *image, cv::Mat &mat) {
         [context render:image.CIImage toBitmap:mat8uc4.data rowBytes:mat8uc4.step bounds:bounds format:kCIFormatRGBA8 colorSpace:colorSpace];
     }
     CGColorSpaceRelease(colorSpace);
-
+    
     // Adjust byte order of pixel.
     cv::Mat mat8uc3 = cv::Mat((int)width, (int)height, CV_8UC3);
     cv::cvtColor(mat8uc4, mat8uc3, cv::COLOR_RGBA2BGR);
-
+    
     mat = mat8uc3;
 }
 
 /// Converts a Mat to UIImage.
 static UIImage *MatToUIImage(cv::Mat &mat) {
-
+    
     // Create a pixel buffer.
     assert(mat.elemSize() == 1 || mat.elemSize() == 3);
     cv::Mat matrgb;
@@ -62,7 +62,7 @@ static UIImage *MatToUIImage(cv::Mat &mat) {
     } else if (mat.elemSize() == 3) {
         cv::cvtColor(mat, matrgb, cv::COLOR_BGR2RGB);
     }
-
+    
     // Change a image format.
     NSData *data = [NSData dataWithBytes:matrgb.data length:(matrgb.elemSize() * matrgb.total())];
     CGColorSpaceRef colorSpace;
@@ -77,7 +77,7 @@ static UIImage *MatToUIImage(cv::Mat &mat) {
     CGImageRelease(imageRef);
     CGDataProviderRelease(provider);
     CGColorSpaceRelease(colorSpace);
-
+    
     return image;
 }
 
@@ -178,11 +178,11 @@ static UIImage *RestoreUIImageOrientation(UIImage *processed, UIImage *original)
     
     std::vector<cv::Rect> boundRect(contours.size());
     std::vector<std::vector<cv::Point> > contours_poly( contours.size() );
-    for( size_t i = 0; i < contours.size(); i++ )
-      {
-        cv::approxPolyDP( cv::Mat(contours[i]), contours_poly[i], 3, true );
-        boundRect[i] = boundingRect( cv::Mat(contours_poly[i]) );
-      }
+    for (size_t i = 0; i < contours.size(); i++)
+    {
+        cv::approxPolyDP( cv::Mat(contours[i]), contours_poly[i], 3, true);
+        boundRect[i] = boundingRect( cv::Mat(contours_poly[i]));
+    }
     NSMutableArray *imagesArray = [NSMutableArray array];
     cv::Mat drawing = cv::Mat::zeros( canny.size(), CV_8UC3 );
     for (int i = 0; i < contours.size(); i++) {
@@ -196,18 +196,8 @@ static UIImage *RestoreUIImageOrientation(UIImage *processed, UIImage *original)
         }
     }
     
-    
-//    UIImage *resultImage = MatToUIImage(bgrMat);
-//    UIImage *restore = RestoreUIImageOrientation(resultImage, image);
-//    [imagesArray addObject: restore];
-    
     return imagesArray;
 }
-
-
-
-
-
 @end
 
 

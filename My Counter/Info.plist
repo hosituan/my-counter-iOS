@@ -67,7 +67,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Camera access is absolutely necessary to use this app</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>"Save photo"</string>
+	<string>&quot;Save photo&quot;</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -106,5 +106,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Acess photo</string>
 </dict>
 </plist>

@@ -8,12 +8,13 @@
 import Foundation
 import UIKit
 import ObjectiveC
+import Firebase
 
-
-let storageUrl = "gs://my-counter-c02e5.appspot.com"
-let templateChild = "Template"
-let historyChild = "History"
-let idLength = 5
+//let storageUrl = "gs://my-counter-c02e5.appspot.com"
+//let templateChild = "Template"
+//let historyChild = "History"
+//let proposeChild = "Propose"
+//let idLength = 5
 
 var apiUrl = "http://34.71.32.225" //default
 
@@ -22,13 +23,4 @@ struct CountRequest {
     static let count = apiUrl + "/count"
     static let prepare = apiUrl + "/prepare"
     static let add = apiUrl + "/add"
-}
-
-
-var iOS14: Bool {
-    if #available(iOS 14, *)
-    {
-        return true
-    }
-    return false
 }

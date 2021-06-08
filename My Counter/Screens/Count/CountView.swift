@@ -26,13 +26,15 @@ struct CountView: View {
             buttons: [
                 .default(Text(Strings.EN.TakePhoto), action: {
                     showActionSheet = false
-                    countViewModel.sourceType = .camera
-                    showImagePicker()
+                    showSinglePhotoPicker(.camera, modelStyle: .fullScreen)
                 }),
-                .default(Text(Strings.EN.SelectFromLibrary), action: {
+                .default(Text(Strings.EN.SelectSinglePhoto), action: {
                     showActionSheet = false
-                    countViewModel.sourceType = .photoLibrary
-                    showImagePicker()
+                    showSinglePhotoPicker(.photoLibrary)
+                }),
+                .default(Text(Strings.EN.SelectMultiPhotos), action: {
+                    showActionSheet = false
+                    showMultiPhotoPicker()
                 }),
                 .cancel(Text(Strings.EN.CancelTitle), action: {
                     showActionSheet = false
@@ -40,10 +42,19 @@ struct CountView: View {
             ])
     }
     
-    func showImagePicker() {
-        self.viewControllerHolder.value?.present(style: .fullScreen)  {
-            ImagePickerView(sourceType: countViewModel.sourceType) { image in
-                self.countViewModel.selectedImage = image
+    func showSinglePhotoPicker(_ sourceType: UIImagePickerController.SourceType = .camera, modelStyle: UIModalPresentationStyle = .pageSheet) {
+        self.viewControllerHolder.value?.present(style: modelStyle) {
+            ImagePickerView(sourceType: sourceType) { image in
+                countViewModel.selectedImage = image
+            }
+            .edgesIgnoringSafeArea(.all)
+        }
+    }
+    
+    func showMultiPhotoPicker() {
+        self.viewControllerHolder.value?.present(style: .pageSheet) {
+            TLPhotoPickerView(currentAssets: countViewModel.selectedAsset) { (images) in
+                countViewModel.selectedAsset = images
             }
             .edgesIgnoringSafeArea(.all)
         }
@@ -51,9 +62,15 @@ struct CountView: View {
     
     var countActionView: some View {
         VStack(alignment: .leading) {
+            VStack(spacing: 0) {
+                Text(countViewModel.scoreStr)
+                    .foregroundColor(Color.Count.PrimaryColor)
+                Slider(value: $countViewModel.score, in: 0.7...1)
+                    .foregroundColor(Color.Count.PrimaryColor)
+            }
             CheckView(isChecked: $countViewModel.showConfidence, title: Strings.EN.ShowConfince)
                 .padding(.top)
-                .isHidden(self.countViewModel.selectedImage == nil)
+                .isHidden(self.countViewModel.selectedImage == nil && self.countViewModel.selectedImages.count == 0)
             if countViewModel.boxResponse != nil {
                 VStack(alignment: .leading) {
                     Text("\(Strings.EN.CountResultTitle)\(countViewModel.template.name ?? ""): \(countViewModel.boxResponse?.result.count ?? 0)")
@@ -73,12 +90,13 @@ struct CountView: View {
                     .padding(.bottom)
                 }.padding(.top, 4)
             }
+            
             Button(action: {
                 countViewModel.start()
             }, label: {
-                MainButtonView(title: countViewModel.boxResponse == nil ? Strings.EN.CountTitle: Strings.EN.SaveTitle)
+                MainButtonView(title: (countViewModel.boxResponse == nil && self.countViewModel.resultImages == nil) ? Strings.EN.CountTitle: Strings.EN.ShareTitle)
             })
-            .isHidden(self.countViewModel.selectedImage == nil)
+            .isHidden(self.countViewModel.selectedImage == nil && self.countViewModel.selectedImages.count == 0)
             .padding(.bottom)
         }
     }
@@ -94,7 +112,7 @@ struct CountView: View {
                     .onTapGesture {
                         viewControllerHolder.value?.present(style: .fullScreen) {
                             ZStack(alignment: .top) {
-                                PreviewViewImage(image: image)
+                                PreviewViewImage(images: [image])
                                     .edgesIgnoringSafeArea(.all)
                                 Text("\(Strings.EN.CountResultTitle)\(countViewModel.template.name ?? ""): \(countViewModel.boxResponse?.result.count ?? 0)")
                                     .bold()
@@ -119,7 +137,7 @@ struct CountView: View {
                 Button(action: {
                     AppDelegate.shared().requestCameraAccess() { result in
                         if result {
-                            showActionSheet = true
+                            countViewModel.showActionSheet = true
                         }
                     }
                 }, label: {
@@ -128,19 +146,28 @@ struct CountView: View {
                 .padding(.bottom)
                 
                 imageView(image: self.countViewModel.resultImage != nil ? self.countViewModel.resultImage : self.countViewModel.selectedImage)
+                
+                
+                ImageGridView(images: countViewModel.selectedImages, assets: countViewModel.selectedAsset)
+
                 countActionView
-                    .isHidden(countViewModel.selectedImage == nil)
+                    .isHidden(countViewModel.selectedImage == nil && countViewModel.selectedImages.count == 0)
                 
             }
             .padding()
-            .actionSheet(isPresented: $showActionSheet) {
+            .actionSheet(isPresented: $countViewModel.showActionSheet) {
                 sheet
             }
+            .sheet(isPresented: $countViewModel.showShareSheet) {
+                ShareSheet(activityItems: [countViewModel.resultImage as Any])
+            }
         }
-        .background(LinearGradient(gradient: Gradient(colors: [Color.Count.TopBackgroundColor, Color.Count.BackgroundColor]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all))
+        .background(LinearGradient(gradient: Gradient(colors: [Color.Count.TopBackgroundColor, countViewModel.backgroundColor]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all))
         .navigationBarTitle(countViewModel.template.name ?? "")
         .onDisappear() {
             AppDelegate.shared().dismissProgressHUD()
+            Color.Count.PrimaryColor = countViewModel.primaryColor
+            Color.Count.PrimaryTextColor = countViewModel.textColor
         }
     }
 }

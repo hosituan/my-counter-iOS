@@ -28,43 +28,18 @@ struct MenuView: View {
     
     var adminActionView: some View {
         VStack {
-            MenuActionRowView(title: Strings.EN.AddTemplateNavTitle)
-                .onTapGesture {
-                    let scene = UIApplication.shared.connectedScenes.first
-                    if let sd: SceneDelegate = (scene?.delegate as? SceneDelegate) {
-                        sd.hideMenu()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
-                            menuHandler.isShowAddTemplate = true
-                        })
-                    }
-                }
+            MenuActionRowView(isTap: $menuHandler.isShowAddTemplate, title: Strings.EN.AddTemplateNavTitle)
             Divider()
-            MenuActionRowView(title: Strings.EN.TemplateListNavTitle)
-                .onTapGesture {
-                    let scene = UIApplication.shared.connectedScenes.first
-                    if let sd: SceneDelegate = (scene?.delegate as? SceneDelegate) {
-                        sd.hideMenu()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
-                            menuHandler.isShowTemplateList = true
-                        })
-                    }
-                }
+            MenuActionRowView(isTap: $menuHandler.isShowTemplateList, title: Strings.EN.TemplateListNavTitle)
             Divider()
         }
     }
     
     var normalUserActionView: some View {
         VStack {
-            MenuActionRowView(title: Strings.EN.HistoryNavTitle)
-                .onTapGesture {
-                    let scene = UIApplication.shared.connectedScenes.first
-                    if let sd: SceneDelegate = (scene?.delegate as? SceneDelegate) {
-                        sd.hideMenu()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
-                            menuHandler.isShowHistory = true
-                        })
-                    }
-                }
+            MenuActionRowView(isTap: $menuHandler.isShowHistory, title: Strings.EN.HistoryNavTitle)
+            Divider()
+            MenuActionRowView(isTap:$menuHandler.isShowPropose, title: Strings.EN.ProposeNavTitle)
             Divider()
         }
     }

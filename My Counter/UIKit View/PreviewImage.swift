@@ -12,26 +12,29 @@ import Lightbox
 import SnapKit
 
 struct PreviewViewImage: UIViewControllerRepresentable {
-    
     var link: String?
-    var image: UIImage?
+    var images: [UIImage]?
     var text: String = ""
+    var index = 0
     func makeUIViewController(context: Context) -> some LightboxController {
-        var images: [LightboxImage] = []
+        var lightboxImages: [LightboxImage] = []
         if let link = link, let url = URL(string: link) {
-            images = [LightboxImage(imageURL: url) ]
+            lightboxImages = [LightboxImage(imageURL: url) ]
         }
-        else if let image = image {
-            images = [LightboxImage(image: image)]
+        else if let images = images {
+            for image in images {
+                lightboxImages.append(LightboxImage(image: image))
+            }
         }
         else {
             return LightboxController()
         }
         
-        let controller = LightboxController(images: images)
+        let controller = LightboxController(images: lightboxImages, startIndex: index)
         LightboxConfig.CloseButton.text = ""
         LightboxConfig.CloseButton.image = UIImage(systemName: "xmark")
         LightboxConfig.CloseButton.image?.withTintColor(.red)
+        
         LightboxConfig.PageIndicator.enabled = false
         controller.modalPresentationStyle = .fullScreen
         controller.dynamicBackground = true

@@ -8,7 +8,6 @@ target 'My Counter' do
   pod 'Alamofire', '~> 5.2'
   pod 'KYDrawerController'
   pod 'ASCollectionView-SwiftUI', '~> 1.3'
-  pod 'IQKeyboardManager'
   pod 'FBSDKLoginKit'
   pod 'SwiftyJSON'
   pod 'Firebase/Auth'
@@ -24,6 +23,8 @@ target 'My Counter' do
   pod 'OpenCV'
   pod 'Socket.IO-Client-Swift'
   pod 'UIImageColors'
+  pod "TLPhotoPicker"
+  pod 'Parse'
   # Pods for My Counter
 
 end

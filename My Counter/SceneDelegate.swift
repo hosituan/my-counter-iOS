@@ -12,7 +12,7 @@ import PartialSheet
 import FBSDKCoreKit
 import FirebaseAuth
 import FBSDKLoginKit
-import IQKeyboardManager
+//import IQKeyboardManager
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         // init facebook SDK
-        IQKeyboardManager.shared().isEnabled = true
+        //IQKeyboardManager.shared().isEnabled = true
         ApplicationDelegate.initializeSDK(nil)
         Settings.isAutoLogAppEventsEnabled = true
         Settings.isAdvertiserIDCollectionEnabled = true
@@ -60,6 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let vc = drawerController
             vc.view.frame = window.bounds
             window.rootViewController = vc
+            window.overrideUserInterfaceStyle = .light
             self.window = window
             (UIApplication.shared.delegate as? AppDelegate)?.self.window = window
             window.makeKeyAndVisible()

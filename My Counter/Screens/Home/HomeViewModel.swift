@@ -13,11 +13,6 @@ class HomeViewModel: ObservableObject {
     //let objectWillChange: ObservableObjectPublisher = ObservableObjectPublisher()
     let firebaseManager = FirebaseManager()
     @Published var templateList: [Template] = [Template]()
-    @Published var selection: Int = 0 {
-        didSet {
-            selected = templateList[selection]
-        }
-    }
     @Published var isFirstLoad = true
     @Published var selected: Template = Template() {
         didSet {

@@ -8,13 +8,12 @@
 import Foundation
 
 struct Strings {
-    
-    
     struct EN {
         
-    
+        //Home
+        static let SelectTemplate = "Select Template"
+        
         // Navigation Title
-        static let AddTemplateNavTitle = "Add Template"
         static let TemplateListNavTitle = "Template List"
         
         //Count Screen
@@ -25,13 +24,15 @@ struct Strings {
         static let CountResultTitle = "Number of "
         static let Counting = "Counting..."
         static let Uploading = "Uploading..."
-        static let SelectFromLibrary = "Select from Library"
+        static let SelectSinglePhoto = "Select from Library (1 photo)"
+        static let SelectMultiPhotos = "Select from Library (multiple photos)"
         static let TakePhoto = "Take Photo"
         static let CancelTitle = "Cancel"
         static let DefaultMethodTitle = "Default method."
         static let SpentTime = "Total time spent: "
         static let CountTime = "Count time: "
         static let SaveTitle = "Save"
+        static let ShareTitle = "Share"
         static let RateMessage = "Is it accurate? \nHelp us to impove it: "
         static let ShowConfince = "Show Confidence"
         static let AdvancedMethod = "Advanced Method \nIt will take more time, but high accucacy"
@@ -58,6 +59,7 @@ struct Strings {
         
         
         //Add
+        static let AddTemplateNavTitle = "Add Template"
         static let AddTitle = "Add"
         static let DescriptionAdd = "What about it?"
         static let DescriptionTitle = "Description"
@@ -72,8 +74,12 @@ struct Strings {
         static let HistoryNavTitle = "Count History"
         
         //Profile
-        
         static let ProfileTitle = "Profile"
+        
+        //Propose
+        static let ProposeDescription = "Please tell us about your custom object and attach at least 5 images of it. \nWe will collect data and deploy it soon.\nThanks for your contribution!"
+        static let SubmitTitle = "Submit"
+        static let ProposeNavTitle = "Propose Template"
         
     }
     

@@ -17,6 +17,7 @@ struct TextSize16Bold: ViewModifier {
     }
 }
 
+
 struct NavigationLink_16: ViewModifier {
     func body(content: Content) -> some View {
         content

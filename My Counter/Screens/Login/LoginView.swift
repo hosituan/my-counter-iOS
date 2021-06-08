@@ -17,7 +17,6 @@ struct LoginView: View {
     @State var isResetActive : Bool = false
     @ObservedObject var loginViewModel = LoginViewModel()
     @State var isHidePassword = true
-    
     @State var isShowReset = false
     @State var isShowRegister = false
     
@@ -61,8 +60,6 @@ struct LoginView: View {
         NavigationView {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .center) {
-                    //                    Image("Logo")
-                    //                        .padding(32)
                     Text("This is logo")
                         .foregroundColor(Color.Count.PrimaryColor)
                         .bold()

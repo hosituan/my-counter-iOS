@@ -8,12 +8,13 @@
 import SwiftUI
 import SwiftUIListSeparator
 
+
 struct AddTemplateView: View {
-    @Environment(\.viewController) var viewControllerHolder: ViewControllerHolder
     @ObservedObject var addTemplateViewModel = AddTemplateViewModel()
+    @State var showSheet = false
     var body: some View {
-        List {
-            VStack(alignment: .leading) {
+        ScrollView(showsIndicators: false) {
+            LazyVStack(alignment: .leading) {
                 MainTextField(title: Strings.EN.Name + ":", placeHolder: Strings.EN.PlaceHolderName, value: $addTemplateViewModel.name)
                     .padding(.bottom)
                 MainTextField(title: Strings.EN.DriveID + ":", value: $addTemplateViewModel.driveID)
@@ -26,16 +27,21 @@ struct AddTemplateView: View {
                         .padding(.bottom)
                 }
                 
+                CheckView(isChecked: $addTemplateViewModel.isCircle, title: "Circle")
+                    .padding(.bottom)
+                CheckView(isChecked: $addTemplateViewModel.isSquare, title: "Square")
+                
                 HStack {
                     Text(Strings.EN.SelectPhotoTitle + ":")
                         .modifier(TextSize14Bold())
                         .padding(.bottom, 3)
                         .padding(.trailing, 10)
                     Button(action: {
-                        showImagePicker()
+                        showSheet = true
                     }) {
                         Image(systemName: "photo")
                             .resizable()
+                            .renderingMode(.original)
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 20, height: 20, alignment: .center)
                     }
@@ -46,28 +52,27 @@ struct AddTemplateView: View {
                         .aspectRatio(contentMode: .fit)
                         .padding(.vertical)
                 }
+                
                 Button(action: {
                     addTemplateViewModel.addTemplate()
                 }) {
                     MainButtonView(title: Strings.EN.AddTitle)
                 }.padding(.top)
                 
-            }.listRowBackground(Color.clear)
-            
+            }
+            .sheet(isPresented: $showSheet) {
+                ImagePickerView(sourceType: .photoLibrary) { image in
+                    self.addTemplateViewModel.selectedImage = image
+                }
+                .edgesIgnoringSafeArea(.all)
+            }
+            .padding(.horizontal)     
         }
-        .listSeparatorStyle(.none)
         .background(LinearGradient(gradient: Gradient(colors: [Color.Count.TopBackgroundColor, Color.Count.BackgroundColor]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all))
         .navigationBarTitle(Strings.EN.AddTemplateNavTitle)
+        .modifier(DismissingKeyboard())
     }
-    
-    func showImagePicker() {
-        self.viewControllerHolder.value?.present(style: .fullScreen)  {
-            ImagePickerView(sourceType: .photoLibrary) { image in
-                self.addTemplateViewModel.selectedImage = image
-            }
-            .edgesIgnoringSafeArea(.all)
-        }
-    }
+
 }
 
 
