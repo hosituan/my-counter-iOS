@@ -65,7 +65,7 @@ struct CountView: View {
             VStack(spacing: 0) {
                 Text(countViewModel.scoreStr)
                     .foregroundColor(Color.Count.PrimaryColor)
-                Slider(value: $countViewModel.score, in: 0.7...1)
+                Slider(value: $countViewModel.score, in: 0.3...1)
                     .foregroundColor(Color.Count.PrimaryColor)
             }
             CheckView(isChecked: $countViewModel.showConfidence, title: Strings.EN.ShowConfince)
@@ -73,7 +73,7 @@ struct CountView: View {
                 .isHidden(self.countViewModel.selectedImage == nil && self.countViewModel.selectedImages.count == 0)
             if countViewModel.boxResponse != nil {
                 VStack(alignment: .leading) {
-                    Text("\(Strings.EN.CountResultTitle)\(countViewModel.template.name ?? ""): \(countViewModel.boxResponse?.result.count ?? 0)")
+                    Text("\(Strings.EN.CountResultTitle)\(countViewModel.template.name ?? ""): \(countViewModel.boxResult.count)")
                         .bold()
                     Text("\(Strings.EN.SpentTime): \(countViewModel.spentTime) seconds")
                         .bold()

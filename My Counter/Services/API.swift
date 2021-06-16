@@ -85,7 +85,7 @@ class API {
         ]
         print(parameters)
         print(image.size)
-        let imgData = image.jpegData(compressionQuality: 1)!
+        var imgData = image.jpegData(compressionQuality: 1)!
         //let utilityQueue = DispatchQueue.global(qos: .utility)
         AF.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(imgData, withName: "file",fileName: "file.jpg", mimeType: "image/jpg")

@@ -35,13 +35,15 @@ class CountViewModel: ObservableObject {
         }
     }
     
+    var timer = Timer()
     @Published var score = 0.95 {
         didSet {
+            timer.invalidate()
             scoreStr = String(format:"%.2f", score)
-            if let boxResponse = boxResponse, let selectedImage = selectedImage {
-                resultImage = selectedImage
-                resultImage = resultImage?.drawOnImage(boxes: boxResponse.result, showConfident: showConfidence, isEclipse: template.isCircle ?? true, score: score.roundToDecimal(2))
-            }
+            timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { _ in
+                self.setResult()
+            })
+            
         }
     }
     @Published var scoreStr = "0.95"
@@ -74,14 +76,15 @@ class CountViewModel: ObservableObject {
     
     @Published var boxResponse: BoxResponse? {
         didSet {
-            if let boxResponse = boxResponse, let selectedImage = selectedImage {
-                resultImage = selectedImage
-                let boxes = boxResponse.result
-                date = Date.getCurrentDate(withTime: true)
-                self.rating = 0
-                resultImage = resultImage?.drawOnImage(boxes: boxResponse.result, showConfident: showConfidence, isEclipse: template.isCircle ?? true, score: score.roundToDecimal(2))
-                FirebaseManager().uploadHistory(resultImage, name: template.name, count: boxes.count, userID: AppDelegate.shared().currenUser?.uid ?? "guest", day: date)
-            }
+            resultImage = selectedImage
+            date = Date.getCurrentDate(withTime: true)
+            self.rating = 0
+            setResult()
+        }
+    }
+    @Published var boxResult: [Box] = [] {
+        didSet {
+            drawResult()
         }
     }
     
@@ -104,13 +107,28 @@ class CountViewModel: ObservableObject {
     @Published var countTime = 0
     @Published var showConfidence: Bool = false {
         didSet {
-            if let boxResponse = boxResponse, let selectedImage = selectedImage {
-                resultImage = selectedImage
-                resultImage = resultImage?.drawOnImage(boxes: boxResponse.result, showConfident: showConfidence, isEclipse: template.isCircle ?? true, score: score.roundToDecimal(2))
-            }
+            drawResult()
         }
     }
     
+    func setResult() {
+        boxResult.removeAll()
+        var boxes:[Box] = []
+        if let boxResponse = boxResponse {
+            for box in boxResponse.result {
+                if box.score > score {
+                    boxes.append(box)
+                }
+            }
+        }
+        boxResult = boxes
+        drawResult()
+    }
+    
+    func drawResult() {
+        resultImage = selectedImage
+        resultImage = resultImage?.drawOnImage(boxes: boxResult, showConfident: showConfidence, isEclipse: template.isCircle ?? true, score: score.roundToDecimal(2))
+    }
 
     
     func start() {
@@ -167,10 +185,12 @@ class CountViewModel: ObservableObject {
         self.startCounting = false
         self.spentTime = 0
         self.countTime = 0
+        self.timer.invalidate()
+        self.countTimeCounter?.invalidate()
         if let img = selectedImage {
-            AppDelegate.shared().api?.countInBackground(image: img, template: template, resultBlock: { (object, error) in
-                
-            })
+//            AppDelegate.shared().api?.countInBackground(image: img, template: template, resultBlock: { (object, error) in
+//
+//            })
             if img.size.width < 1000 || img.size.height < 1000 {
                 selectedImage = img.resizeImage(targetSize: CGSize(width: 1000, height: 1000))
             }
