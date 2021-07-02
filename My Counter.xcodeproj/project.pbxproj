@@ -918,7 +918,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"My Counter/Preview Content\"";
-				DEVELOPMENT_TEAM = S423MR2Z88;
+				DEVELOPMENT_TEAM = 3U55QZ72L6;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "My Counter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -926,7 +926,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.c2c-platform.drone.dev1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.c2c-platform.drone.dev2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "My Counter/Wrapper/My Counter-Bridging-Header.h";
@@ -946,7 +946,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"My Counter/Preview Content\"";
-				DEVELOPMENT_TEAM = S423MR2Z88;
+				DEVELOPMENT_TEAM = 3U55QZ72L6;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "My Counter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -954,7 +954,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.c2c-platform.drone.dev1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.c2c-platform.drone.dev2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "My Counter/Wrapper/My Counter-Bridging-Header.h";

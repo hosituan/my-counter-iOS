@@ -35,8 +35,16 @@ class UserLogin: NSObject, ObservableObject, LoginButtonDelegate, GIDSignInDeleg
         }
     }
     
+    
     func logout() {
-        fbLoginButton.sendActions(for: .touchUpInside)
+        let firebaseAuth = Auth.auth()
+        self.isLogin = false
+        do {
+          try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+          print ("Error signing out: %@", signOutError)
+        }
+        //fbLoginButton.sendActions(for: .touchUpInside)
     }
     
     func getUserInformation() {
@@ -59,6 +67,32 @@ class UserLogin: NSObject, ObservableObject, LoginButtonDelegate, GIDSignInDeleg
         
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
+    }
+    
+    func signIn(email: String, password: String) {
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (authResult, error) in
+            guard authResult != nil, error == nil else {
+                print(error ?? "Login Error")
+                return
+            }
+            print("Login Successfully")
+            DispatchQueue.main.async {
+                self?.getUserInformation()
+            }
+
+        }
+    }
+    
+    func signUp(email: String, password: String) {
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            guard authResult != nil, error == nil else {
+                print(error ?? "Register Error")
+                return
+            }
+            DispatchQueue.main.async {
+                self.getUserInformation()
+            }
+        }
     }
     
     

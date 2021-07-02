@@ -58,6 +58,7 @@ struct LoginView: View {
     }
     var body: some View {
         NavigationView {
+            
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .center) {
                     Text("This is logo")
@@ -72,6 +73,7 @@ struct LoginView: View {
                     .padding(.bottom, 24)
                     Button(action: {
                         self.loginAction()
+                        userLogin.signIn(email: loginViewModel.email, password: loginViewModel.password)
                     }, label: {
                         ZStack {
                             Rectangle()
@@ -84,6 +86,11 @@ struct LoginView: View {
                         
                     }).disabled(!loginViewModel.validate)
                     .padding(.bottom)
+                    .onReceive(loginViewModel.objectWillChange) { _ in
+                        if userLogin.isLogin {
+                            dismissAction()
+                        }
+                    }
                     
                     NavigationLink(destination: ResetPasswordView(), isActive: $isShowReset) {
                         HStack {
@@ -126,7 +133,9 @@ struct LoginView: View {
             
         }
         
+        
     }
+
     
     func loginAction() {
         let email = loginViewModel.email.trimmingCharacters(in: .whitespaces).lowercased()

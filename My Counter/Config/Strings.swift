@@ -40,6 +40,7 @@ struct Strings {
         //Login Screen
         static let LoginTitle = "Login"
         static let PasswordFieldName = "Password"
+        static let RepeatPasswordFieldName = "Repeat Password"
         static let EmailFieldName = "Email"
         static let EmailPlaceHolder = "hosituan.work@gmail.com"
         static let ResetPasswordTitle = "Forgot Password?"

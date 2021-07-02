@@ -67,7 +67,7 @@ struct MenuView: View {
                             .padding(.vertical)
                     }
                 }
-                if userLogin.isLogin {
+                if (userLogin.isLogin) {
                     adminActionView
                 }
                 normalUserActionView
