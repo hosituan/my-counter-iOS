@@ -10,6 +10,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 struct HistoryRow: View {
     @State var item: CountHistory
+    @State var isSelected: Bool
     var body: some View {
         VStack {
             HStack {
@@ -33,10 +34,16 @@ struct HistoryRow: View {
                         .italic()
                     RatingView(rating: $item.rate, date: item.date)
                 }.padding([.leading, .top])
+                if self.isSelected {
+                    Spacer()
+                    Image(systemName: "checkmark").foregroundColor(.blue)
+                }
                 Spacer()
-            }
+        
             .frame(width: UIScreen.main.bounds.width - 32)
-        }.buttonStyle(PlainButtonStyle())
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
     }
 }
 
