@@ -918,7 +918,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"My Counter/Preview Content\"";
-				DEVELOPMENT_TEAM = 3U55QZ72L6;
+				DEVELOPMENT_TEAM = S423MR2Z88;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "My Counter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -946,7 +946,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"My Counter/Preview Content\"";
-				DEVELOPMENT_TEAM = 3U55QZ72L6;
+				DEVELOPMENT_TEAM = S423MR2Z88;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "My Counter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;

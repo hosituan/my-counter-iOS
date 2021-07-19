@@ -16,7 +16,7 @@ import Firebase
 //let proposeChild = "Propose"
 //let idLength = 5
 
-var apiUrl = "http://34.71.32.225" //default
+var apiUrl = "http://35.202.32.2" //default
 
 struct CountRequest {
     static let upload = apiUrl + "/upload"
