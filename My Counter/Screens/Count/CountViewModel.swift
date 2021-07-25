@@ -80,6 +80,8 @@ class CountViewModel: ObservableObject {
             date = Date.getCurrentDate(withTime: true)
             self.rating = 0
             setResult()
+
+
         }
     }
     @Published var boxResult: [Box] = [] {
@@ -123,6 +125,9 @@ class CountViewModel: ObservableObject {
         }
         boxResult = boxes
         drawResult()
+        if boxResult.count > 0 {
+            FirebaseManager().uploadHistory(resultImage, name: template.name, count: boxResult.count, userID: AppDelegate.shared().currenUser?.uid ?? "guest", day: date)
+        }
     }
     
     func drawResult() {
