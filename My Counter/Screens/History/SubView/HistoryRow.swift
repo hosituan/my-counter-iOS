@@ -10,10 +10,16 @@ import SwiftUI
 import SDWebImageSwiftUI
 struct HistoryRow: View {
     @State var item: CountHistory
-    @State var isSelected: Bool
+    @Binding var isSelected: Bool
     var body: some View {
         VStack {
             HStack {
+                if isSelected {
+                    Image(systemName: "smallcircle.fill.circle.fill").foregroundColor(.green)
+                } else {
+                    Image(systemName: "smallcircle.fill.circle").foregroundColor(.gray)
+                }
+                
                 if let urlString = item.url, let url = URL(string: urlString) {
                     WebImage(url: url)
                         .resizable()
@@ -34,16 +40,13 @@ struct HistoryRow: View {
                         .italic()
                     RatingView(rating: $item.rate, date: item.date)
                 }.padding([.leading, .top])
-                if self.isSelected {
-                    Spacer()
-                    Image(systemName: "checkmark").foregroundColor(.blue)
-                }
+                
                 Spacer()
         
             .frame(width: UIScreen.main.bounds.width - 32)
             }
             .buttonStyle(PlainButtonStyle())
-        }
+        }.background(isSelected ? Color.gray : Color.clear)
     }
 }
 

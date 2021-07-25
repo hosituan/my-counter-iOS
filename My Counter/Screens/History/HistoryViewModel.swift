@@ -12,10 +12,14 @@ class HistoryViewModel: ObservableObject {
     @Published var historyList: [CountHistory] = [] {
         didSet {
             objectWillChange.send()
+            self.selections = [Bool](repeating: false, count: historyList.count)
         }
     }
+    @Published var selections: [Bool] = []
     @Published var isRefresh = false
     @Published var isFirstLoad = true
+    @Published var total = 0
+    @Published var isCounting = false
     func loadHistory() {
         if isFirstLoad {
             AppDelegate.shared().showProgressHUD()
@@ -55,6 +59,15 @@ class HistoryViewModel: ObservableObject {
             }
         }
         
+    }
+    
+    func countTotal() {
+        total = 0
+        for index in 0..<historyList.count {
+            if selections[index] {
+                total += historyList[index].count
+            }
+        }
     }
 
 }

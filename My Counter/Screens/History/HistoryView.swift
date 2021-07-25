@@ -13,18 +13,12 @@ import SwiftUIListSeparator
 struct HistoryView: View {
     @Environment(\.viewController) var viewControllerHolder: ViewControllerHolder
     @ObservedObject var historyViewModel = HistoryViewModel()
-    @State private var selection = Set<String>()
-    @State private var selections: [String] = []
-    @State private var isCounting = false
-    @State private var total = 0
-
-
     var body: some View {
-        List(selection: $selection) {
+        List {
             ForEach(historyViewModel.historyList.indices, id: \.self) { index in
-                HistoryRow(item: historyViewModel.historyList[index],isSelected: false)
+                HistoryRow(item: historyViewModel.historyList[index], isSelected: $historyViewModel.selections[index])
                     .onTapGesture {
-                        if (!isCounting) {
+                        if (!self.historyViewModel.isCounting) {
                             viewControllerHolder.value?.present(style: .fullScreen) {
                                 ZStack(alignment: .top) {
                                     PreviewViewImage(link: historyViewModel.historyList[index].url, text: "\(Strings.EN.CountResultTitle)\(historyViewModel.historyList[index].name): \(historyViewModel.historyList[index].count)")
@@ -33,14 +27,8 @@ struct HistoryView: View {
                             }
                             
                         } else {
-                            if (!selections.contains(historyViewModel.historyList[index].date)) {
-                                selections.append(historyViewModel.historyList[index].date)
-                                total += historyViewModel.historyList[index].count
-                            }
-                            else {
-                                selections.removeAll(where: { $0 == historyViewModel.historyList[index].date  })
-                                total -= historyViewModel.historyList[index].count
-                            }
+                            self.historyViewModel.selections[index].toggle()
+                            self.historyViewModel.countTotal()
                         }
                     }
                     .listRowBackground(Color.clear)
@@ -49,14 +37,13 @@ struct HistoryView: View {
             
 
         }
-        .environment(\.editMode, .constant(self.isCounting ? EditMode.active : EditMode.inactive)).animation(Animation.spring())
         .toolbar(content: {
             Button(action: {
-                self.isCounting.toggle()
-                self.total = 0
-                self.selections = []
+                self.historyViewModel.isCounting.toggle()
+                self.historyViewModel.total = 0
+                self.historyViewModel.selections = [Bool](repeating: false, count: historyViewModel.historyList.count)
             }, label: {
-                Text(isCounting ? "Done" : "Count")
+                Text(historyViewModel.isCounting ? "Done" : "Count")
                                     .frame(width: 80, height: 40)
             })
         })
@@ -65,7 +52,7 @@ struct HistoryView: View {
             historyViewModel.loadHistory()
         }
         .background(LinearGradient(gradient: Gradient(colors: [Color.Count.TopBackgroundColor, Color.Count.BackgroundColor]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all))
-        .navigationBarTitle(isCounting ? "Total: \(total)" : Strings.EN.HistoryNavTitle )
+        .navigationBarTitle(historyViewModel.isCounting ? "Total: \(historyViewModel.total)" : Strings.EN.HistoryNavTitle )
     }
 }
 
