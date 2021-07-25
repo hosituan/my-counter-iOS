@@ -16,9 +16,6 @@ import GoogleSignIn
 
 
 class UserLogin: NSObject, ObservableObject, LoginButtonDelegate, GIDSignInDelegate {
-    
-    
-    
     @Published var isLogin = false
     {
         didSet {

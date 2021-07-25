@@ -76,6 +76,13 @@ class API {
 //                                             withParameters: params,
 //                                             block:block)
     }
+    func beginBackgroundUpdateTask() -> UIBackgroundTaskIdentifier {
+        return UIApplication.shared.beginBackgroundTask(expirationHandler: ({}))
+    }
+
+    func endBackgroundUpdateTask(taskID: UIBackgroundTaskIdentifier) {
+        UIApplication.shared.endBackgroundTask(taskID)
+    }
     
     
     func count(image: UIImage, template: Template, completionHandler: @escaping (BoxResponse?, CountError?) -> Void) {
@@ -87,6 +94,7 @@ class API {
         print(image.size)
         var imgData = image.jpegData(compressionQuality: 1)!
         //let utilityQueue = DispatchQueue.global(qos: .utility)
+        let taskID = beginBackgroundUpdateTask()
         AF.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(imgData, withName: "file",fileName: "file.jpg", mimeType: "image/jpg")
             for (key, value) in parameters {
@@ -104,20 +112,25 @@ class API {
                         if result.success {
                             let countResponse = try JSONDecoder().decode(BoxResponse.self, from: data)
                             completionHandler(countResponse, nil)
+                            self.endBackgroundUpdateTask(taskID: taskID)
                         }
                         else {
                             let error = CountError(reason: result.message)
                             completionHandler(nil, error)
+                            self.endBackgroundUpdateTask(taskID: taskID)
                         }
                     } catch let error as NSError {
                         print("Failed to load: \(error.localizedDescription)")
                         let error = CountError(error)
                         completionHandler(nil, error)
+                        self.endBackgroundUpdateTask(taskID: taskID)
                     }
                 }
             case .failure(let error):
                 let error = CountError(error)
                 completionHandler(nil, error)
+                self.endBackgroundUpdateTask(taskID: taskID)
+
             }
         })
     }
