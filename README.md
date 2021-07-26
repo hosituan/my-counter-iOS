@@ -20,7 +20,14 @@ SKU110K_CVPR19 GitHub: https://github.com/eg4000/SKU110K_CVPR19
   - Github: hosituanit
   
   Contributor:
-  - Lâm Gia Khánh
+  Lâm Gia Khánh - iOS Developer
+
+  Contact:
+  - Email: lamgiakhanh.work@gmail.com
+  - Phone: +84 907 102 640
+  - Country: VietNam
+  - Facebook: https://www.facebook.com/kayg2712/
+  - Github: LamGiaKhanh
 <h1>Contributing</h1>
 
 Issues and pull requests are welcome!
