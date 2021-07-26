@@ -20,6 +20,7 @@ SKU110K_CVPR19 GitHub: https://github.com/eg4000/SKU110K_CVPR19
   - Github: hosituanit
   
   Contributor:
+  
   Lâm Gia Khánh - iOS Developer
 
   Contact:
