@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2A39F3F87785F335B97BF24C /* Pods_My_Counter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB541778B7D713A85A8F7C98 /* Pods_My_Counter.framework */; };
+		6D4AA8F726ADB0DF008A176D /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AA8F626ADB0DF008A176D /* CHCSVParser.m */; };
 		FB2A463D2622AD1A00BD7AFB /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2A463C2622AD1A00BD7AFB /* HistoryView.swift */; };
 		FB2A46402622B52B00BD7AFB /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2A463F2622B52B00BD7AFB /* Date+Extension.swift */; };
 		FB2BB1C5266DE62E00B03E5E /* DismissKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2BB1C4266DE62E00B03E5E /* DismissKeyboard.swift */; };
@@ -101,6 +102,8 @@
 
 /* Begin PBXFileReference section */
 		573B9A88502A9B5DE04D2ECE /* Pods-My Counter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Counter.release.xcconfig"; path = "Target Support Files/Pods-My Counter/Pods-My Counter.release.xcconfig"; sourceTree = "<group>"; };
+		6D4AA8F526ADB0DF008A176D /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
+		6D4AA8F626ADB0DF008A176D /* CHCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVParser.m; sourceTree = "<group>"; };
 		901CF62BA4A7F6B67C2865DF /* Pods-My Counter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Counter.debug.xcconfig"; path = "Target Support Files/Pods-My Counter/Pods-My Counter.debug.xcconfig"; sourceTree = "<group>"; };
 		EB541778B7D713A85A8F7C98 /* Pods_My_Counter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_My_Counter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2A463C2622AD1A00BD7AFB /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
@@ -332,6 +335,8 @@
 		FB80A2B12627F7AA005BC419 /* Wrapper */ = {
 			isa = PBXGroup;
 			children = (
+				6D4AA8F526ADB0DF008A176D /* CHCSVParser.h */,
+				6D4AA8F626ADB0DF008A176D /* CHCSVParser.m */,
 				FB80A2B32627F7CE005BC419 /* OpenCVWrapper.h */,
 				FB80A2B52627F803005BC419 /* OpenCVWrapper.mm */,
 				FB80A2B42627F803005BC419 /* My Counter-Bridging-Header.h */,
@@ -748,6 +753,7 @@
 				FB97043926145CA700FB1319 /* TemplateRow.swift in Sources */,
 				FB50018226124DD100D17411 /* MainButtonView.swift in Sources */,
 				FBED481426125B6B00AF0BD4 /* LoginViewModel.swift in Sources */,
+				6D4AA8F726ADB0DF008A176D /* CHCSVParser.m in Sources */,
 				FB92D87A2622D97600599B59 /* PreviewImage.swift in Sources */,
 				FBAD74FA2608E40500A22FF6 /* UIImage+Extension.swift in Sources */,
 				FBED4855261303DA00AF0BD4 /* User.swift in Sources */,

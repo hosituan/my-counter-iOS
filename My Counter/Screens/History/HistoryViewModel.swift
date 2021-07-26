@@ -18,8 +18,20 @@ class HistoryViewModel: ObservableObject {
     @Published var selections: [Bool] = []
     @Published var isRefresh = false
     @Published var isFirstLoad = true
-    @Published var total = 0
+    @Published var itemWasSelected = false
+    @Published var total = 0 {
+        didSet {
+            if total == 0 {
+                self.itemWasSelected = false
+            }
+            else {
+                self.itemWasSelected = true
+            }
+        }
+    }
+    
     @Published var isCounting = false
+    
     func loadHistory() {
         if isFirstLoad {
             AppDelegate.shared().showProgressHUD()
@@ -68,6 +80,55 @@ class HistoryViewModel: ObservableObject {
                 total += historyList[index].count
             }
         }
+    }
+    
+    func createCSV() {
+        let date = Date.getCurrentDate(withTime: true)
+        let sFileName = "MYCOUNTER_\(date).csv"
+        let docDicPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let docURL = URL(fileURLWithPath: docDicPath).appendingPathComponent(sFileName)
+        let output = OutputStream.toMemory()
+        let csvWriter = CHCSVWriter(outputStream: output, encoding: String.Encoding.utf8.rawValue, delimiter: ",".utf16.first!)
+        csvWriter?.writeField("DATE")
+        csvWriter?.writeField("IMAGE_URL")
+        csvWriter?.writeField("TEMPLATE_NAME")
+        csvWriter?.writeField("COUNT")
+        csvWriter?.writeField("RATE")
+        csvWriter?.finishLine()
+
+        for index in 0..<historyList.count {
+            if selections[index] {
+                csvWriter?.writeField(historyList[index].date)
+                csvWriter?.writeField(historyList[index].url)
+                csvWriter?.writeField(historyList[index].name)
+                csvWriter?.writeField(historyList[index].count)
+                csvWriter?.writeField(historyList[index].rate)
+                csvWriter?.finishLine()
+
+            }
+        }
+        csvWriter?.writeField("Total:")
+        csvWriter?.writeField("")
+        csvWriter?.writeField("")
+        csvWriter?.writeField("\(total)")
+        csvWriter?.writeField("")
+        csvWriter?.finishLine()
+
+
+        csvWriter?.closeStream()
+        
+        let buffer = (output.property(forKey: .dataWrittenToMemoryStreamKey) as? Data)!
+        do {
+            try buffer.write(to: docURL)
+        }
+        catch {
+            AppDelegate.shared().showCommonAlert(message: "Can't Create CSV File")
+            return
+        }
+        AppDelegate.shared().showCommonAlert(message: "Create CSV File Successfully as \(sFileName)")
+        self.isCounting = false
+        self.total = 0
+        self.selections = [Bool](repeating: false, count: self.historyList.count)
     }
 
 }
