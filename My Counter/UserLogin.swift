@@ -83,12 +83,16 @@ class UserLogin: NSObject, ObservableObject, LoginButtonDelegate, GIDSignInDeleg
     func signUp(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             guard authResult != nil, error == nil else {
+                AppDelegate.shared().showCommonAlert(message: error?.localizedDescription)
                 print(error ?? "Register Error")
                 return
             }
             DispatchQueue.main.async {
+                print("Sign up Successfully")
                 self.getUserInformation()
             }
+            AppDelegate.shared().showCommonAlert(message: "Sign Up Successfully")
+
         }
     }
     

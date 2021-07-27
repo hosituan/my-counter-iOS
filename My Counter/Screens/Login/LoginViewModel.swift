@@ -39,6 +39,7 @@ class LoginViewModel: ObservableObject {
     func clearData() {
         self.email = ""
         self.password = ""
+        self.confirmPassword = ""
         self.validate = false
     }
     

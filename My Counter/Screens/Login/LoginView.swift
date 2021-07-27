@@ -17,8 +17,11 @@ struct LoginView: View {
     @State var isResetActive : Bool = false
     @ObservedObject var loginViewModel = LoginViewModel()
     @State var isHidePassword = true
-    @State var isShowReset = false
-    @State var isShowRegister = false
+//    @State var isShowReset = false
+//    @State var isShowRegister = false
+    @State var tabIndex = 0
+    
+        
     
     var bottomView: some View {
         HStack {
@@ -56,86 +59,111 @@ struct LoginView: View {
                 .padding(.horizontal, 3)
         }
     }
-    var body: some View {
-        NavigationView {
-            
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .center) {
-                    Text("This is logo")
-                        .foregroundColor(Color.Count.PrimaryColor)
-                        .bold()
-                        .padding(.vertical)
-                    VStack(alignment: .leading, spacing: 0) {
-                        MainTextField(title: Strings.EN.EmailFieldName, placeHolder: Strings.EN.EmailPlaceHolder, value: $loginViewModel.email)
-                            .padding(.bottom, 23)
-                        SecureTextField(value: $loginViewModel.password, title: Strings.EN.PasswordFieldName)
-                    }
-                    .padding(.bottom, 24)
-                    Button(action: {
-                        self.loginAction()
-                        userLogin.signIn(email: loginViewModel.email, password: loginViewModel.password)
-                    }, label: {
-                        ZStack {
-                            Rectangle()
-                                .fill(loginViewModel.validate ? Color.Count.PrimaryColor : Color.Count.ContentGrayTextColor )
-                                .frame(height: 56)
-                            Text(Strings.EN.LoginTitle)
-                                .foregroundColor(.white)
-                                .bold()
-                        }
-                        
-                    }).disabled(!loginViewModel.validate)
-                    .padding(.bottom)
-                    .onReceive(loginViewModel.objectWillChange) { _ in
-                        if userLogin.isLogin {
-                            dismissAction()
-                        }
-                    }
-                    
-                    NavigationLink(destination: ResetPasswordView(), isActive: $isShowReset) {
-                        HStack {
-                            Text(Strings.EN.ResetPasswordTitle)
-                                .foregroundColor(Color.Count.NavigationLinkColor)
-                                .modifier(NavigationLink_14())
-                            Spacer()
-                        }
-                    }
-                    
-                    NavigationLink(destination: RegisterView(), isActive: $isShowRegister) {
-                        HStack {
-                            Text(Strings.EN.RegisterTitle)
-                                .foregroundColor(Color.Count.NavigationLinkColor)
-                                .modifier(NavigationLink_14())
-                            Spacer()
-                        }
-                    }.padding(.bottom)
-                    
-                    bottomView
-                    
-                    Spacer()
-                    
+    var loginView: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .center) {
+                VStack(alignment: .leading, spacing: 0) {
+                    MainTextField(title: Strings.EN.EmailFieldName, placeHolder: Strings.EN.EmailPlaceHolder, value: $loginViewModel.email)
+                        .padding(.bottom, 23)
+                    SecureTextField(value: $loginViewModel.password, title: Strings.EN.PasswordFieldName)
                 }
-
-            }
-            .listSeparatorStyle(.none)
-            .padding(.horizontal, 16)
-            .navigationBarTitle(Text(Strings.EN.LoginTitle))
-            .navigationBarItems(leading: Button(action: {
-                self.dismissAction()
-            }, label: {
-                Image(systemName: "chevron.down")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 24, height: 24, alignment: .center)
-                    .foregroundColor(.black)
-                
-            }))
-            
+                .padding(.bottom, 24)
+                Button(action: {
+                    self.loginAction()
+                    userLogin.signIn(email: loginViewModel.email, password: loginViewModel.password)
+                }, label: {
+                    ZStack {
+                        Rectangle()
+                            .fill(loginViewModel.validate ? Color.Count.PrimaryColor : Color.Count.ContentGrayTextColor )
+                            .frame(height: 56)
+                        Text(Strings.EN.LoginTitle)
+                            .foregroundColor(.white)
+                            .bold()
+                    }
+                    
+                }).disabled(!loginViewModel.validate)
+                .padding(.bottom)
+                .onReceive(loginViewModel.objectWillChange) { _ in
+                    if userLogin.isLogin {
+                        dismissAction()
+                    }
+                }
+                bottomView
+                }
+        .padding(.horizontal, 16)
         }
-        
+
+    }
+    
+    var registerView: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .center) {
+                LazyVStack(alignment: .leading, spacing: 0) {
+                    MainTextField(title: Strings.EN.EmailFieldName, placeHolder: Strings.EN.EmailPlaceHolder, value: $loginViewModel.email)
+                        .padding(.bottom, 23)
+                    SecureTextField(value: $loginViewModel.password, title: Strings.EN.PasswordFieldName)
+                    SecureTextField(value: $loginViewModel.confirmPassword, title: Strings.EN.RepeatPasswordFieldName)
+                }
+                .padding(.bottom, 24)
+                Button(action: {
+                    userLogin.signUp(email: loginViewModel.email, password: loginViewModel.password)
+                }, label: {
+                    ZStack {
+                        Rectangle()
+                            .fill(loginViewModel.confirm ? Color.Count.PrimaryColor : Color.Count.ContentGrayTextColor )
+                            .frame(height: 56)
+                        Text(Strings.EN.RegisterTitle)
+                            .foregroundColor(.white)
+                            .bold()
+                    }
+                }).disabled(!loginViewModel.confirm)
+                .padding(.bottom)
+                .onReceive(loginViewModel.objectWillChange) { _ in
+                    if userLogin.isLogin {
+                        dismissAction()
+                    }
+                }
+            }
+        .listSeparatorStyle(.none)
+        .padding(.horizontal, 16)
+        }
+    
         
     }
-
+    var body: some View {
+            VStack(spacing:30) {
+                HStack {
+                    Button(action: {
+                        self.dismissAction()
+                    }, label: {
+                            Image(systemName: "chevron.down")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 24, height: 24, alignment: .center)
+                                .foregroundColor(.black)
+                    })
+                    .padding()
+                    Spacer()
+                }
+                Spacer()
+                Text("This is logo")
+                    .foregroundColor(Color.Count.PrimaryColor)
+                    .bold()
+                    .padding(.vertical)
+                CustomTopTabBar(tabIndex: $tabIndex)
+                    if tabIndex == 0 {
+                       loginView
+                    }
+                    else {
+                       registerView
+                    }
+                Spacer()
+            }
+            .onAppear {
+                loginViewModel.clearData()
+            }
+            .padding(.bottom)
+    }
     
     func loginAction() {
         let email = loginViewModel.email.trimmingCharacters(in: .whitespaces).lowercased()
@@ -143,6 +171,88 @@ struct LoginView: View {
     }
     
 }
+
+struct CustomTopTabBar: View {
+    @Binding var tabIndex: Int
+    var body: some View {
+        HStack {
+            TabBarButton(text: "Login", isSelected: .constant(tabIndex == 0))
+                .onTapGesture { onButtonTapped(index: 0)
+                }
+            Spacer()
+            TabBarButton(text: "Register", isSelected: .constant(tabIndex == 1))
+                .onTapGesture { onButtonTapped(index: 1) }
+        }
+        .border(width: 1, edges: [.bottom], color: .black)
+    }
+    
+    private func onButtonTapped(index: Int) {
+        withAnimation { tabIndex = index }
+    }
+}
+
+struct TabBarButton: View {
+    let text: String
+    @Binding var isSelected: Bool
+    var body: some View {
+        Spacer()
+        Text(text)
+            .fontWeight(isSelected ? .heavy : .regular)
+            .font(.system(size: 26))
+            .border(width: isSelected ? 2 : 1, edges: [.bottom], color: .black)
+        Spacer()
+
+    }
+}
+
+
+struct EdgeBorder: Shape {
+
+    var width: CGFloat
+    var edges: [Edge]
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        for edge in edges {
+            var x: CGFloat {
+                switch edge {
+                case .top, .bottom, .leading: return rect.minX
+                case .trailing: return rect.maxX - width
+                }
+            }
+
+            var y: CGFloat {
+                switch edge {
+                case .top, .leading, .trailing: return rect.minY
+                case .bottom: return rect.maxY - width
+                }
+            }
+
+            var w: CGFloat {
+                switch edge {
+                case .top, .bottom: return rect.width
+                case .leading, .trailing: return self.width
+                }
+            }
+
+            var h: CGFloat {
+                switch edge {
+                case .top, .bottom: return self.width
+                case .leading, .trailing: return rect.height
+                }
+            }
+            path.addPath(Path(CGRect(x: x, y: y, width: w, height: h)))
+        }
+        return path
+    }
+}
+
+extension View {
+    func border(width: CGFloat, edges: [Edge], color: SwiftUI.Color) -> some View {
+        overlay(EdgeBorder(width: width, edges: edges).foregroundColor(color))
+    }
+}
+
 
 
 
