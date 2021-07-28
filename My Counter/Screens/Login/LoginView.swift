@@ -95,10 +95,11 @@ struct LoginView: View {
     
     var registerView: some View {
             VStack(alignment: .center) {
-                LazyVStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: 0) {
                     MainTextField(title: Strings.EN.EmailFieldName, placeHolder: Strings.EN.EmailPlaceHolder, value: $loginViewModel.email)
                         .padding(.bottom, 23)
                     SecureTextField(value: $loginViewModel.password, title: Strings.EN.PasswordFieldName)
+                        .padding(.bottom, 23)
                     SecureTextField(value: $loginViewModel.confirmPassword, title: Strings.EN.RepeatPasswordFieldName)
                 }
                 .padding(.bottom, 24)
@@ -143,7 +144,7 @@ struct LoginView: View {
                 Image("countLogo")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 150, height: 150, alignment: .center)
+                    .frame(width: 180, height: 180, alignment: .center)
                 CustomTopTabBar(tabIndex: $tabIndex)
                     if tabIndex == 0 {
                        loginView
