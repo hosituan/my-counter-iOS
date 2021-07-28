@@ -80,7 +80,8 @@ struct LoginView: View {
                             .bold()
                     }
                     
-                }).disabled(!loginViewModel.validate)
+                })
+                .disabled(!loginViewModel.validate)
                 .padding(.bottom)
                 .onReceive(loginViewModel.objectWillChange) { _ in
                     if userLogin.isLogin {
@@ -97,12 +98,12 @@ struct LoginView: View {
             VStack(alignment: .center) {
                 VStack(alignment: .leading, spacing: 0) {
                     MainTextField(title: Strings.EN.EmailFieldName, placeHolder: Strings.EN.EmailPlaceHolder, value: $loginViewModel.email)
-                        .padding(.bottom, 23)
+                        .padding(.bottom, 16)
                     SecureTextField(value: $loginViewModel.password, title: Strings.EN.PasswordFieldName)
-                        .padding(.bottom, 23)
+                        .padding(.bottom, 16)
                     SecureTextField(value: $loginViewModel.confirmPassword, title: Strings.EN.RepeatPasswordFieldName)
                 }
-                .padding(.bottom, 24)
+                .padding(.bottom, 15)
                 Button(action: {
                     userLogin.signUp(email: loginViewModel.email, password: loginViewModel.password)
                 }, label: {
@@ -114,7 +115,8 @@ struct LoginView: View {
                             .foregroundColor(.white)
                             .bold()
                     }
-                }).disabled(!loginViewModel.confirm)
+                })
+                .disabled(!loginViewModel.confirm)
                 .padding(.bottom)
                 .onReceive(loginViewModel.objectWillChange) { _ in
                     if userLogin.isLogin {
@@ -126,39 +128,39 @@ struct LoginView: View {
         .padding(.horizontal, 16)
     }
     var body: some View {
-            VStack(spacing:30) {
-                HStack {
-                    Button(action: {
-                        self.dismissAction()
-                    }, label: {
-                            Image(systemName: "chevron.down")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 24, height: 24, alignment: .center)
-                                .foregroundColor(.black)
-                    })
-                    .padding()
-                    Spacer()
+        HStack {
+            Button(action: {
+                dismissAction()
+            }, label: {
+                    Image(systemName: "chevron.down")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 24, height: 24, alignment: .center)
+                        .foregroundColor(.black)
+            })
+            .padding()
+            Spacer()
+        }
+        VStack(spacing:30) {
+            Spacer()
+            Image("countLogo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 180, height: 180, alignment: .center)
+            CustomTopTabBar(tabIndex: $tabIndex)
+                if tabIndex == 0 {
+                   loginView
                 }
-                Spacer()
-                Image("countLogo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 180, height: 180, alignment: .center)
-                CustomTopTabBar(tabIndex: $tabIndex)
-                    if tabIndex == 0 {
-                       loginView
-                    }
-                    else {
-                       registerView
-                    }
-                Spacer()
-            }
-            .onAppear {
-                loginViewModel.clearData()
-            }
-            .padding(.bottom)
-            .modifier(DismissingKeyboard())
+                else {
+                   registerView
+                }
+            Spacer()
+        }
+        .onAppear {
+            loginViewModel.clearData()
+        }
+        .padding(.bottom)
+        .modifier(DismissingKeyboard())
 
     }
     
