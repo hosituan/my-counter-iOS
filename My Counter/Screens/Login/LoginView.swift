@@ -60,7 +60,6 @@ struct LoginView: View {
         }
     }
     var loginView: some View {
-        ScrollView(showsIndicators: false) {
             VStack(alignment: .center) {
                 VStack(alignment: .leading, spacing: 0) {
                     MainTextField(title: Strings.EN.EmailFieldName, placeHolder: Strings.EN.EmailPlaceHolder, value: $loginViewModel.email)
@@ -91,12 +90,10 @@ struct LoginView: View {
                 bottomView
                 }
         .padding(.horizontal, 16)
-        }
 
     }
     
     var registerView: some View {
-        ScrollView(showsIndicators: false) {
             VStack(alignment: .center) {
                 LazyVStack(alignment: .leading, spacing: 0) {
                     MainTextField(title: Strings.EN.EmailFieldName, placeHolder: Strings.EN.EmailPlaceHolder, value: $loginViewModel.email)
@@ -126,9 +123,6 @@ struct LoginView: View {
             }
         .listSeparatorStyle(.none)
         .padding(.horizontal, 16)
-        }
-    
-        
     }
     var body: some View {
             VStack(spacing:30) {
@@ -146,10 +140,10 @@ struct LoginView: View {
                     Spacer()
                 }
                 Spacer()
-                Text("This is logo")
-                    .foregroundColor(Color.Count.PrimaryColor)
-                    .bold()
-                    .padding(.vertical)
+                Image("countLogo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 150, height: 150, alignment: .center)
                 CustomTopTabBar(tabIndex: $tabIndex)
                     if tabIndex == 0 {
                        loginView
@@ -163,6 +157,8 @@ struct LoginView: View {
                 loginViewModel.clearData()
             }
             .padding(.bottom)
+            .modifier(DismissingKeyboard())
+
     }
     
     func loginAction() {
